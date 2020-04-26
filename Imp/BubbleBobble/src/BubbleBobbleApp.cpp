@@ -4,14 +4,10 @@ class BubbleBobbleApp : public Imp::Application
 {
 public:
 	BubbleBobbleApp()
-	{
-
-	}
+	{}
 
 	virtual ~BubbleBobbleApp()
-	{
-
-	}
+	{}
 };
 
 Imp::Application* Imp::CreateApplication()

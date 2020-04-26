@@ -1,14 +1,13 @@
 #pragma once
 
+//I plan on continue using this engine for further development so I am using these macros for future purposes
+
 #ifdef IMP_WINDOWS
 
 extern Imp::Application* Imp::CreateApplication();
 
 int main(int argc, char** argv)
 {
-	Imp::Log::GetInstance();
-	Imp::Log::Info("ApplePie");
-	Imp::Log::Destory();
 	auto app = Imp::CreateApplication();
 	app->Run();
 	delete app;
