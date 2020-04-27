@@ -14,23 +14,23 @@ Normally I would've used a static library for this engine, but when I thought ab
 the possibility of coming across dynamically linked libraries. I thought it would be a good experience to make this engine
 using dynamically linked libraries.
 
-I had heard of CMake of teachers and had seen some files with cmake extensions but never knew what it actually was.
+I had heard of CMake from teachers and had seen some files with cmake extensions but never knew what it actually was.
 Though The Cherno is not using CMake, he's using something similar called Premake. He explained that he prefers using Premake
-over CMake because Premake is easier to use and it uses lua to generate the project files.
+over CMake because it is easier to use and it uses lua to generate the project files.
 I have only seen lua at for a few hours but using it with premake made me understand more
 about what Premake and similar tools actually do, I think this is a nice experience for later.
 
 So as you can see, The Cherno has a big influence in this project. That said, this assignment/personal project is supposed
 to make my teachers and other people know what I can do. This means that I wouldn't prove what I can do 
 if I only follow patterns and design choices that The Cherno has made in his engine series.
-That is why I will mention which files/systems are strongly influenced by him. 
+That is why I will mention which files/systems are influenced by him. 
 
 Events: The sort of event system that I would make before following the engine series, 
         would just be a command pattern with an observer pattern. 
         For the people who don't know what I'm talking about check this book out: 
         http://gameprogrammingpatterns.com/
         The Cherno implements this is kind of the same way but with callback functions and some cool macro's
-        So callback functions and maybe macro's will be the things that i could add by learning from his engine series.
+        So callback functions and maybe macro's will be things that i could add by learning from his engine series.
         
 Entry point: This basically makes sure that the engine is in charge of the start of the application and controls the
              initialization of the system. 
