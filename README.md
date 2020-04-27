@@ -27,7 +27,8 @@ That is why I will mention which files/systems are strongly influenced by him.
 
 Events: The sort of event system that I would make before following the engine series, 
         would just be a command pattern with an observer pattern. 
-        For the people who don't know what I'm talking about check this book out: http://gameprogrammingpatterns.com/
+        For the people who don't know what I'm talking about check this book out: 
+        http://gameprogrammingpatterns.com/
         The Cherno implements this is kind of the same way but with callback functions and some cool macro's
         So callback functions and maybe macro's will be the things that i could add by learning from his engine series.
         
@@ -40,10 +41,7 @@ The use of static functions: The Cherno uses static in ways that I didn't know w
 These are some links from The Cherno:
 
 Social Media:
-https://instagram.com/thecherno
-https://thecherno.com/discord
-https://twitter.com/thecherno
+https://instagram.com/thecherno / https://thecherno.com/discord / https://twitter.com/thecherno
 
-GitHub and Youtube:
-https://www.youtube.com/channel/UCQ-W1KE9EYfdxhL6S4twUNw
-https://github.com/TheCherno/Hazel
+Youtube and GitHub:
+https://www.youtube.com/channel/UCQ-W1KE9EYfdxhL6S4twUNw / https://github.com/TheCherno/Hazel
