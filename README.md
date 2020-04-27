@@ -5,7 +5,7 @@ chosen by my educational institution HOWEST Digital Arts & Entertainment.
 
 This engine will be using OpenGL as the base and will for now only support Windows 32-bit and 64-bit.
 
-With this engine I'm taking another approuch that i saw when following tutorials from The Cherno on youtube.
+With this engine I'm taking another approach that I learned when following tutorials from The Cherno on youtube.
 His 'Engine Series' is well explained and is structured so that it's never boring to watch.
 This means that there is code in here that strongly resembles the code in The Cherno's engine series.
 That said, I will only write code that I understand myself completely and could implement without copy pasting.
