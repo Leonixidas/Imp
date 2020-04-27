@@ -17,6 +17,11 @@ workspace "Imp"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "Imp/Libs/GLFW/include"
+
+include "Imp/Libs/GLFW"
+
 project "Imp"
     location "Imp"
     kind "SharedLib"
@@ -36,7 +41,14 @@ project "Imp"
 
     includedirs
     {
-        "%{prj.name}/src"
+        "%{prj.name}/src",
+        "%{IncludeDir.GLFW}"
+    }
+
+    links
+    {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "system:windows"

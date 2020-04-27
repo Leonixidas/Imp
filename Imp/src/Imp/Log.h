@@ -14,9 +14,6 @@ namespace Imp
 	class IMP_API Log
 	{
 	public:
-		Log();
-		~Log() = default;
-
 		static void Info(const std::string& message);
 		static void Warn(const std::string& message);
 		static void Error(const std::string& message);
@@ -24,6 +21,10 @@ namespace Imp
 		static void StartFileLogging(const std::string& fileName);
 		static void EndFileLogging();
 
+	private:
+		static void CalculateTime();
+		static void PrintTime();
+		static tm* m_pTime;
 	};
 }
 

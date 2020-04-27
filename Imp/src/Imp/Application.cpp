@@ -1,12 +1,13 @@
 #include "ImpPCH.h"
 #include "Application.h"
+#include "Log.h"
 
 
 namespace Imp
 {
 	Application::Application()
 	{
-
+		m_pWindow = Window::Create();
 	}
 
 	Application::~Application()
@@ -16,6 +17,10 @@ namespace Imp
 
 	void Application::Run()
 	{
-		while (true);
+		Log::Info("Entered Application: loop");
+		while (m_Running)
+		{
+			m_pWindow->OnUpdate();
+		}
 	}
 }
