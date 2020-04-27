@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Imp">
+      <UniqueIdentifier>{EBF7870B-5701-887C-E07C-9E7C4C85937C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imp\Events">
+      <UniqueIdentifier>{6F2DF01D-5BE5-316B-C4EC-0AC7B0C3CC5B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Imp.h" />
+    <ClInclude Include="src\Imp\Application.h">
+      <Filter>Imp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\Core.h">
+      <Filter>Imp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\EntryPoint.h">
+      <Filter>Imp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\Events\Event.h">
+      <Filter>Imp\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\Events\KeyEvent.h">
+      <Filter>Imp\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\Events\MouseEvent.h">
+      <Filter>Imp\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\Log.h">
+      <Filter>Imp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\Singleton.h">
+      <Filter>Imp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImpPCH.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Imp\Application.cpp">
+      <Filter>Imp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Imp\Log.cpp">
+      <Filter>Imp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImpPCH.cpp" />
+  </ItemGroup>
+</Project>
