@@ -1,5 +1,8 @@
 #include "ImpPCH.h"
 #include "WindowsWindow.h"
+#include "Imp/Events/WindowEvent.h"
+#include "Imp/Events/KeyEvent.h"
+#include "Imp/Events/MouseEvent.h"
 #include "Imp/Log.h"
 
 namespace Imp
@@ -19,27 +22,6 @@ namespace Imp
 		ShutDown();
 	}
 
-	unsigned int WindowsWindow::GetWidth() const
-	{
-		return m_Data.width;
-	}
-	unsigned int WindowsWindow::GetHeight() const
-	{
-		return m_Data.height;
-	}
-	bool WindowsWindow::IsVSync() const
-	{
-		return m_Data.vsync;
-	}
-	void WindowsWindow::SetVSync(bool vsync)
-	{
-		if (vsync)
-			glfwSwapInterval(1);
-		else
-			glfwSwapInterval(0);
-
-		m_Data.vsync = vsync;
-	}
 
 	void WindowsWindow::OnUpdate()
 	{
@@ -53,7 +35,7 @@ namespace Imp
 		m_Data.width = props.m_Width;
 		m_Data.height = props.m_Height;
 
-		Log::Info("Creating window: Initializing GLFW");
+		Log::Succeed("Creating window: Initializing GLFW");
 
 		if (!m_Initialized)
 		{
@@ -68,9 +50,49 @@ namespace Imp
 		glfwMakeContextCurrent(m_pWindow);
 		glfwSetWindowUserPointer(m_pWindow, &m_Data);
 		SetVSync(true);
+
+		//Set GLFW callback functions for events
+		glfwSetWindowCloseCallback(m_pWindow, [](GLFWwindow* window)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			WindowCloseEvent e;
+			data.callback(e);
+		});
 	}
+
+	unsigned int WindowsWindow::GetWidth() const
+	{
+		return m_Data.width;
+	}
+
+	unsigned int WindowsWindow::GetHeight() const
+	{
+		return m_Data.height;
+	}
+
+	void WindowsWindow::SetEventCallBack(const EventCallBack& callback)
+	{
+		m_Data.callback = callback;
+	}
+
+	bool WindowsWindow::IsVSync() const
+	{
+		return m_Data.vsync;
+	}
+
+	void WindowsWindow::SetVSync(bool vsync)
+	{
+		if (vsync)
+			glfwSwapInterval(1);
+		else
+			glfwSwapInterval(0);
+
+		m_Data.vsync = vsync;
+	}
+
 	void WindowsWindow::ShutDown()
 	{
 		glfwDestroyWindow(m_pWindow);
+		glfwTerminate();
 	}
 }

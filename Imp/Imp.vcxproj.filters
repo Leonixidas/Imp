@@ -7,12 +7,6 @@
     <Filter Include="Imp\Events">
       <UniqueIdentifier>{6F2DF01D-5BE5-316B-C4EC-0AC7B0C3CC5B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Platforms">
-      <UniqueIdentifier>{01f1a0fc-c4bb-498f-9a4d-8a7691816e41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Platforms\Windows">
-      <UniqueIdentifier>{c15572e6-c0b7-4f87-b3c0-03c01ce91608}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Imp.h" />
@@ -34,19 +28,20 @@
     <ClInclude Include="src\Imp\Events\MouseEvent.h">
       <Filter>Imp\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Imp\Events\WindowEvent.h">
+      <Filter>Imp\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Imp\Log.h">
       <Filter>Imp</Filter>
     </ClInclude>
     <ClInclude Include="src\Imp\Singleton.h">
       <Filter>Imp</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImpPCH.h" />
-    <ClInclude Include="src\WindowsWindow.h">
-      <Filter>Platforms\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="src\Imp\Window.h">
       <Filter>Imp</Filter>
     </ClInclude>
+    <ClInclude Include="src\ImpPCH.h" />
+    <ClInclude Include="src\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Imp\Application.cpp">
@@ -56,8 +51,6 @@
       <Filter>Imp</Filter>
     </ClCompile>
     <ClCompile Include="src\ImpPCH.cpp" />
-    <ClCompile Include="src\WindowsWindow.cpp">
-      <Filter>Platforms\Windows</Filter>
-    </ClCompile>
+    <ClCompile Include="src\WindowsWindow.cpp" />
   </ItemGroup>
 </Project>

@@ -12,6 +12,8 @@ namespace Imp
 
 		virtual unsigned int GetWidth() const override;
 		virtual unsigned int GetHeight() const override;
+
+		virtual void SetEventCallBack(const EventCallBack& callback) override;
 		virtual bool IsVSync() const override;
 		virtual void SetVSync(bool vsync) override;
 
@@ -26,10 +28,12 @@ namespace Imp
 
 		struct WindowData
 		{
-			std::string title;
-			unsigned int width;
-			unsigned int height;
-			bool vsync;
+			std::string title{};
+			unsigned int width{};
+			unsigned int height{};
+			bool vsync{};
+
+			EventCallBack callback{};
 		};
 
 		WindowData m_Data;

@@ -9,10 +9,18 @@ namespace Imp
 	void Log::Info(const std::string& message)
 	{
 		CalculateTime();
-
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), int(Level::INFO));
 		PrintTime();
-		std::cout << "INFO " <<  message << std::endl;
+		std::cout << "INFO: " << message << std::endl;
+	}
+
+	void Log::Succeed(const std::string& message)
+	{
+		CalculateTime();
+
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), int(Level::SUCCEED));
+		PrintTime();
+		std::cout << "SUCCEEDED: " <<  message << std::endl;
 	}
 
 	void Log::Warn(const std::string& message)
@@ -20,7 +28,7 @@ namespace Imp
 		CalculateTime();
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), int(Level::WARN));
 		PrintTime();
-		std::cout << "WARNING " << message << std::endl;
+		std::cout << "WARNING: " << message << std::endl;
 	}
 
 	void Log::Error(const std::string& message)
@@ -37,6 +45,11 @@ namespace Imp
 
 	void Log::EndFileLogging()
 	{
+	}
+
+	void Log::CleanUp()
+	{
+		delete m_pTime;
 	}
 
 	void Log::CalculateTime()

@@ -42,7 +42,8 @@ project "Imp"
     includedirs
     {
         "%{prj.name}/src",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "3rdParty/VLD"
     }
 
     links
@@ -53,7 +54,7 @@ project "Imp"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
+        staticruntime "Off"
         systemversion "latest"
 
         defines
@@ -69,11 +70,25 @@ project "Imp"
 
     filter "configurations:Debug"
         defines "IMP_DEBUG"
+        buildoptions "/MDd"
         symbols "On"
+        ignoredefaultlibraries 
+        { 
+            "MSVCRT",
+            "LIBCMT",
+            "LIBCMTD"
+        }
 
     filter "configurations:Release"
         defines "IMP_RELEASE"
+        buildoptions "/MD"
         optimize "On"
+        ignoredefaultlibraries 
+        { 
+            "MSVCRTD",
+            "LIBCMT",
+            "LIBCMTD"
+        }
 
 
 project "BubbleBobble"
@@ -92,7 +107,8 @@ project "BubbleBobble"
 
         includedirs
         {
-            "Imp/src" 
+            "Imp/src",
+            "3rdParty/VLD"
         }
 
         links
@@ -102,7 +118,7 @@ project "BubbleBobble"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
+        staticruntime "Off"
         systemversion "latest"
 
         defines
@@ -112,8 +128,22 @@ project "BubbleBobble"
 
     filter "configurations:Debug"
         defines "IMP_DEBUG"
+        buildoptions "/MDd"
         symbols "On"
+        ignoredefaultlibraries 
+        { 
+            "MSVCRT",
+            "LIBCMT",
+            "LIBCMTD"
+        }
 
     filter "configurations:Release"
         defines "IMP_RELEASE"
+        buildoptions "/MD"
         optimize "On"
+        ignoredefaultlibraries 
+        { 
+            "MSVCRTD",
+            "LIBCMT",
+            "LIBCMTD"
+        }

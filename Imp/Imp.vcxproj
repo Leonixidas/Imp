@@ -100,10 +100,11 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IMP_WINDOWS;IMP_BUILD_DLL;IMP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;..\3rdParty\VLD;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -111,6 +112,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Imp\Imp.lib</ImportLibrary>
+      <IgnoreSpecificDefaultLibraries>MSVCRT.lib;LIBCMT.lib;LIBCMTD.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST ..\bin\Debug-windows-x86_64\Imp\Imp.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Imp\Imp.dll ..\bin\Debug-windows-x86_64\BubbleBobble &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Imp\Imp.dll ..\bin\Debug-windows-x86_64\BubbleBobble &gt; nul)</Command>
@@ -122,10 +124,11 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IMP_WINDOWS;IMP_BUILD_DLL;IMP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;..\3rdParty\VLD;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -133,6 +136,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Debug-windows-x86\Imp\Imp.lib</ImportLibrary>
+      <IgnoreSpecificDefaultLibraries>MSVCRT.lib;LIBCMT.lib;LIBCMTD.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST ..\bin\Debug-windows-x86\Imp\Imp.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86\Imp\Imp.dll ..\bin\Debug-windows-x86\BubbleBobble &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86\Imp\Imp.dll ..\bin\Debug-windows-x86\BubbleBobble &gt; nul)</Command>
@@ -144,13 +148,14 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IMP_WINDOWS;IMP_BUILD_DLL;IMP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;..\3rdParty\VLD;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -159,6 +164,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Release-windows-x86_64\Imp\Imp.lib</ImportLibrary>
+      <IgnoreSpecificDefaultLibraries>MSVCRTD.lib;LIBCMT.lib;LIBCMTD.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST ..\bin\Release-windows-x86_64\Imp\Imp.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Imp\Imp.dll ..\bin\Release-windows-x86_64\BubbleBobble &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Imp\Imp.dll ..\bin\Release-windows-x86_64\BubbleBobble &gt; nul)</Command>
@@ -170,13 +176,14 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>IMP_WINDOWS;IMP_BUILD_DLL;IMP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;..\3rdParty\VLD;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -185,6 +192,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Release-windows-x86\Imp\Imp.lib</ImportLibrary>
+      <IgnoreSpecificDefaultLibraries>MSVCRTD.lib;LIBCMT.lib;LIBCMTD.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>IF EXIST ..\bin\Release-windows-x86\Imp\Imp.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86\Imp\Imp.dll ..\bin\Release-windows-x86\BubbleBobble &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86\Imp\Imp.dll ..\bin\Release-windows-x86\BubbleBobble &gt; nul)</Command>
@@ -198,10 +206,11 @@
     <ClInclude Include="src\Imp\Events\Event.h" />
     <ClInclude Include="src\Imp\Events\KeyEvent.h" />
     <ClInclude Include="src\Imp\Events\MouseEvent.h" />
+    <ClInclude Include="src\Imp\Events\WindowEvent.h" />
     <ClInclude Include="src\Imp\Log.h" />
     <ClInclude Include="src\Imp\Singleton.h" />
-    <ClInclude Include="src\ImpPCH.h" />
     <ClInclude Include="src\Imp\Window.h" />
+    <ClInclude Include="src\ImpPCH.h" />
     <ClInclude Include="src\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>

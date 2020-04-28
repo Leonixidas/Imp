@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include "Window.h"
+#include "Events/WindowEvent.h"
 
 namespace Imp
 {
@@ -11,7 +12,13 @@ namespace Imp
 
 		virtual ~Application();
 
+		virtual void OnEvent(Event& e);
+
+		virtual bool OnWindowClose(WindowCloseEvent& e);
+
 		virtual void Run();
+
+		virtual void CleanUp();
 
 	private:
 		Window* m_pWindow;

@@ -9,7 +9,7 @@ namespace Imp
 	public:
 		int GetMouseButton() const { return m_MouseButton; }
 
-		virtual int GetCategoryFlags() { return int(EventCategory::MouseButton) & int(EventCategory::Input); }
+		virtual int GetCategoryFlags() const override { return int(EventCategory::MouseButton) & int(EventCategory::Input); }
 
 	protected:
 		MouseButtonEvent(int mouseButton, float xpos, float ypos)
@@ -34,7 +34,7 @@ namespace Imp
 
 		
 		static EventType GetStaticType() { return EventType::MouseButtonPressed; }
-		virtual EventType GetEventType() { return GetStaticType(); }
+		virtual EventType GetEventType() const override { return GetStaticType(); }
 
 	private:
 		bool m_IsRepeated = false;
@@ -48,7 +48,7 @@ namespace Imp
 		{ }
 
 		static EventType GetStaticType() { return EventType::MouseButtonReleased; }
-		virtual EventType GetEventType() { return GetStaticType(); }
+		virtual EventType GetEventType() const override { return GetStaticType(); }
 	};
 
 	class IMP_API MouseMovedEvent : public Event
@@ -59,9 +59,9 @@ namespace Imp
 			, m_yVel(yvel)
 		{}
 
-		virtual int GetCategoryFlags() { return int(EventCategory::Mouse) & int(EventCategory::Input); }
+		virtual int GetCategoryFlags() const override { return int(EventCategory::Mouse) & int(EventCategory::Input); }
 		static EventType GetStaticType() { return EventType::MouseMoved; }
-		virtual EventType GetEventType() { return GetStaticType(); }
+		virtual EventType GetEventType() const override { return GetStaticType(); }
 
 	private:
 		float m_xVel, m_yVel;
@@ -76,9 +76,9 @@ namespace Imp
 
 		float GetScrollVelocity() const { return m_Vel; }
 
-		virtual int GetCategoryFlags() { return int(EventCategory::Mouse) & int(EventCategory::Input); }
+		virtual int GetCategoryFlags() const override { return int(EventCategory::Mouse) & int(EventCategory::Input); }
 		static EventType GetStaticType() { return EventType::MouseScrolled; }
-		virtual EventType GetEventType() { return GetStaticType(); }
+		virtual EventType GetEventType() const override { return GetStaticType(); }
 
 	private:
 		float m_Vel;

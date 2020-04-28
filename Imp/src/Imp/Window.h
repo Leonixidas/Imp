@@ -1,6 +1,7 @@
 #pragma once
 #include "ImpPCH.h"
 #include "Core.h"
+#include "Events/Event.h"
 
 namespace Imp
 {
@@ -20,12 +21,15 @@ namespace Imp
 	class IMP_API Window
 	{
 	public:
+		using EventCallBack = std::function<void(Event&)>;
+
 		virtual ~Window() {}
 
 		virtual void OnUpdate() = 0;
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
 
+		virtual void SetEventCallBack(const EventCallBack& callback) = 0;
 		virtual bool IsVSync() const = 0;
 		virtual void SetVSync(bool vsync) = 0;
 

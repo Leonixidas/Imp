@@ -1,5 +1,5 @@
 #pragma once
-
+#include "ImpPCH.h"
 #include "../Core.h"
 
 namespace Imp
@@ -21,11 +21,13 @@ namespace Imp
 		Input			= 1 << 0,
 		Mouse			= 1 << 1,
 		Keyboard		= 1 << 2,
-		MouseButton		= 1 << 3
+		MouseButton		= 1 << 3,
+		Window			= 1 << 4
 	};
 
 	class IMP_API Event
 	{
+		friend class EventDispatcher;
 	public:
 		virtual EventType GetEventType() const = 0;
 		virtual int GetCategoryFlags() const = 0;
@@ -37,5 +39,36 @@ namespace Imp
 
 	protected:
 		bool m_IsHandeled = false;
+	};
+
+	// This class basically checks if the incoming event equals the templated typename
+	// If so, we call the callback function that was added to the Dispatch function
+	// the returning bool will set the isHandeled variable to true or false depending on the logic
+	// in the callback function
+	// This pattern is also used in unreal engine
+	class IMP_API EventDispatcher
+	{
+	public:
+		EventDispatcher(Event& e)
+			: m_Event(e)
+		{ }
+
+		~EventDispatcher() = default;
+
+		template<typename T>
+		bool Dispatch(std::function<bool(T&)> func)
+		{
+			if (m_Event.GetEventType() == T::GetStaticType())
+			{
+				m_Event.m_IsHandeled = func(*(T*)&m_Event);
+
+				return true;
+			}
+
+			return false;
+		}
+
+	private:
+		Event& m_Event;
 	};
 }

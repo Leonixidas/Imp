@@ -6,7 +6,7 @@ namespace Imp
 	class IMP_API KeyEvent : public Event
 	{
 	public:
-		virtual int GetCategoryFlags() { return int(EventCategory::Input) & int(EventCategory::Keyboard); }
+		virtual int GetCategoryFlags() const override { return int(EventCategory::Input) & int(EventCategory::Keyboard); }
 		int GetKeyCode() { return m_KeyCode; }
 
 	protected:
@@ -29,7 +29,7 @@ namespace Imp
 		bool GetIsRepeated() { return m_Repeated; }
 
 		static EventType GetStaticType() { return EventType::KeyPressed; }
-		virtual EventType GetEventType() { return GetStaticType(); }
+		virtual EventType GetEventType() const override { return GetStaticType(); }
 
 	private:
 		bool m_Repeated = false;
@@ -44,6 +44,6 @@ namespace Imp
 		}
 
 		static EventType GetStaticType() { return EventType::KeyReleased; }
-		virtual EventType GetEventType() { return GetStaticType(); }
+		virtual EventType GetEventType() const override { return GetStaticType(); }
 	};
 }
