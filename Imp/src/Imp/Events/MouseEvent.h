@@ -12,21 +12,17 @@ namespace Imp
 		virtual int GetCategoryFlags() const override { return int(EventCategory::MouseButton) & int(EventCategory::Input); }
 
 	protected:
-		MouseButtonEvent(int mouseButton, float xpos, float ypos)
+		MouseButtonEvent(int mouseButton)
 			: m_MouseButton(mouseButton)
-			, m_xPos(xpos)
-			, m_yPos(ypos)
 		{}
-
-		float m_xPos, m_yPos;
 		int m_MouseButton;
 	};
 
 	class IMP_API MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressedEvent(int mouseButton, float xpos, float ypos, bool repeated)
-			: MouseButtonEvent(mouseButton, xpos, ypos)
+		MouseButtonPressedEvent(int mouseButton, bool repeated)
+			: MouseButtonEvent(mouseButton)
 			, m_IsRepeated(repeated)
 		{ }
 
@@ -36,6 +32,11 @@ namespace Imp
 		static EventType GetStaticType() { return EventType::MouseButtonPressed; }
 		virtual EventType GetEventType() const override { return GetStaticType(); }
 
+		virtual const std::string DebugInfo() const override
+		{
+			return "MouseButtonReleasedEvent: Mouse button " + std::to_string(m_MouseButton) + " got pressed.";
+		}
+
 	private:
 		bool m_IsRepeated = false;
 	};
@@ -43,18 +44,23 @@ namespace Imp
 	class IMP_API MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleasedEvent(int mouseButton, float xpos, float ypos)
-			: MouseButtonEvent(mouseButton, xpos, ypos)
+		MouseButtonReleasedEvent(int mouseButton)
+			: MouseButtonEvent(mouseButton)
 		{ }
 
 		static EventType GetStaticType() { return EventType::MouseButtonReleased; }
 		virtual EventType GetEventType() const override { return GetStaticType(); }
+
+		virtual const std::string DebugInfo() const override
+		{
+			return "MouseButtonReleasedEvent: Mouse button " + std::to_string(m_MouseButton) + " got released.";
+		}
 	};
 
 	class IMP_API MouseMovedEvent : public Event
 	{
 	public:
-		MouseMovedEvent(float xvel, float yvel)
+		MouseMovedEvent(int xvel, int yvel)
 			: m_xVel(xvel)
 			, m_yVel(yvel)
 		{}
@@ -63,8 +69,15 @@ namespace Imp
 		static EventType GetStaticType() { return EventType::MouseMoved; }
 		virtual EventType GetEventType() const override { return GetStaticType(); }
 
+		virtual const std::string DebugInfo() const override
+		{
+			std::string debugInfo{};
+			debugInfo = "MouseMovedEvent: mouse pos [" + std::to_string(m_xVel) + ',' + std::to_string(m_yVel) + "].";
+			return debugInfo;
+		}
+
 	private:
-		float m_xVel, m_yVel;
+		int m_xVel, m_yVel;
 	};
 
 	class IMP_API MouseScrolledEvent : public Event
@@ -79,6 +92,11 @@ namespace Imp
 		virtual int GetCategoryFlags() const override { return int(EventCategory::Mouse) & int(EventCategory::Input); }
 		static EventType GetStaticType() { return EventType::MouseScrolled; }
 		virtual EventType GetEventType() const override { return GetStaticType(); }
+
+		virtual const std::string DebugInfo() const override
+		{
+			return "MouseScrolledEvent: scroll velocity = " + std::to_string(m_Vel);
+		}
 
 	private:
 		float m_Vel;

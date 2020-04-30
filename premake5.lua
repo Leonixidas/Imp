@@ -19,13 +19,16 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Imp/Libs/GLFW/include"
+IncludeDir["Glad"] = "Imp/Libs/Glad/include"
 IncludeDir["glm"] = "Imp/Libs/glm/glm"
+
 
 LibDirs = {}
 LibDirs["Win32"] = "3rdParty/VLD/lib/Win32"
 LibDirs["Win64"] = "3rdParty/VLD/lib/Win64"
 
 include "Imp/Libs/GLFW"
+include "Imp/libs/Glad"
 
 project "Imp"
     location "Imp"
@@ -48,6 +51,7 @@ project "Imp"
     {
         "%{prj.name}/src",
         "%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}",
         "%{IncludeDir.glm}",
         "3rdParty/VLD/include"
     }
@@ -55,6 +59,7 @@ project "Imp"
     links
     {
         "GLFW",
+        "Glad",
         "opengl32.lib",
         "vld.lib"
     }
@@ -67,7 +72,8 @@ project "Imp"
         defines
         {
             "IMP_WINDOWS",
-            "IMP_BUILD_DLL"
+            "IMP_BUILD_DLL",
+            "GLFW_INCLUDE_NONE"
         }
 
         postbuildcommands

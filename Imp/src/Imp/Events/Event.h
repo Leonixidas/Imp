@@ -37,6 +37,8 @@ namespace Imp
 			return GetCategoryFlags() & category;
 		}
 
+		virtual const std::string DebugInfo() const = 0;
+
 	protected:
 		bool m_IsHandeled = false;
 	};

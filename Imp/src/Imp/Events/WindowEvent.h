@@ -11,6 +11,11 @@ namespace Imp
 		static EventType GetStaticType() { return EventType::WindowClose; }
 		virtual EventType GetEventType() const override { return GetStaticType(); }
 		virtual int GetCategoryFlags() const override { return int(EventCategory::Window); }
+
+		virtual const std::string DebugInfo() const override
+		{
+			return "WindowCloseEvent: Window is being closed.";
+		}
 	};
 
 	class IMP_API WindowResizeEvent : public Event
@@ -24,6 +29,11 @@ namespace Imp
 		static EventType GetStaticType() { return EventType::WindowResize; }
 		virtual EventType GetEventType()const override { return GetStaticType(); }
 		virtual int GetCategoryFlags() const override { return int(EventCategory::Window); }
+
+		virtual const std::string DebugInfo() const override
+		{
+			return "WindowResizeEvent: new window size [" + std::to_string(m_XSize) + ',' + std::to_string(m_YSize) + "].";
+		}
 
 	private:
 		float m_XSize, m_YSize;

@@ -2,6 +2,7 @@
 #include "Imp/Window.h"
 #include "GLFW/glfw3.h"
 
+
 namespace Imp
 {
 	class WindowsWindow : public Window
@@ -17,7 +18,7 @@ namespace Imp
 		virtual bool IsVSync() const override;
 		virtual void SetVSync(bool vsync) override;
 
-		virtual void OnUpdate() override;
+		virtual void Update() override;
 
 	protected:
 		virtual void Init(const WindowProps& props);

@@ -1,6 +1,7 @@
 #include "ImpPCH.h"
 #include "Application.h"
 #include "Log.h"
+#include "glad/glad.h"
 
 
 namespace Imp
@@ -22,6 +23,11 @@ namespace Imp
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(OnWindowClose));
+
+#ifdef IMP_DEBUG
+		Log::Info(e.DebugInfo());
+#endif
+
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
@@ -35,7 +41,7 @@ namespace Imp
 		Log::Info("Starting Application");
 		while (m_Running)
 		{
-			m_pWindow->OnUpdate();
+			m_pWindow->Update();
 		}
 		Log::Info("Closing Application");
 	}

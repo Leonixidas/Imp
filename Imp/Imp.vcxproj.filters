@@ -37,6 +37,9 @@
     <ClInclude Include="src\Imp\Singleton.h">
       <Filter>Imp</Filter>
     </ClInclude>
+    <ClInclude Include="src\Imp\Time.h">
+      <Filter>Imp</Filter>
+    </ClInclude>
     <ClInclude Include="src\Imp\Window.h">
       <Filter>Imp</Filter>
     </ClInclude>
