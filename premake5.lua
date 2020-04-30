@@ -19,6 +19,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Imp/Libs/GLFW/include"
+IncludeDir["glm"] = "Imp/Libs/glm/glm"
+
+LibDirs = {}
+LibDirs["Win32"] = "3rdParty/VLD/lib/Win32"
+LibDirs["Win64"] = "3rdParty/VLD/lib/Win64"
 
 include "Imp/Libs/GLFW"
 
@@ -43,13 +48,15 @@ project "Imp"
     {
         "%{prj.name}/src",
         "%{IncludeDir.GLFW}",
-        "3rdParty/VLD"
+        "%{IncludeDir.glm}",
+        "3rdParty/VLD/include"
     }
 
     links
     {
         "GLFW",
-        "opengl32.lib"
+        "opengl32.lib",
+        "vld.lib"
     }
 
     filter "system:windows"
@@ -90,6 +97,18 @@ project "Imp"
             "LIBCMTD"
         }
 
+    filter "platforms:x64"
+        libdirs
+        {
+            "%{LibDirs.Win64}"
+        }
+
+    filter "platforms:x86"
+        libdirs
+        {
+            "%{LibDirs.Win32}"
+        }
+
 
 project "BubbleBobble"
         location "BubbleBobble"
@@ -108,12 +127,13 @@ project "BubbleBobble"
         includedirs
         {
             "Imp/src",
-            "3rdParty/VLD"
+            "3rdParty/VLD/include"
         }
 
         links
         {
-            "Imp"
+            "Imp",
+            "vld.lib"
         }
 
     filter "system:windows"
@@ -146,4 +166,16 @@ project "BubbleBobble"
             "MSVCRTD",
             "LIBCMT",
             "LIBCMTD"
+        }
+
+    filter "platforms:x64"
+        libdirs
+        {
+            "%{LibDirs.Win64}"
+        }
+
+    filter "platforms:x86"
+        libdirs
+        {
+            "%{LibDirs.Win32}"
         }
