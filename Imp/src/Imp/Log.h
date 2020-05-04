@@ -32,3 +32,15 @@ namespace Imp
 	};
 }
 
+#ifdef IMP_DEBUG
+#define IMP_INFO(x) Imp::Log::Info(x)
+#define IMP_SUCCEED(x) Imp::Log::Succeed(x)
+#define IMP_WARNING(x) Imp::Log::Warn(x)
+#define IMP_ERROR(x) Imp::Log::Error(x)
+#else
+#define IMP_INFO(x)
+#define IMP_SUCCEED(x)
+#define IMP_WARNING(x)
+#define IMP_ERROR(x)
+#endif
+
