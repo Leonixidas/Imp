@@ -136,7 +136,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\3rdParty\VLD\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\VLD\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Debug-windows-x86\Imp\Imp.lib</ImportLibrary>
       <IgnoreSpecificDefaultLibraries>MSVCRT.lib;LIBCMT.lib;LIBCMTD.lib</IgnoreSpecificDefaultLibraries>
     </Link>
