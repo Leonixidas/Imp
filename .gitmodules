@@ -2,3 +2,6 @@
  	path = Imp/Libs/GLFW
  	url = https://github.com/Leonixidas/glfw
 
+[submodule "Imp/Libs/Imgui"]
+	path = Imp/Libs/Imgui
+	url = https://github.com/Leonixidas/imgui
