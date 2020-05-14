@@ -1,3 +1,6 @@
  [submodule "Imp/Libs/GLFW"]
  	path = Imp/Libs/GLFW
  	url = https://github.com/Leonixidas/glfw
+[submodule "Imp\\Libs\\imgui"]
+	path = Imp\\Libs\\imgui
+	url = https://github.com/Leonixidas/imgui

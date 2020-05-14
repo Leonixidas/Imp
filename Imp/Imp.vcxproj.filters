@@ -7,6 +7,12 @@
     <Filter Include="Imp\Events">
       <UniqueIdentifier>{6F2DF01D-5BE5-316B-C4EC-0AC7B0C3CC5B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Imp.h" />
@@ -31,6 +37,12 @@
     <ClInclude Include="src\Imp\Events\WindowEvent.h">
       <Filter>Imp\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Imp\Layer.h">
+      <Filter>Imp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\LayerManager.h">
+      <Filter>Imp</Filter>
+    </ClInclude>
     <ClInclude Include="src\Imp\Log.h">
       <Filter>Imp</Filter>
     </ClInclude>
@@ -44,16 +56,26 @@
       <Filter>Imp</Filter>
     </ClInclude>
     <ClInclude Include="src\ImpPCH.h" />
-    <ClInclude Include="src\WindowsWindow.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Imp\Application.cpp">
+      <Filter>Imp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Imp\Layer.cpp">
+      <Filter>Imp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Imp\LayerManager.cpp">
       <Filter>Imp</Filter>
     </ClCompile>
     <ClCompile Include="src\Imp\Log.cpp">
       <Filter>Imp</Filter>
     </ClCompile>
     <ClCompile Include="src\ImpPCH.cpp" />
-    <ClCompile Include="src\WindowsWindow.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

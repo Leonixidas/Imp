@@ -21,6 +21,8 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Imp/Libs/GLFW/include"
 IncludeDir["Glad"] = "Imp/Libs/Glad/include"
 IncludeDir["glm"] = "Imp/Libs/glm/glm"
+IncludeDir["Imgui"] = "Imp/Libs/imgui"
+
 
 
 LibDirs = {}
@@ -28,7 +30,8 @@ LibDirs["Win32"] = "3rdParty/VLD/lib/Win32"
 LibDirs["Win64"] = "3rdParty/VLD/lib/Win64"
 
 include "Imp/Libs/GLFW"
-include "Imp/libs/Glad"
+include "Imp/Libs/Glad"
+include "Imp/Libs/imgui"
 
 project "Imp"
     location "Imp"
@@ -53,6 +56,7 @@ project "Imp"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.glm}",
+        "%{IncludeDir.Imgui}",
         "3rdParty/VLD/include"
     }
 
@@ -60,6 +64,7 @@ project "Imp"
     {
         "GLFW",
         "Glad",
+        "Imgui",
         "opengl32.lib",
         "vld.lib"
     }
