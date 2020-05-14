@@ -4,7 +4,7 @@
 namespace Imp
 {
 	//TODO change position variables when implementing the math library
-	class IMP_API MouseButtonEvent : public Event
+	class MouseButtonEvent : public Event
 	{
 	public:
 		int GetMouseButton() const { return m_MouseButton; }
@@ -18,7 +18,7 @@ namespace Imp
 		int m_MouseButton;
 	};
 
-	class IMP_API MouseButtonPressedEvent : public MouseButtonEvent
+	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int mouseButton, bool repeated)
@@ -41,7 +41,7 @@ namespace Imp
 		bool m_IsRepeated = false;
 	};
 
-	class IMP_API MouseButtonReleasedEvent : public MouseButtonEvent
+	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int mouseButton)
@@ -57,7 +57,7 @@ namespace Imp
 		}
 	};
 
-	class IMP_API MouseMovedEvent : public Event
+	class MouseMovedEvent : public Event
 	{
 	public:
 		MouseMovedEvent(int xvel, int yvel)
@@ -80,7 +80,7 @@ namespace Imp
 		int m_xVel, m_yVel;
 	};
 
-	class IMP_API MouseScrolledEvent : public Event
+	class MouseScrolledEvent : public Event
 	{
 	public:
 		MouseScrolledEvent(float vel)

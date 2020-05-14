@@ -18,7 +18,7 @@ namespace Imp
 		{ }
 	};
 
-	class IMP_API Window
+	class Window
 	{
 	public:
 		using EventCallBack = std::function<void(Event&)>;

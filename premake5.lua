@@ -34,9 +34,11 @@ include "Imp/Libs/Glad"
 include "Imp/Libs/imgui"
 
 project "Imp"
-    location "Imp"
-    kind "SharedLib"
-    language "C++"
+        location "Imp"
+        kind "StaticLib"
+        language "C++"
+        cppdialect "C++17"
+        staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -65,13 +67,10 @@ project "Imp"
         "GLFW",
         "Glad",
         "Imgui",
-        "opengl32.lib",
-        "vld.lib"
+        "opengl32.lib"
     }
 
     filter "system:windows"
-        cppdialect "C++17"
-        staticruntime "Off"
         systemversion "latest"
 
         defines
@@ -81,32 +80,15 @@ project "Imp"
             "GLFW_INCLUDE_NONE"
         }
 
-        postbuildcommands
-        {
-            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/BubbleBobble")
-        }
-
     filter "configurations:Debug"
         defines "IMP_DEBUG"
-        buildoptions "/MDd"
-        symbols "On"
-        ignoredefaultlibraries 
-        { 
-            "MSVCRT",
-            "LIBCMT",
-            "LIBCMTD"
-        }
+        runtime "Debug"
+        symbols "on"
 
     filter "configurations:Release"
         defines "IMP_RELEASE"
-        buildoptions "/MD"
-        optimize "On"
-        ignoredefaultlibraries 
-        { 
-            "MSVCRTD",
-            "LIBCMT",
-            "LIBCMTD"
-        }
+        runtime "Release"
+        optimize "on"
 
     filter "platforms:x64"
         libdirs
@@ -125,6 +107,8 @@ project "BubbleBobble"
         location "BubbleBobble"
         kind "ConsoleApp"
         language "C++"
+        cppdialect "C++17"
+        staticruntime "on"
 
         targetdir ("bin/" .. outputdir .. "/%{prj.name}")
         objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -148,8 +132,6 @@ project "BubbleBobble"
         }
 
     filter "system:windows"
-        cppdialect "C++17"
-        staticruntime "Off"
         systemversion "latest"
 
         defines
@@ -159,25 +141,13 @@ project "BubbleBobble"
 
     filter "configurations:Debug"
         defines "IMP_DEBUG"
-        buildoptions "/MDd"
-        symbols "On"
-        ignoredefaultlibraries 
-        { 
-            "MSVCRT",
-            "LIBCMT",
-            "LIBCMTD"
-        }
+        runtime "Debug"
+        symbols "on"
 
     filter "configurations:Release"
         defines "IMP_RELEASE"
-        buildoptions "/MD"
-        optimize "On"
-        ignoredefaultlibraries 
-        { 
-            "MSVCRTD",
-            "LIBCMT",
-            "LIBCMTD"
-        }
+        runtime "Release"
+        optimize "on"
 
     filter "platforms:x64"
         libdirs

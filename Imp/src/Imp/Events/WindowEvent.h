@@ -4,7 +4,7 @@
 namespace Imp
 {
 
-	class IMP_API WindowCloseEvent : public Event
+	class WindowCloseEvent : public Event
 	{
 	public:
 		WindowCloseEvent(){}
@@ -18,7 +18,7 @@ namespace Imp
 		}
 	};
 
-	class IMP_API WindowResizeEvent : public Event
+	class WindowResizeEvent : public Event
 	{
 	public:
 		WindowResizeEvent(float x, float y)

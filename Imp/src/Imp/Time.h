@@ -5,7 +5,7 @@
 
 namespace Imp
 {
-	class IMP_API Time : public Singleton<Time>
+	class Time : public Singleton<Time>
 	{
 	private:
 

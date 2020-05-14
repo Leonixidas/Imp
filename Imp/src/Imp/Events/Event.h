@@ -25,7 +25,7 @@ namespace Imp
 		Window			= 1 << 4
 	};
 
-	class IMP_API Event
+	class Event
 	{
 		friend class EventDispatcher;
 	public:
@@ -50,7 +50,7 @@ namespace Imp
 	// the returning bool will set the isHandeled variable to true or false depending on the logic
 	// in the callback function
 	// This pattern is also used in unreal engine
-	class IMP_API EventDispatcher
+	class EventDispatcher
 	{
 	public:
 		EventDispatcher(Event& e)

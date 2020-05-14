@@ -3,7 +3,7 @@
 
 namespace Imp
 {
-	class IMP_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		virtual int GetCategoryFlags() const override { return int(EventCategory::Input) & int(EventCategory::Keyboard); }
@@ -18,7 +18,7 @@ namespace Imp
 	};
 
 
-	class IMP_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keyCode, bool repeated)
@@ -51,7 +51,7 @@ namespace Imp
 		bool m_Repeated = false;
 	};
 
-	class IMP_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keyCode)

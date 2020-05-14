@@ -5,7 +5,7 @@
 
 namespace Imp
 {
-	class IMP_API LayerManager final
+	class LayerManager final
 	{
 	public:
 		LayerManager();

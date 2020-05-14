@@ -12,7 +12,7 @@ namespace Imp
 		FATAL = 0x0004
 	};
 
-	class IMP_API Log
+	class Log
 	{
 	public:
 		static void Info(const std::string& message);

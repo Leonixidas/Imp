@@ -7,7 +7,7 @@
 
 namespace Imp
 {
-	class IMP_API Application
+	class Application
 	{
 	public:
 		Application();
