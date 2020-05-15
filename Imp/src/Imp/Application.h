@@ -22,6 +22,10 @@ namespace Imp
 
 		virtual void CleanUp();
 
+		static Application& GetInstance() { return *m_pInstance; }
+
+		Window& GetWindow() { return *m_pWindow; }
+
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);
 
@@ -29,6 +33,8 @@ namespace Imp
 		Window* m_pWindow;
 		bool m_Running = true;
 		LayerManager m_LayerManager;
+
+		static Application* m_pInstance;
 	};
 
 	Application* CreateApplication();

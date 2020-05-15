@@ -21,7 +21,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Imp/Libs/GLFW/include"
 IncludeDir["Glad"] = "Imp/Libs/Glad/include"
 IncludeDir["glm"] = "Imp/Libs/glm/glm"
-IncludeDir["Imgui"] = "Imp/Libs/imgui"
+IncludeDir["Imgui"] = "Imp/Libs/Imgui"
 
 
 

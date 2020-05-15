@@ -6,12 +6,19 @@
 
 namespace Imp
 {
-#define BIND_EVENT_FUNC(x) std::bind(&Application::x,this,std::placeholders::_1)
+	Application* Application::m_pInstance = nullptr;
+
 	Application::Application()
 		: m_LayerManager()
 	{
+		if (m_pInstance != nullptr)
+		{
+			Log::Error("There already exists an application");
+		}
+
+		m_pInstance = this;
 		m_pWindow = Window::Create();
-		m_pWindow->SetEventCallBack(BIND_EVENT_FUNC(OnEvent));
+		m_pWindow->SetEventCallBack(BIND_EVENT_FUNC(Application::OnEvent));
 	}
 
 	Application::~Application()
@@ -22,11 +29,7 @@ namespace Imp
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(OnWindowClose));
-
-#ifdef IMP_DEBUG
-		Log::Info(e.DebugInfo());
-#endif
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(Application::OnWindowClose));
 
 		for (auto iter = m_LayerManager.rBegin(); iter != m_LayerManager.rEnd();)
 		{
@@ -48,6 +51,9 @@ namespace Imp
 		Log::Info("Starting Application");
 		while (m_Running)
 		{
+			glClearColor(0.f, 0.f, 0.f, 1.f);
+			glClear(GL_COLOR_BUFFER_BIT);
+
 			for (auto iter = m_LayerManager.Begin(); iter != m_LayerManager.End();)
 			{
 				if((*iter)->GetEnabled())

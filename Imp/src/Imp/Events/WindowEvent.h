@@ -30,6 +30,9 @@ namespace Imp
 		virtual EventType GetEventType()const override { return GetStaticType(); }
 		virtual int GetCategoryFlags() const override { return int(EventCategory::Window); }
 
+		inline float GetX() { return m_XSize; }
+		inline float GetY() { return m_YSize; }
+
 		virtual const std::string DebugInfo() const override
 		{
 			return "WindowResizeEvent: new window size [" + std::to_string(m_XSize) + ',' + std::to_string(m_YSize) + "].";

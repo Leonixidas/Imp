@@ -7,7 +7,7 @@ namespace Imp
 	{
 	public:
 		virtual int GetCategoryFlags() const override { return int(EventCategory::Input) & int(EventCategory::Keyboard); }
-		int GetKeyCode() { return m_KeyCode; }
+		inline int GetKeyCode() { return m_KeyCode; }
 
 	protected:
 		KeyEvent(int keyCode)
@@ -68,6 +68,28 @@ namespace Imp
 			const char* name = glfwGetKeyName(m_KeyCode, scanCode);
 			if (name != nullptr)
 				return "KeyReleasedEvent: '" + std::string(name) + "' got released";
+			else
+				return "";
+		}
+	};
+
+	class KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keyCode)
+			: KeyEvent(keyCode)
+		{
+		}
+
+		static EventType GetStaticType() { return EventType::KeyTyped; }
+		virtual EventType GetEventType() const override { return GetStaticType(); }
+
+		virtual const std::string DebugInfo() const override
+		{
+			int scanCode = glfwGetKeyScancode(m_KeyCode);
+			const char* name = glfwGetKeyName(m_KeyCode, scanCode);
+			if (name != nullptr)
+				return "KeyTypedEvent: '" + std::string(name) + "'";
 			else
 				return "";
 		}

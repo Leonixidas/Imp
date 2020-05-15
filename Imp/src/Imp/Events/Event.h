@@ -9,7 +9,7 @@ namespace Imp
 	{
 		None = 0,
 		WindowClose, WindowResize, WindowFocus, WindowLoseFocus, WindowMoved,
-		KeyPressed, KeyReleased,
+		KeyPressed, KeyReleased, KeyTyped,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 

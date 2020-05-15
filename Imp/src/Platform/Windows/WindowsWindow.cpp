@@ -131,11 +131,17 @@ namespace Imp
 			}
 		});
 
+		glfwSetCharCallback(m_pWindow, [](GLFWwindow* window, unsigned int key)
+		{
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			KeyTypedEvent e{ (int)key };
+		});
+
 		glfwSetScrollCallback(m_pWindow, [](GLFWwindow* window, double xOffset, double yOffset)
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			MouseScrolledEvent e{ float(xOffset) };
+			MouseScrolledEvent e{ (float)xOffset, (float)yOffset };
 
 			data.callback(e);
 		});
@@ -144,7 +150,7 @@ namespace Imp
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			MouseMovedEvent e{ int(x), int(y) };
+			MouseMovedEvent e{ (float)x, (float)y };
 
 			data.callback(e);
 		});

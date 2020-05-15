@@ -60,34 +60,39 @@ namespace Imp
 	class MouseMovedEvent : public Event
 	{
 	public:
-		MouseMovedEvent(int xvel, int yvel)
-			: m_xVel(xvel)
-			, m_yVel(yvel)
+		MouseMovedEvent(float xpos, float ypos)
+			: m_xPos(xpos)
+			, m_yPos(ypos)
 		{}
 
 		virtual int GetCategoryFlags() const override { return int(EventCategory::Mouse) & int(EventCategory::Input); }
 		static EventType GetStaticType() { return EventType::MouseMoved; }
 		virtual EventType GetEventType() const override { return GetStaticType(); }
 
+		float GetX() { return m_xPos; }
+		float GetY() { return m_yPos; }
+
 		virtual const std::string DebugInfo() const override
 		{
 			std::string debugInfo{};
-			debugInfo = "MouseMovedEvent: mouse pos [" + std::to_string(m_xVel) + ',' + std::to_string(m_yVel) + "].";
+			debugInfo = "MouseMovedEvent: mouse pos [" + std::to_string(m_xPos) + ',' + std::to_string(m_yPos) + "].";
 			return debugInfo;
 		}
 
 	private:
-		int m_xVel, m_yVel;
+		float m_xPos, m_yPos;
 	};
 
 	class MouseScrolledEvent : public Event
 	{
 	public:
-		MouseScrolledEvent(float vel)
-			: m_Vel(vel)
+		MouseScrolledEvent(float xvel, float yvel)
+			: m_xVel(xvel)
+			, m_yVel(yvel)
 		{}
 
-		float GetScrollVelocity() const { return m_Vel; }
+		float GetX() const { return m_xVel; }
+		float GetY() const { return m_yVel; }
 
 		virtual int GetCategoryFlags() const override { return int(EventCategory::Mouse) & int(EventCategory::Input); }
 		static EventType GetStaticType() { return EventType::MouseScrolled; }
@@ -95,10 +100,10 @@ namespace Imp
 
 		virtual const std::string DebugInfo() const override
 		{
-			return "MouseScrolledEvent: scroll velocity = " + std::to_string(m_Vel);
+			return "MouseScrolledEvent: scroll velocity = [" + std::to_string(m_xVel) + ',' + std::to_string(m_yVel) + ']';
 		}
 
 	private:
-		float m_Vel;
+		float m_xVel, m_yVel;
 	};
 }

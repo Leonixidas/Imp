@@ -5,6 +5,8 @@
 #include "Imp/Log.h"
 #include "Imp/Layer.h"
 
+#include "Imp/Imgui/ImguiLayer.h"
+
 
 //Events
 #include "Imp/Events/KeyEvent.h"

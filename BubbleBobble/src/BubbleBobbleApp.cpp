@@ -1,7 +1,5 @@
 #include <Imp.h>
 
-#define BIND_EVENT_FUNC(x) std::bind(&ExampleLayer::x,this,std::placeholders::_1)
-
 class ExampleLayer : public Imp::Layer
 {
 public:
@@ -30,12 +28,11 @@ public:
 	virtual void OnEvent(Imp::Event& e) override
 	{
 		Imp::EventDispatcher dispatcher{ e };
-		dispatcher.Dispatch<Imp::MouseMovedEvent>(BIND_EVENT_FUNC(OnMouseMovedEvent));
+		dispatcher.Dispatch<Imp::MouseMovedEvent>(BIND_EVENT_FUNC(ExampleLayer::OnMouseMovedEvent));
 	}
 
 	bool OnMouseMovedEvent(Imp::MouseMovedEvent& e)
 	{
-		Imp::Log::Info("CLIENT: " + e.DebugInfo());
 		return true;
 	}
 };
@@ -46,6 +43,7 @@ public:
 	BubbleBobbleApp()
 	{
 		PushLayer(new ExampleLayer());
+		PushOverlay(new Imp::ImguiLayer());
 	}
 
 	virtual ~BubbleBobbleApp()
