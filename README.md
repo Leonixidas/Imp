@@ -10,9 +10,8 @@ His 'Engine Series' is well explained and is structured so that it's never borin
 This means that there is code in here that strongly resembles the code in The Cherno's engine series.
 That said, I will only write code that I understand myself completely and could implement without copy pasting.
 
-Normally I would've used a static library for this engine, but when I thought about the future and 
-the possibility of coming across dynamically linked libraries. I thought it would be a good experience to make this engine
-using dynamically linked libraries.
+I was gonna usea dynamic library but after some time I remembered the words "DLLs are the root of all warnings" when I had warnings that I couldn't solve.
+So I will be using a static library like I usually do. 
 
 I had heard of CMake from teachers and had seen some files with cmake extensions but never knew what it actually was.
 Though The Cherno is not using CMake, he's using something similar called Premake. He explained that he prefers using Premake
