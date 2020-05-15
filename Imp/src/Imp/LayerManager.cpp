@@ -26,6 +26,7 @@ void Imp::LayerManager::PushLayer(Layer* layer)
 	if (iter == m_Layers.end())
 	{
 		m_Layers.emplace(m_LayerInsert, layer);
+		layer->OnAttach();
 	}
 	else
 	{
@@ -41,6 +42,8 @@ void Imp::LayerManager::PopLayer(Layer* layer)
 	{
 		m_Layers.erase(iter);
 		--m_LayerInsert;
+
+		layer->OnDetach();
 	}
 	else
 	{
@@ -55,6 +58,7 @@ void Imp::LayerManager::PushOverlay(Layer* overlay)
 	if (iter == m_Layers.end())
 	{
 		m_Layers.emplace_back(overlay);
+		overlay->OnAttach();
 	}
 	else
 	{
@@ -69,6 +73,7 @@ void Imp::LayerManager::PopOverlay(Layer* overlay)
 	if (iter != m_Layers.end())
 	{
 		m_Layers.erase(iter);
+		overlay->OnDetach();
 	}
 	else
 	{

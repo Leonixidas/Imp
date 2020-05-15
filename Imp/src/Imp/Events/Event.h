@@ -1,6 +1,7 @@
 #pragma once
 #include "ImpPCH.h"
 #include "../Core.h"
+#include "../../Libs/GLFW/include/GLFW/glfw3.h"
 
 namespace Imp
 {

@@ -14,7 +14,7 @@ public:
 
 	virtual void OnAttach() override
 	{
-
+		Imp::Log::Info("CLIENT: ExampleLayer attached");
 	}
 
 	virtual void OnDetach() override
@@ -29,7 +29,14 @@ public:
 
 	virtual void OnEvent(Imp::Event& e) override
 	{
-		
+		Imp::EventDispatcher dispatcher{ e };
+		dispatcher.Dispatch<Imp::MouseMovedEvent>(BIND_EVENT_FUNC(OnMouseMovedEvent));
+	}
+
+	bool OnMouseMovedEvent(Imp::MouseMovedEvent& e)
+	{
+		Imp::Log::Info("CLIENT: " + e.DebugInfo());
+		return true;
 	}
 };
 
@@ -37,7 +44,9 @@ class BubbleBobbleApp : public Imp::Application
 {
 public:
 	BubbleBobbleApp()
-	{}
+	{
+		PushLayer(new ExampleLayer());
+	}
 
 	virtual ~BubbleBobbleApp()
 	{}
