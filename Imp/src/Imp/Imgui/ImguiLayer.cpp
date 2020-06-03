@@ -2,6 +2,7 @@
 #include "ImguiLayer.h"
 #include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
 #include "Imp/Application.h"
+#include "Imp/Log.h"
 
 //temporary
 #include <GLFW/glfw3.h>
@@ -154,7 +155,7 @@ bool Imp::ImguiLayer::OnKeyTypedEvent(KeyTypedEvent& e)
 	ImGuiIO& io = ImGui::GetIO();
 	int keyCode = e.GetKeyCode();
 	if(keyCode > 0 && keyCode < 0x10000)
-		io.AddInputCharacter((unsigned int)e.GetKeyCode());
+		io.AddInputCharacter((unsigned short)keyCode);
 
 	return false;
 }

@@ -192,6 +192,7 @@
     <ClInclude Include="src\Imp\Events\MouseEvent.h" />
     <ClInclude Include="src\Imp\Events\WindowEvent.h" />
     <ClInclude Include="src\Imp\Imgui\ImguiLayer.h" />
+    <ClInclude Include="src\Imp\Input.h" />
     <ClInclude Include="src\Imp\Layer.h" />
     <ClInclude Include="src\Imp\LayerManager.h" />
     <ClInclude Include="src\Imp\Log.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="src\Imp\Window.h" />
     <ClInclude Include="src\ImpPCH.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +214,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>

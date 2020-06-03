@@ -20,6 +20,8 @@ namespace Imp
 
 		virtual void Update() override;
 
+		inline virtual void* GetNativeWindow() const override { return m_pWindow; }
+
 	protected:
 		virtual void Init(const WindowProps& props);
 		virtual void ShutDown();

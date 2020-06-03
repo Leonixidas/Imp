@@ -12,7 +12,7 @@ public:
 
 	virtual void OnAttach() override
 	{
-		Imp::Log::Info("CLIENT: ExampleLayer attached");
+		IMP_INFO("CLIENT: ExampleLayer attached");
 	}
 
 	virtual void OnDetach() override

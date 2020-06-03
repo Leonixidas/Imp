@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Log.h"
 #include "glad/glad.h"
+#include "Input.h"
 
 
 namespace Imp
@@ -13,7 +14,7 @@ namespace Imp
 	{
 		if (m_pInstance != nullptr)
 		{
-			Log::Error("There already exists an application");
+			IMP_ERROR("There already exists an application");
 		}
 
 		m_pInstance = this;
@@ -31,7 +32,7 @@ namespace Imp
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(Application::OnWindowClose));
 
-		for (auto iter = m_LayerManager.rBegin(); iter != m_LayerManager.rEnd();)
+		for (auto iter = m_LayerManager.rbegin(); iter != m_LayerManager.rend();)
 		{
 			(*iter++)->OnEvent(e);
 			if (e.IsHandeled())
@@ -48,27 +49,28 @@ namespace Imp
 
 	void Application::Run()
 	{
-		Log::Info("Starting Application");
+		IMP_INFO("Starting Application");
 		while (m_Running)
 		{
 			glClearColor(0.f, 0.f, 0.f, 1.f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			for (auto iter = m_LayerManager.Begin(); iter != m_LayerManager.End();)
+			for (Layer* layer : m_LayerManager)
 			{
-				if((*iter)->GetEnabled())
-					(*iter)->Update();
-
-				++iter;
+				if (layer->GetEnabled()) 
+					layer->Update();
 			}
+
+			auto [x, y] = Input::GetMousePosition();
 
 			m_pWindow->Update();
 		}
-		Log::Info("Closing Application");
+		IMP_INFO("Closing Application");
 	}
 	void Application::CleanUp()
 	{
 		delete m_pWindow;
+		Input::ShutDown();
 	}
 	void Application::PushLayer(Layer* layer)
 	{

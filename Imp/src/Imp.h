@@ -7,6 +7,9 @@
 
 #include "Imp/Imgui/ImguiLayer.h"
 
+#include "Imp/Input.h"
+#include "Imp/KeyCodes.h"
+#include "Imp/MouseButtonCodes.h"
 
 //Events
 #include "Imp/Events/KeyEvent.h"

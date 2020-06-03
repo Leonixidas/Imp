@@ -36,13 +36,13 @@ namespace Imp
 		m_Data.width = props.m_Width;
 		m_Data.height = props.m_Height;
 
-		Log::Succeed("Creating window: Initializing GLFW");
+		IMP_SUCCEED("Creating window: Initializing GLFW");
 
 		if (!m_Initialized)
 		{
 			bool succeed = glfwInit();
 			if (!succeed)
-				Log::Error("GLFW could not be initialized");
+				IMP_ERROR("GLFW could not be initialized");
 
 			m_Initialized = true;
 		}
@@ -53,10 +53,10 @@ namespace Imp
 		// INITIALIZING GLAD
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		if (status > 0)
-			Log::Info("Glad is initialized");
+			IMP_INFO("Glad is initialized");
 		else
 		{
-			Log::Error("Glad was not initialized!");
+			IMP_ERROR("Glad was not initialized!");
 			return;
 		}
 
@@ -135,6 +135,7 @@ namespace Imp
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			KeyTypedEvent e{ (int)key };
+			data.callback(e);
 		});
 
 		glfwSetScrollCallback(m_pWindow, [](GLFWwindow* window, double xOffset, double yOffset)
