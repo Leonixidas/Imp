@@ -5,3 +5,6 @@
 [submodule "Imp/Libs/Imgui"]
 	path = Imp/Libs/Imgui
 	url = https://github.com/Leonixidas/imgui
+[submodule "Imp/Libs/glm"]
+	path = Imp/Libs/glm
+	url = https://github.com/g-truc/glm
