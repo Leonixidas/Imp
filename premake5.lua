@@ -20,7 +20,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Imp/Libs/GLFW/include"
 IncludeDir["Glad"] = "Imp/Libs/Glad/include"
-IncludeDir["glm"] = "Imp/Libs/glm/glm"
+IncludeDir["glm"] = "Imp/Libs/glm"
 IncludeDir["Imgui"] = "Imp/Libs/Imgui"
 
 
@@ -49,7 +49,10 @@ project "Imp"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp".
+        "%{prj.name}/Libs/glm/glm/**.hpp",
+        "%{prj.name}/Libs/glm/glm/**.inl",
+
     }
 
     includedirs
@@ -122,7 +125,8 @@ project "BubbleBobble"
         includedirs
         {
             "Imp/src",
-            "3rdParty/VLD/include"
+            "3rdParty/VLD/include",
+            "%{IncludeDir.glm}"
         }
 
         links
