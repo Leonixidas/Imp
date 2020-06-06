@@ -49,7 +49,7 @@ project "Imp"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp".
+        "%{prj.name}/src/**.cpp",
         "%{prj.name}/Libs/glm/glm/**.hpp",
         "%{prj.name}/Libs/glm/glm/**.inl",
 
@@ -72,6 +72,11 @@ project "Imp"
         "Imgui",
         "opengl32.lib"
     }
+
+    defines
+    {
+     "_CRT_SECURE_NO_WARNINGS"
+	}
 
     filter "system:windows"
         systemversion "latest"
@@ -126,6 +131,7 @@ project "BubbleBobble"
         {
             "Imp/src",
             "3rdParty/VLD/include",
+            "Imp/Libs",
             "%{IncludeDir.glm}"
         }
 

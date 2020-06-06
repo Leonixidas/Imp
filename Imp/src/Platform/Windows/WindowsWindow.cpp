@@ -4,6 +4,7 @@
 #include "Imp/Events/KeyEvent.h"
 #include "Imp/Events/MouseEvent.h"
 #include "Imp/Log.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
 #include "glad/glad.h"
 
@@ -27,7 +28,7 @@ namespace Imp
 	void WindowsWindow::Update()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_pWindow);
+		m_pContext->SwapBuffers();
 	}
 
 	void WindowsWindow::Init(const WindowProps& props)
@@ -38,6 +39,7 @@ namespace Imp
 
 		IMP_SUCCEED("Creating window: Initializing GLFW");
 
+
 		if (!m_Initialized)
 		{
 			bool succeed = glfwInit();
@@ -47,18 +49,11 @@ namespace Imp
 			m_Initialized = true;
 		}
 
-		m_pWindow = glfwCreateWindow(m_Data.width, m_Data.height, m_Data.title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_pWindow);
 
-		// INITIALIZING GLAD
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		if (status > 0)
-			IMP_INFO("Glad is initialized");
-		else
-		{
-			IMP_ERROR("Glad was not initialized!");
-			return;
-		}
+		m_pWindow = glfwCreateWindow(m_Data.width, m_Data.height, m_Data.title.c_str(), nullptr, nullptr);
+		m_pContext = new OpenGLContext(m_pWindow);
+
+		m_pContext->Init();
 
 		glfwSetWindowUserPointer(m_pWindow, &m_Data);
 		SetVSync(true);
@@ -189,6 +184,7 @@ namespace Imp
 
 	void WindowsWindow::ShutDown()
 	{
+		delete m_pContext;
 		glfwDestroyWindow(m_pWindow);
 		glfwTerminate();
 	}

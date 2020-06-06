@@ -5,7 +5,6 @@
 Imp::LayerManager::LayerManager()
 	: m_Layers()
 {
-	m_LayerInsert = m_Layers.begin();
 }
 
 Imp::LayerManager::~LayerManager()
@@ -25,7 +24,7 @@ void Imp::LayerManager::PushLayer(Layer* layer)
 
 	if (iter == m_Layers.end())
 	{
-		m_Layers.emplace(m_LayerInsert, layer);
+		m_Layers.emplace(m_Layers.begin() + m_LayerInsert, layer);
 		layer->OnAttach();
 	}
 	else

@@ -5,8 +5,6 @@
 #include "Imp/Log.h"
 #include "Imp/Layer.h"
 
-#include "Imp/Imgui/ImguiLayer.h"
-
 #include "Imp/Input.h"
 #include "Imp/KeyCodes.h"
 #include "Imp/MouseButtonCodes.h"

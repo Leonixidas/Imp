@@ -7,6 +7,12 @@
 
 namespace Imp
 {
+	class ImguiLayer;
+	class VertexArray;
+	class VertexBuffer;
+	class IndexBuffer;
+	class Shader;
+
 	class Application
 	{
 	public:
@@ -31,10 +37,16 @@ namespace Imp
 
 	private:
 		Window* m_pWindow;
+		ImguiLayer* m_pImGuiLayer;
 		bool m_Running = true;
 		LayerManager m_LayerManager;
 
 		static Application* m_pInstance;
+
+		VertexArray* m_pVertexArray;
+		VertexBuffer* m_pVertexBuffer;
+		IndexBuffer* m_pIndexBuffer;
+		Shader* m_pShader;
 	};
 
 	Application* CreateApplication();

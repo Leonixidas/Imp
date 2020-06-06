@@ -15,6 +15,7 @@ namespace Imp
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 		virtual void Update() {}
+		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& e) {}
 
 		void SetEnabled(bool enabled) { m_IsEnabled = enabled; }

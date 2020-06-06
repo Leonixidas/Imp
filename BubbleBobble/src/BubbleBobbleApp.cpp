@@ -1,4 +1,8 @@
 #include <Imp.h>
+#pragma warning(push)
+#pragma warning(disable:6011)
+#include "Imgui/imgui.h"
+#pragma warning(pop)
 
 class ExampleLayer : public Imp::Layer
 {
@@ -18,6 +22,13 @@ public:
 	virtual void OnDetach() override
 	{
 
+	}
+
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("ExampleLayer");
+		ImGui::Text("Hello It's a me!");
+		ImGui::End();
 	}
 
 	virtual void Update() override
@@ -43,7 +54,6 @@ public:
 	BubbleBobbleApp()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Imp::ImguiLayer());
 	}
 
 	virtual ~BubbleBobbleApp()

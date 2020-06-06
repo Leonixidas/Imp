@@ -2,9 +2,10 @@
 #include "Imp/Window.h"
 #include "GLFW/glfw3.h"
 
-
 namespace Imp
 {
+	class GraphicsContext;
+
 	class WindowsWindow : public Window
 	{
 	public:
@@ -28,6 +29,7 @@ namespace Imp
 
 	private:
 		GLFWwindow* m_pWindow;
+		GraphicsContext* m_pContext;
 
 		struct WindowData
 		{
