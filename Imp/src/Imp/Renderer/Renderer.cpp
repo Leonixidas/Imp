@@ -3,6 +3,20 @@
 
 namespace Imp
 {
-	RenderAPI Renderer::m_RenderAPI = RenderAPI::OPENGL;
+	void Renderer::BeginScene()
+	{
+
+	}
+
+	void Renderer::EndScene()
+	{
+
+	}
+
+	void Renderer::Submit(VertexArray* vertexArray)
+	{
+		vertexArray->Bind();
+		RenderCommand::DrawIndexed(vertexArray);
+	}
 
 }

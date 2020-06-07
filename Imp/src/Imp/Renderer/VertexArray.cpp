@@ -9,8 +9,8 @@ Imp::VertexArray* Imp::VertexArray::Create()
 {
 	switch (Renderer::GetAPI())
 	{
-	case RenderAPI::NONE: IMP_ERROR("NONE as API is not supported"); return nullptr;
-	case RenderAPI::OPENGL: return new OpenGLVertexArray();
+	case RendererAPI::API::None: IMP_ERROR("NONE as API is not supported"); return nullptr;
+	case RendererAPI::API::OpenGL: return new OpenGLVertexArray();
 	}
 
 	IMP_ERROR("Unknown Render API");

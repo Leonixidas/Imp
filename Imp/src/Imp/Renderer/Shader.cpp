@@ -9,8 +9,8 @@ Imp::Shader* Imp::Shader::Create(const std::string& vertexSrc, const std::string
 {
 	switch (Renderer::GetAPI())
 	{
-	case RenderAPI::NONE: IMP_ERROR("NONE as API is not supported"); return nullptr;
-	case RenderAPI::OPENGL: return new OpenGLShader(vertexSrc, pixelSrc);
+	case RendererAPI::API::None: IMP_ERROR("NONE as API is not supported"); return nullptr;
+	case RendererAPI::API::OpenGL: return new OpenGLShader(vertexSrc, pixelSrc);
 	}
 
 	IMP_ERROR("UNKNOWN RENDER API");

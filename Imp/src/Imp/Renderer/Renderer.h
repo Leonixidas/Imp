@@ -1,17 +1,16 @@
 #pragma once
+#include "RenderCommand.h"
 
 namespace Imp
 {
-	enum class RenderAPI
-	{
-		NONE = 0, OPENGL = 1
-	};
-
 	class Renderer
 	{
 	public:
-		inline static RenderAPI GetAPI() { return m_RenderAPI; }
-	private:
-		static RenderAPI m_RenderAPI;
+		static void BeginScene();
+		static void EndScene();
+
+		static void Submit(VertexArray* vertexArray);
+
+		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	};
 }
