@@ -1,12 +1,10 @@
  [submodule "Imp/Libs/GLFW"]
  	path = Imp/Libs/GLFW
  	url = https://github.com/Leonixidas/glfw
-
 [submodule "Imp/Libs/Imgui"]
 	path = Imp/Libs/Imgui
 	url = https://github.com/Leonixidas/imgui
 [submodule "Imp/Libs/glm"]
 	path = Imp/Libs/glm
 	url = https://github.com/g-truc/glm
-[submodule "Imp/Libs/Box2D"]
-	url = https://github.com/Leonixidas/box2d
+

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\BubbleBobbleApp.cpp" />
+    <ClCompile Include="src\BubbleBobbleLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform.cpp" />
+    <ClCompile Include="src\Wall.cpp" />
+    <ClCompile Include="src\WarpGate.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\ModeSelectLayer.cpp" />
+    <ClCompile Include="src\StartLayer.cpp" />
+    <ClCompile Include="src\PlayLayer.cpp" />
+    <ClCompile Include="src\MenuLayer.cpp" />
+    <ClCompile Include="src\EndLayer.cpp" />
+    <ClCompile Include="src\MultiLayer.cpp" />
+    <ClCompile Include="src\VersusLayer.cpp" />
+    <ClCompile Include="src\Enemy.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Level">
+      <UniqueIdentifier>{c247b8e3-5a5f-4d8b-b6a4-9a7d7dd4814f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefabs">
+      <UniqueIdentifier>{2ec091dd-c869-4027-99bf-aef517df74d7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\BubbleBobbleLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform.h" />
+    <ClInclude Include="src\Wall.h" />
+    <ClInclude Include="src\WarpGate.h" />
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\PlayLayer.h" />
+    <ClInclude Include="src\StartLayer.h" />
+    <ClInclude Include="src\ModeSelectLayer.h" />
+    <ClInclude Include="src\MenuLayer.h" />
+    <ClInclude Include="src\EndLayer.h" />
+    <ClInclude Include="src\BubbleBobbleApp.h" />
+    <ClInclude Include="src\ScoreSystem.h" />
+    <ClInclude Include="src\MultiLayer.h" />
+    <ClInclude Include="src\VersusLayer.h" />
+    <ClInclude Include="src\Enemy.h" />
+  </ItemGroup>
+</Project>
