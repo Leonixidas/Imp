@@ -8,3 +8,6 @@
 	path = Imp/Libs/glm
 	url = https://github.com/g-truc/glm
 
+[submodule "Imp/Libs/box2d"]
+	path = Imp/Libs/box2d
+	url = https://github.com/Leonixidas/box2d
