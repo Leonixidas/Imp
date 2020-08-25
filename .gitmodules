@@ -8,3 +8,5 @@
 [submodule "Imp/Libs/glm"]
 	path = Imp/Libs/glm
 	url = https://github.com/g-truc/glm
+[submodule "Imp/Libs/Box2D"]
+	url = https://github.com/Leonixidas/box2d
