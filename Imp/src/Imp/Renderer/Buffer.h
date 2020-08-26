@@ -1,5 +1,8 @@
 #pragma once
+#include "Imp/Core.h"
 #include "Imp/Log.h"
+#include "Imp/Core.h"
+#include "glm/glm.hpp"
 
 namespace Imp
 {
@@ -29,6 +32,12 @@ namespace Imp
 
 		return 0;
 	}
+
+	struct Vertex
+	{
+		glm::vec3 Position = {};
+		glm::vec2 uv = {};
+	};
 
 	struct BufferElement
 	{
@@ -118,10 +127,12 @@ namespace Imp
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
 
+		virtual uint32_t GetRendererID() = 0;
+
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
 
-		static VertexBuffer* Create(float* vertices, uint32_t size);
+		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 	};
 
 	class IndexBuffer
@@ -133,6 +144,6 @@ namespace Imp
 
 		virtual uint32_t GetCount() const = 0;
 
-		static IndexBuffer* Create(uint32_t* indices, uint32_t count);
+		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t count);
 	};
 }

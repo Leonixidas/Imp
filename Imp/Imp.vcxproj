@@ -96,7 +96,7 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMP_WINDOWS;IMP_BUILD_DLL;GLFW_INCLUDE_NONE;IMP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\Box2D\include;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -117,7 +117,7 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMP_WINDOWS;IMP_BUILD_DLL;GLFW_INCLUDE_NONE;IMP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\Box2D\include;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -138,7 +138,7 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMP_WINDOWS;IMP_BUILD_DLL;GLFW_INCLUDE_NONE;IMP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\Box2D\include;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -163,7 +163,7 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMP_WINDOWS;IMP_BUILD_DLL;GLFW_INCLUDE_NONE;IMP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\Box2D\include;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -591,6 +591,8 @@
     <ClInclude Include="Libs\glm\glm\vec3.hpp" />
     <ClInclude Include="Libs\glm\glm\vec4.hpp" />
     <ClInclude Include="Libs\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="Libs\stb_image\stb_image.h" />
+    <ClInclude Include="src\Imp\Helpers\ResourceLoader.h" />
     <ClInclude Include="src\Imp.h" />
     <ClInclude Include="src\Imp\Application.h" />
     <ClInclude Include="src\Imp\Core.h" />
@@ -612,6 +614,7 @@
     <ClInclude Include="src\Imp\Renderer\Renderer.h" />
     <ClInclude Include="src\Imp\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Imp\Renderer\Shader.h" />
+    <ClInclude Include="src\Imp\Renderer\Texture.h" />
     <ClInclude Include="src\Imp\Renderer\VertexArray.h" />
     <ClInclude Include="src\Imp\Singleton.h" />
     <ClInclude Include="src\Imp\Time.h" />
@@ -621,30 +624,35 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Libs\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Imp\Helpers\ResourceLoader.cpp" />
     <ClCompile Include="src\Imp\Application.cpp" />
     <ClCompile Include="src\Imp\Imgui\ImguiBuild.cpp" />
     <ClCompile Include="src\Imp\Imgui\ImguiLayer.cpp" />
     <ClCompile Include="src\Imp\Layer.cpp" />
     <ClCompile Include="src\Imp\LayerManager.cpp" />
     <ClCompile Include="src\Imp\Log.cpp" />
-    <ClCompile Include="src\ImpPCH.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="src\Imp\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Imp\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Imp\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Imp\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Imp\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Imp\Renderer\Texture.cpp" />
     <ClCompile Include="src\Imp\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\ImpPCH.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
@@ -658,6 +666,9 @@
     </ProjectReference>
     <ProjectReference Include="Libs\imgui\Imgui.vcxproj">
       <Project>{E087650D-4C9C-8DBE-151E-311E81F189EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="Libs\box2d\Box2D.vcxproj">
+      <Project>{A434E80C-1049-10BE-D9CA-B31D459E0CEF}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

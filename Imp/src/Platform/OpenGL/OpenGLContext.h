@@ -1,7 +1,6 @@
 #pragma once
 #include "imp/Renderer/GraphicsContext.h"
-
-struct GLFWwindow;
+#include "GLFW/glfw3.h"
 
 namespace Imp
 {

@@ -12,8 +12,8 @@ namespace Imp
 		WindowsWindow(const WindowProps& props);
 		~WindowsWindow();
 
-		virtual unsigned int GetWidth() const override;
-		virtual unsigned int GetHeight() const override;
+		virtual uint32_t GetWidth() const override;
+		virtual uint32_t GetHeight() const override;
 
 		virtual void SetEventCallBack(const EventCallBack& callback) override;
 		virtual bool IsVSync() const override;
@@ -29,13 +29,13 @@ namespace Imp
 
 	private:
 		GLFWwindow* m_pWindow;
-		GraphicsContext* m_pContext;
+		Ref<GraphicsContext> m_pContext;
 
 		struct WindowData
 		{
 			std::string title{};
-			unsigned int width{};
-			unsigned int height{};
+			uint32_t width{};
+			uint32_t height{};
 			bool vsync{};
 
 			EventCallBack callback{};

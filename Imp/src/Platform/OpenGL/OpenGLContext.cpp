@@ -1,7 +1,5 @@
 #include "ImpPCH.h"
 #include "OpenGLContext.h"
-
-#include "GLFW/glfw3.h"
 #include "Glad/glad.h"
 #include "Imp/Log.h"
 

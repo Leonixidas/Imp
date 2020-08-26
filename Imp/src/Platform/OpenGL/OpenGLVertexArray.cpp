@@ -48,14 +48,21 @@ void Imp::OpenGLVertexArray::UnBind() const
 	glBindVertexArray(0);
 }
 
-void Imp::OpenGLVertexArray::AddVertexBuffer(VertexBuffer* vertexBuffer)
+void Imp::OpenGLVertexArray::SubmitBufferData(uint32_t bufferSlot, float* vertices, uint32_t size)
+{
+	glBindVertexArray(m_RendererID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffers[bufferSlot]->GetRendererID());
+	glBufferSubData(GL_ARRAY_BUFFER, 0, size, vertices);
+}
+
+void Imp::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 {
 	glBindVertexArray(m_RendererID);
 	vertexBuffer->Bind();
 
 	uint32_t index = 0;
 	const auto& layout = vertexBuffer->GetLayout();
-	for (const auto& element : layout)
+	for (auto& element : layout)
 	{
 		glEnableVertexAttribArray(index);
 		glVertexAttribPointer(index,
@@ -63,16 +70,48 @@ void Imp::OpenGLVertexArray::AddVertexBuffer(VertexBuffer* vertexBuffer)
 			GetShaderDataTypeToGLenum(element.Type),
 			element.Normalized,
 			layout.GetStride(),
-			(const void*)element.Offset);
+			(const void*)size_t(element.Offset));
 		++index;
 	}
 
 	m_VertexBuffers.push_back(vertexBuffer);
 }
 
-void Imp::OpenGLVertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
+void Imp::OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 {
 	glBindVertexArray(m_RendererID);
 	indexBuffer->Bind();
 	m_pIndexBuffer = indexBuffer;
+}
+
+//for matrices
+void Imp::OpenGLVertexArray::AddInstancedBuffer(const Ref<VertexBuffer>& vertexBuffer, uint32_t attribLocation)
+{
+	uint32_t pos1 = attribLocation;
+	uint32_t pos2 = pos1 + 1;
+	uint32_t pos3 = pos2 + 1;
+	uint32_t pos4 = pos3 + 1;
+
+	vertexBuffer->Bind();
+	auto& layout = vertexBuffer->GetLayout();
+
+	for (auto& element : layout)
+	{
+		glEnableVertexAttribArray(pos1);
+		glEnableVertexAttribArray(pos2);
+		glEnableVertexAttribArray(pos3);
+		glEnableVertexAttribArray(pos4);
+
+		glVertexAttribPointer(pos1, 4, GetShaderDataTypeToGLenum(element.Type), element.Normalized, layout.GetStride(), (void*)(0));
+		glVertexAttribPointer(pos2, 4, GetShaderDataTypeToGLenum(element.Type), element.Normalized, layout.GetStride(), (void*)(sizeof(float) * 4));
+		glVertexAttribPointer(pos3, 4, GetShaderDataTypeToGLenum(element.Type), element.Normalized, layout.GetStride(), (void*)(sizeof(float) * 8));
+		glVertexAttribPointer(pos4, 4, GetShaderDataTypeToGLenum(element.Type), element.Normalized, layout.GetStride(), (void*)(sizeof(float) * 12));
+
+		glVertexAttribDivisor(pos1, 1);
+		glVertexAttribDivisor(pos1, 2);
+		glVertexAttribDivisor(pos1, 3);
+		glVertexAttribDivisor(pos1, 4);
+	}
+
+	m_VertexBuffers.push_back(vertexBuffer);
 }

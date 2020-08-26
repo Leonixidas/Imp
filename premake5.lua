@@ -22,13 +22,15 @@ IncludeDir["GLFW"] = "Imp/Libs/GLFW/include"
 IncludeDir["Glad"] = "Imp/Libs/Glad/include"
 IncludeDir["glm"] = "Imp/Libs/glm"
 IncludeDir["Imgui"] = "Imp/Libs/Imgui"
-
+IncludeDir["stb_image"] = "Imp/Libs/stb_image"
+IncludeDir["box2d"] = "Imp/Libs/Box2D/include"
 
 
 LibDirs = {}
 LibDirs["Win32"] = "3rdParty/VLD/lib/Win32"
 LibDirs["Win64"] = "3rdParty/VLD/lib/Win64"
 
+include "Imp/Libs/box2d"
 include "Imp/Libs/GLFW"
 include "Imp/Libs/Glad"
 include "Imp/Libs/imgui"
@@ -50,6 +52,8 @@ project "Imp"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
+        "%{IncludeDir.stb_image}/**.h",
+        "%{IncludeDir.stb_image}/**.cpp",
         "%{prj.name}/Libs/glm/glm/**.hpp",
         "%{prj.name}/Libs/glm/glm/**.inl",
 
@@ -62,6 +66,8 @@ project "Imp"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.Imgui}",
+        "%{IncludeDir.stb_image}",
+        "%{IncludeDir.box2d}",
         "3rdParty/VLD/include"
     }
 
@@ -70,6 +76,7 @@ project "Imp"
         "GLFW",
         "Glad",
         "Imgui",
+        "Box2D",
         "opengl32.lib"
     }
 
@@ -132,7 +139,8 @@ project "BubbleBobble"
             "Imp/src",
             "3rdParty/VLD/include",
             "Imp/Libs",
-            "%{IncludeDir.glm}"
+            "%{IncludeDir.glm}",
+            "%{IncludeDir.box2d}"
         }
 
         links

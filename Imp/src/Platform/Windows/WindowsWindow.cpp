@@ -10,9 +10,9 @@
 
 namespace Imp
 {
-	Window* Window::Create(const WindowProps& props)
+	Ref<Window> Window::Create(const WindowProps& props)
 	{
-		return new WindowsWindow(props);
+		return std::make_shared<WindowsWindow>(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
@@ -44,14 +44,15 @@ namespace Imp
 		{
 			bool succeed = glfwInit();
 			if (!succeed)
+			{
 				IMP_ERROR("GLFW could not be initialized");
-
+			}
 			m_Initialized = true;
 		}
 
 
 		m_pWindow = glfwCreateWindow(m_Data.width, m_Data.height, m_Data.title.c_str(), nullptr, nullptr);
-		m_pContext = new OpenGLContext(m_pWindow);
+		m_pContext = Ref<GraphicsContext>(new OpenGLContext(m_pWindow));
 
 		m_pContext->Init();
 
@@ -126,7 +127,7 @@ namespace Imp
 			}
 		});
 
-		glfwSetCharCallback(m_pWindow, [](GLFWwindow* window, unsigned int key)
+		glfwSetCharCallback(m_pWindow, [](GLFWwindow* window, uint32_t key)
 		{
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			KeyTypedEvent e{ (int)key };
@@ -152,12 +153,12 @@ namespace Imp
 		});
 	}
 
-	unsigned int WindowsWindow::GetWidth() const
+	uint32_t WindowsWindow::GetWidth() const
 	{
 		return m_Data.width;
 	}
 
-	unsigned int WindowsWindow::GetHeight() const
+	uint32_t WindowsWindow::GetHeight() const
 	{
 		return m_Data.height;
 	}
@@ -184,7 +185,6 @@ namespace Imp
 
 	void WindowsWindow::ShutDown()
 	{
-		delete m_pContext;
 		glfwDestroyWindow(m_pWindow);
 		glfwTerminate();
 	}
