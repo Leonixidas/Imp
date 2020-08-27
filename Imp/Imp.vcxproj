@@ -592,23 +592,28 @@
     <ClInclude Include="Libs\glm\glm\vec4.hpp" />
     <ClInclude Include="Libs\glm\glm\vector_relational.hpp" />
     <ClInclude Include="Libs\stb_image\stb_image.h" />
-    <ClInclude Include="src\Imp\Helpers\ResourceLoader.h" />
     <ClInclude Include="src\Imp.h" />
     <ClInclude Include="src\Imp\Application.h" />
+    <ClInclude Include="src\Imp\Components\Component.h" />
+    <ClInclude Include="src\Imp\Components\RenderComponent.h" />
     <ClInclude Include="src\Imp\Core.h" />
     <ClInclude Include="src\Imp\EntryPoint.h" />
     <ClInclude Include="src\Imp\Events\Event.h" />
     <ClInclude Include="src\Imp\Events\KeyEvent.h" />
     <ClInclude Include="src\Imp\Events\MouseEvent.h" />
     <ClInclude Include="src\Imp\Events\WindowEvent.h" />
+    <ClInclude Include="src\Imp\Helpers\ResourceLoader.h" />
     <ClInclude Include="src\Imp\Imgui\ImguiLayer.h" />
     <ClInclude Include="src\Imp\Input.h" />
     <ClInclude Include="src\Imp\KeyCodes.h" />
     <ClInclude Include="src\Imp\Layer.h" />
     <ClInclude Include="src\Imp\LayerManager.h" />
     <ClInclude Include="src\Imp\Log.h" />
+    <ClInclude Include="src\Imp\Managers\MeshManager.h" />
+    <ClInclude Include="src\Imp\Managers\TextureManager.h" />
     <ClInclude Include="src\Imp\MouseButtonCodes.h" />
     <ClInclude Include="src\Imp\Renderer\Buffer.h" />
+    <ClInclude Include="src\Imp\Renderer\Camera.h" />
     <ClInclude Include="src\Imp\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Imp\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Imp\Renderer\Renderer.h" />
@@ -631,14 +636,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Libs\stb_image\stb_image.cpp" />
-    <ClCompile Include="src\Imp\Helpers\ResourceLoader.cpp" />
     <ClCompile Include="src\Imp\Application.cpp" />
+    <ClCompile Include="src\Imp\Components\RenderComponent.cpp" />
+    <ClCompile Include="src\Imp\Helpers\ResourceLoader.cpp" />
     <ClCompile Include="src\Imp\Imgui\ImguiBuild.cpp" />
     <ClCompile Include="src\Imp\Imgui\ImguiLayer.cpp" />
     <ClCompile Include="src\Imp\Layer.cpp" />
     <ClCompile Include="src\Imp\LayerManager.cpp" />
     <ClCompile Include="src\Imp\Log.cpp" />
     <ClCompile Include="src\Imp\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Imp\Renderer\Camera.cpp" />
     <ClCompile Include="src\Imp\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Imp\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Imp\Renderer\RendererAPI.cpp" />

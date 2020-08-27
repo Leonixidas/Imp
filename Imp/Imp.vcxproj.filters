@@ -34,6 +34,9 @@
     <Filter Include="src\Imp\Events">
       <UniqueIdentifier>{26CAF654-1298-EA5A-FB2B-5B81E798C6BF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Imp\Helpers">
+      <UniqueIdentifier>{449796B3-B022-0478-B933-876C253E6078}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Imp\Imgui">
       <UniqueIdentifier>{4C5BDE21-B81B-5A58-8156-A3D5EDD59E34}</UniqueIdentifier>
     </Filter>
@@ -1302,6 +1305,9 @@
     <ClInclude Include="src\Imp\Events\WindowEvent.h">
       <Filter>src\Imp\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Imp\Helpers\ResourceLoader.h">
+      <Filter>src\Imp\Helpers</Filter>
+    </ClInclude>
     <ClInclude Include="src\Imp\Imgui\ImguiLayer.h">
       <Filter>src\Imp\Imgui</Filter>
     </ClInclude>
@@ -1383,7 +1389,11 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Imp\Helpers\ResourceLoader.h" />
+    <ClInclude Include="src\Imp\Renderer\Camera.h" />
+    <ClInclude Include="src\Imp\Components\Component.h" />
+    <ClInclude Include="src\Imp\Components\RenderComponent.h" />
+    <ClInclude Include="src\Imp\Managers\MeshManager.h" />
+    <ClInclude Include="src\Imp\Managers\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Libs\stb_image\stb_image.cpp">
@@ -1391,6 +1401,9 @@
     </ClCompile>
     <ClCompile Include="src\Imp\Application.cpp">
       <Filter>src\Imp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Imp\Helpers\ResourceLoader.cpp">
+      <Filter>src\Imp\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="src\Imp\Imgui\ImguiBuild.cpp">
       <Filter>src\Imp\Imgui</Filter>
@@ -1455,6 +1468,7 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Imp\Helpers\ResourceLoader.cpp" />
+    <ClCompile Include="src\Imp\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Imp\Components\RenderComponent.cpp" />
   </ItemGroup>
 </Project>

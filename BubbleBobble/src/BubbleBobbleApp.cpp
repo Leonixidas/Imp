@@ -17,6 +17,7 @@ public:
 	virtual void OnAttach() override
 	{
 		IMP_INFO("CLIENT: ExampleLayer attached");
+
 	}
 
 	virtual void OnDetach() override
@@ -28,7 +29,7 @@ public:
 	{
 		ImGui::Begin("ExampleLayer");
 		ImGui::Text("Hello It's a me!");
-		ImGui::End();
+		ImGui::End(); 
 	}
 
 	virtual void Update() override
@@ -46,6 +47,10 @@ public:
 	{
 		return true;
 	}
+
+private:
+	std::vector<float> m_VertexArray;
+	Imp::Ref<Imp::VertexArray> m_VertexArray
 };
 
 class BubbleBobbleApp : public Imp::Application

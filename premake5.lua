@@ -6,6 +6,7 @@ workspace "Imp"
     }
 
     platforms {"x64", "x86"}
+    startproject "BubbleBobble"
 
     filter "platforms:x86"
         system "Windows"
@@ -30,10 +31,10 @@ LibDirs = {}
 LibDirs["Win32"] = "3rdParty/VLD/lib/Win32"
 LibDirs["Win64"] = "3rdParty/VLD/lib/Win64"
 
-include "Imp/Libs/box2d"
 include "Imp/Libs/GLFW"
 include "Imp/Libs/Glad"
 include "Imp/Libs/imgui"
+include "Imp/Libs/box2d"
 
 project "Imp"
         location "Imp"

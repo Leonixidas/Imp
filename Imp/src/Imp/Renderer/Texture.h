@@ -7,7 +7,6 @@ namespace Imp
 {
 	struct Character
 	{
-
 		glm::vec4 uv;
 		glm::vec2 Size;
 		glm::vec2 Offset;
