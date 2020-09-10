@@ -3,6 +3,6 @@
 class ResourceLoader
 {
 public:
-	static 
+	static void Load() {}
 };
 

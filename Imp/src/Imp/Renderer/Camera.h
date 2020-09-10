@@ -23,6 +23,9 @@ namespace Imp
 		{
 		}
 		virtual ~Camera() = default;
+		
+		void Rotate(const glm::vec3& rot);
+		void Translate(const glm::vec3& t);
 
 		//getters
 		const glm::mat4& GetViewMatrix() { return m_View; }

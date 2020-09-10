@@ -79,4 +79,14 @@ namespace Imp
 		m_View = glm::inverse(trans * rot);
 	}
 
+	void Camera::Rotate(const glm::vec3& rot)
+	{
+		m_Rotation += rot;
+	}
+
+	void Camera::Translate(const glm::vec3& t)
+	{
+		m_Position += t;
+	}
+
 }
