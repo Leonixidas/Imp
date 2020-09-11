@@ -1,8 +1,11 @@
 #pragma once
 
-class ResourceLoader
+namespace Imp
 {
-public:
-	static void Load() {}
-};
+	class ResourceLoader
+	{
+	public:
+		static Mesh* LoadMesh();
+	};
+}
 

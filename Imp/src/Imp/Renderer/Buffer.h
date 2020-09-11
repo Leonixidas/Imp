@@ -1,7 +1,5 @@
 #pragma once
-#include "Imp/Core.h"
 #include "Imp/Log.h"
-#include "Imp/Core.h"
 #include "glm/glm.hpp"
 
 namespace Imp
@@ -37,6 +35,48 @@ namespace Imp
 	{
 		glm::vec3 Position = {};
 		glm::vec2 uv = {};
+	};
+
+	class ShaderProps
+	{
+	public:
+		ShaderProps(const std::vector<ShaderDataType>& props)
+		{
+			for (const ShaderDataType& d : props)
+			{
+				BufferSize += GetShaderDataTypeSize(d);
+			}
+
+			Buffer = new char[BufferSize];
+		}
+
+		~ShaderProps()
+		{
+			delete[] Buffer;
+			Buffer = nullptr;
+		}
+
+		void SetShaderProperty(uint32_t index, const char* data, const ShaderDataType type)
+		{
+			uint32_t size = GetShaderDataTypeSize(type);
+
+			if (index + size >= BufferSize) IMP_ERROR("shader data type doesn't fit in buffer starting at given index"); return;
+
+			for(int i = 0; i < size; ++i)
+				Buffer[index] = data[i];
+		}
+
+		template<typename T>
+		T* GetShaderProperty(uint32_t index)
+		{
+			if (index + sizeof(T) >= BufferSize) IMP_ERROR("the size of the given type doesn't fit in the buffer at the given index"); return nullptr;
+
+			return static_cast<T*>(&Buffer[index]);
+		}
+
+	private:
+		char* Buffer = nullptr;
+		uint32_t BufferSize = 0;
 	};
 
 	struct BufferElement
