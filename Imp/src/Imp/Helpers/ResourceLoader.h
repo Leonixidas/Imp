@@ -5,7 +5,7 @@ namespace Imp
 	class ResourceLoader
 	{
 	public:
-		static Mesh* LoadMesh();
+		//static Mesh* LoadMesh();
 	};
 }
 

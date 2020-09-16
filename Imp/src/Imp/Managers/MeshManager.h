@@ -12,7 +12,11 @@ namespace Imp
 		Mesh(const Ref<VertexArray>& va, const std::string& name = "Mesh")
 			: VA(va)
 		{
-			
+			if (name == "Mesh")
+			{
+				++Nr;
+				Name = name + '_' + std::to_string(Nr);
+			}
 		}
 
 		Ref<VertexArray> VA;
@@ -21,18 +25,21 @@ namespace Imp
 	private:
 		static uint32_t Nr;
 	};
+
 	class MeshManager : public Singleton<MeshManager>
 	{
 	public:
 		MeshManager() {}
 		~MeshManager() = default;
 
-		void AddMesh(const Ref<VertexArray>& va, const std::string& name = "Mesh");
-		void DeleteMesh(uint32_t id);
+		void AddMesh(const Ref<Mesh>& mesh);
+		//void DeleteMesh(uint32_t id);
+		void DeleteMesh(const std::string& name);
 
-		Ref<VertexArray>& GetMesh(uint32_t id);
+		//Ref<VertexArray>& GetMesh(uint32_t id);
+		Ref<Mesh>& GetMesh(const std::string& name);
 
 	private:
-		std::unordered_map<std::string, Ref<VertexArray>> m_Meshes;
+		std::unordered_map<std::string, Ref<Mesh>> m_Meshes;
 	};
 }

@@ -202,7 +202,7 @@ std::string Imp::OpenGLShader::ReadFile(const std::string& filePath)
 	}
 	else
 	{
-		IMP_ERROR("Could not open file" + filePath);
+		IMP_ERROR("Could not open file: " + filePath);
 	}
 	return result;
 }

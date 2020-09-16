@@ -96,7 +96,7 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMP_WINDOWS;IMP_BUILD_DLL;GLFW_INCLUDE_NONE;IMP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\Box2D\include;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\box2d\include;Libs\box2d\src;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -117,7 +117,7 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMP_WINDOWS;IMP_BUILD_DLL;GLFW_INCLUDE_NONE;IMP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\Box2D\include;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\box2d\include;Libs\box2d\src;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -138,7 +138,7 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMP_WINDOWS;IMP_BUILD_DLL;GLFW_INCLUDE_NONE;IMP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\Box2D\include;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\box2d\include;Libs\box2d\src;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -163,7 +163,7 @@
       <PrecompiledHeaderFile>ImpPCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMP_WINDOWS;IMP_BUILD_DLL;GLFW_INCLUDE_NONE;IMP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\Box2D\include;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Libs\GLFW\include;Libs\Glad\include;Libs\glm;Libs\Imgui;Libs\stb_image;Libs\box2d\include;Libs\box2d\src;..\3rdParty\VLD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -644,6 +644,7 @@
     <ClCompile Include="src\Imp\Layer.cpp" />
     <ClCompile Include="src\Imp\LayerManager.cpp" />
     <ClCompile Include="src\Imp\Log.cpp" />
+    <ClCompile Include="src\Imp\Managers\MeshManager.cpp" />
     <ClCompile Include="src\Imp\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Imp\Renderer\Camera.cpp" />
     <ClCompile Include="src\Imp\Renderer\RenderCommand.cpp" />

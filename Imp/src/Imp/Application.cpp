@@ -1,5 +1,6 @@
 #include "ImpPCH.h"
 #include "Application.h"
+#include "Time.h"
 #include "Log.h"
 #include "Input.h"
 #include "Imgui/ImguiLayer.h"
@@ -11,11 +12,9 @@
 
 namespace Imp
 {
-	Application* Application::m_pInstance = nullptr;
+	Ref<Application> Application::m_pInstance = nullptr;
 
-	
-
-	Application::Application()
+	Application::Application(const WindowProps& props)
 		: m_LayerManager()
 	{
 		if (m_pInstance != nullptr)
@@ -23,75 +22,20 @@ namespace Imp
 			IMP_ERROR("There already exists an application");
 		}
 
-		m_pInstance = this;
-		m_pWindow = Window::Create();
+		m_pInstance.reset(this);
+		m_pWindow = Window::Create(props);
 		m_pWindow->SetEventCallBack(BIND_EVENT_FUNC(Application::OnEvent));
+		m_pWindow->SetVSync(false);
+
+		Renderer2D::Init();
+		Time::GetInstance()->Initialize();
 	
-		m_pImGuiLayer = new ImguiLayer();
+		m_pImGuiLayer = std::make_shared<ImguiLayer>();
 		PushOverlay(m_pImGuiLayer);
 
-		m_pVertexArray = VertexArray::Create();
+		//Imp::Renderer2D::LoadFont("Assets/Fonts/GameFont.fnt");
+		//Imp::Renderer2D::LoadFont("Assets/Fonts/Arial.fnt");
 
-
-		float vertices[3 * 7] =
-		{
-			-0.5f,-0.5f,0.0f, 0.8f,0.2f,0.5f,1.f,
-			 0.5f,-0.5f,0.0f, 0.2f,0.5f,0.8f,1.f,
-			 0.0f, 0.5f,0.0f, 0.5f,0.8f,0.2f,1.f,
-		};
-
-		m_pVertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
-
-		BufferLayout layout = {
-			{ShaderDataType::Float3, "vPosition"},
-			{ShaderDataType::Float4, "vColor"}
-		};
-
-		m_pVertexBuffer->SetLayout(layout);
-		
-		m_pVertexArray->AddVertexBuffer(m_pVertexBuffer);
-		
-
-		uint32_t indices[3] = { 0,1,2 }; 
-		m_pIndexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
-
-		m_pVertexArray->SetIndexBuffer(m_pIndexBuffer);
-
-		std::string vertexSrc = 
-		R"(
-			#version 430 core
-
-			layout(location = 0) in vec3 vPosition;
-			layout(location = 1) in vec4 vColor;
-
-			out vec3 gPosition;
-			out vec4 gColor;
-
-			void main()
-			{
-				gColor = vColor;
-				gPosition = vPosition * 0.5 + 0.5;
-				gl_Position = vec4(vPosition, 1.0);
-			}
-		)";
-
-		std::string pixelSrc =
-		R"(
-			#version 430 core
-			
-			layout(location = 0) out vec4 color;
-
-			in vec3 gPosition;
-			in vec4 gColor;
-
-			void main()
-			{
-				color = vec4(gPosition,1.0);
-				color = gColor;
-			}
-		)";
-
-		m_pShader = Shader::Create(vertexSrc, pixelSrc);
 	}
 
 	Application::~Application()
@@ -106,9 +50,13 @@ namespace Imp
 
 		for (auto iter = m_LayerManager.rbegin(); iter != m_LayerManager.rend();)
 		{
-			(*iter++)->OnEvent(e);
-			if (e.IsHandeled())
-				break;
+			if ((*iter)->GetEnabled())
+			{
+				(*iter++)->OnEvent(e);
+				if (e.IsHandeled())
+					break;
+			}
+			else ++iter;
 		}
 
 	}
@@ -124,50 +72,59 @@ namespace Imp
 		IMP_INFO("Starting Application");
 		while (m_Running)
 		{
-			RenderCommand::SetClearColor({ 0.2f,0.2f,0.2f,1.f });
-			RenderCommand::Clear();
+			Imp::RenderCommand::SetClearColor({ 0.0f,0.f,0.f,1.f });
+			Imp::RenderCommand::Clear();
 
-			Renderer::BeginScene();
-			m_pShader->Bind();
-			Renderer::Submit(m_pVertexArray);
-			Renderer::EndScene();
+			Time::GetInstance()->Update();
 
-			for (Layer* layer : m_LayerManager)
+			for (Ref<Layer> layer : m_LayerManager)
 			{
 				if (layer->GetEnabled()) 
 					layer->Update();
 			}
 
+			for (Ref<Layer> layer : m_LayerManager)
+			{
+				if (layer->GetEnabled())
+					layer->Render();
+			}
+
+			//PhysicsManager::Render();
+#ifdef IMP_DEBUG
 			m_pImGuiLayer->Begin();
-			for (Layer* layer : m_LayerManager)
+			for (Ref<Layer> layer : m_LayerManager)
 			{
 				if (layer->GetEnabled())
 					layer->OnImGuiRender();
 			}
 			m_pImGuiLayer->End();
-
-			auto [x, y] = Input::GetMousePosition();
-
+#endif
 			m_pWindow->Update();
 		}
-		RenderCommand::ShutDown();
+
 		IMP_INFO("Closing Application");
 	}
 	void Application::CleanUp()
 	{
-		delete m_pWindow;
-		delete m_pVertexArray;
-		delete m_pVertexBuffer;
-		delete m_pIndexBuffer;
-		delete m_pShader;
 		Input::ShutDown();
+		Renderer2D::ShutDown();
+		Time::Destory();
 	}
-	void Application::PushLayer(Layer* layer)
+	void Application::PushLayer(const Ref<Layer>& layer)
 	{
 		m_LayerManager.PushLayer(layer);
 	}
-	void Application::PushOverlay(Layer* overlay)
+	void Application::PushOverlay(const Ref<Layer>& overlay)
 	{
 		m_LayerManager.PushOverlay(overlay);
+	}
+
+	void Application::SetLayerEnabled(const std::string& name, bool value)
+	{
+		for (Ref<Layer> layer : m_LayerManager)
+		{
+			if (layer->GetName() == name)
+				layer->SetEnabled(value);
+		}
 	}
 }

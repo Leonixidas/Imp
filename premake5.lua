@@ -24,7 +24,7 @@ IncludeDir["Glad"] = "Imp/Libs/Glad/include"
 IncludeDir["glm"] = "Imp/Libs/glm"
 IncludeDir["Imgui"] = "Imp/Libs/Imgui"
 IncludeDir["stb_image"] = "Imp/Libs/stb_image"
-IncludeDir["box2d"] = "Imp/Libs/Box2D/include"
+IncludeDir["box2d"] = "Imp/Libs/box2d"
 
 
 LibDirs = {}
@@ -68,7 +68,8 @@ project "Imp"
         "%{IncludeDir.glm}",
         "%{IncludeDir.Imgui}",
         "%{IncludeDir.stb_image}",
-        "%{IncludeDir.box2d}",
+        "%{IncludeDir.box2d}/include",
+        "%{IncludeDir.box2d}/src",
         "3rdParty/VLD/include"
     }
 

@@ -40,48 +40,48 @@ namespace Imp
 	void Renderer2D::Init()
 	{
 		RenderCommand::Init();
-		//VertexArray
-		m_p2DData->m_pVertexArray = VertexArray::Create();
+		////VertexArray
+		//m_p2DData->m_pVertexArray = VertexArray::Create();
 
-		m_p2DData->m_Vertices.reserve(4);
-		//VertexBuffer
-		Vertex v{};
-		v.Position = { 0.f,0.f,0.f };
-		v.uv = { 0.f,0.f };
-		m_p2DData->m_Vertices.push_back(v);
-		v.Position = { 0.f,1.f,0.f };
-		v.uv = { 0.f,1.f };
-		m_p2DData->m_Vertices.push_back(v);
-		v.Position = { 1.f,1.f,0.f };
-		v.uv = { 1.f,1.f };
-		m_p2DData->m_Vertices.push_back(v);
-		v.Position = { 1.f,0.f,0.f };
-		v.uv = { 1.f,0.f };
-		m_p2DData->m_Vertices.push_back(v);
+		//m_p2DData->m_Vertices.reserve(4);
+		////VertexBuffer
+		//Vertex v{};
+		//v.Position = { 0.f,0.f,0.f };
+		//v.uv = { 0.f,0.f };
+		//m_p2DData->m_Vertices.push_back(v);
+		//v.Position = { 0.f,1.f,0.f };
+		//v.uv = { 0.f,1.f };
+		//m_p2DData->m_Vertices.push_back(v);
+		//v.Position = { 1.f,1.f,0.f };
+		//v.uv = { 1.f,1.f };
+		//m_p2DData->m_Vertices.push_back(v);
+		//v.Position = { 1.f,0.f,0.f };
+		//v.uv = { 1.f,0.f };
+		//m_p2DData->m_Vertices.push_back(v);
 
-		Ref<VertexBuffer> vertexBuffer = VertexBuffer::Create(glm::value_ptr(m_p2DData->m_Vertices.data()->Position), uint32_t(m_p2DData->m_Vertices.size() * sizeof(Vertex)));
-		Imp::BufferLayout layout = {
-			{ShaderDataType::Float3, "vPosition"},
-			{ShaderDataType::Float2, "vUV"}
-		};
+		//Ref<VertexBuffer> vertexBuffer = VertexBuffer::Create(glm::value_ptr(m_p2DData->m_Vertices.data()->Position), uint32_t(m_p2DData->m_Vertices.size() * sizeof(Vertex)));
+		//Imp::BufferLayout layout = {
+		//	{ShaderDataType::Float3, "vPosition"},
+		//	{ShaderDataType::Float2, "vUV"}
+		//};
 
-		vertexBuffer->SetLayout(layout);
+		//vertexBuffer->SetLayout(layout);
 
-		m_p2DData->m_pVertexArray->AddVertexBuffer(vertexBuffer);
+		//m_p2DData->m_pVertexArray->AddVertexBuffer(vertexBuffer);
 
-		//IndexBuffer
-		uint32_t indices[6] = { 0,1,2,0,2,3 };
-		m_p2DData->m_pVertexArray->SetIndexBuffer(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		m_p2DData->m_pTextureShader = Shader::Create("Assets/Shaders/Texture.glsl");
-		m_p2DData->m_pColorShader = Shader::Create("Assets/Shaders/Color.glsl");
-		m_p2DData->m_pTextShader = Shader::Create("Assets/Shaders/Text.glsl");
-		m_p2DData->m_pFonts = FontTexture::Create();
+		////IndexBuffer
+		//uint32_t indices[6] = { 0,1,2,0,2,3 };
+		//m_p2DData->m_pVertexArray->SetIndexBuffer(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		//m_p2DData->m_pTextureShader = Shader::Create("Assets/Shaders/Texture.glsl");
+		//m_p2DData->m_pColorShader = Shader::Create("Assets/Shaders/Color.glsl");
+		//m_p2DData->m_pTextShader = Shader::Create("Assets/Shaders/Text.glsl");
+		//m_p2DData->m_pFonts = FontTexture::Create();
 
-		m_p2DData->m_pTextureShader->Bind();
-		m_p2DData->m_pTextureShader->LoadSVInt("u_Texture", 0);
+		//m_p2DData->m_pTextureShader->Bind();
+		//m_p2DData->m_pTextureShader->LoadSVInt("u_Texture", 0);
 
-		m_p2DData->m_pTextShader->Bind();
-		m_p2DData->m_pTextShader->LoadSVInt("u_Texture", 0);
+		//m_p2DData->m_pTextShader->Bind();
+		//m_p2DData->m_pTextShader->LoadSVInt("u_Texture", 0);
 	}
 
 	void Renderer2D::ShutDown()

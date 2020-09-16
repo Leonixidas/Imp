@@ -8,17 +8,19 @@ namespace Imp
 	class Layer
 	{
 	public:
-		Layer(const std::string& name = "Layer");
+		explicit Layer(const std::string& name);
 
 		virtual ~Layer();
 
-		virtual void OnAttach() {}
-		virtual void OnDetach() {}
-		virtual void Update() {}
-		virtual void OnImGuiRender() {}
-		virtual void OnEvent(Event& e) {}
+		virtual void OnAttach();
+		virtual void OnDetach();
+		virtual void Update();
+		virtual void Render();
+		virtual void OnImGuiRender();
+		virtual void OnEvent(Event& e);
+		virtual void OnEnabled() {}
 
-		void SetEnabled(bool enabled) { m_IsEnabled = enabled; }
+		void SetEnabled(bool enabled);
 		inline bool GetEnabled() const { return m_IsEnabled; }
 
 		inline const std::string& GetName() const { return m_LayerName; }

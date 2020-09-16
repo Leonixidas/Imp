@@ -31,6 +31,8 @@ namespace Imp
 			m_Now = m_Prev;
 
 			++m_Frames;
+
+			return true;
 		}
 
 	public:
@@ -40,9 +42,9 @@ namespace Imp
 			return m_ElapsedTime;
 		}
 
-		int GetFPS()
+		float GetFPS()
 		{
-			return m_Frames / m_AccumTime;
+			return m_Frames / (float)m_AccumTime;
 		}
 
 		float GetAverageTime()

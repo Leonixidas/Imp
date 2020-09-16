@@ -12,11 +12,12 @@ namespace Imp
 	class VertexBuffer;
 	class IndexBuffer;
 	class Shader;
+	class Camera;
 
 	class Application
 	{
 	public:
-		Application();
+		explicit Application(const WindowProps& props);
 
 		virtual ~Application();
 
@@ -30,23 +31,23 @@ namespace Imp
 
 		static Application& GetInstance() { return *m_pInstance; }
 
+		void SetIsRunning(bool value) { m_Running = value; }
+
 		Window& GetWindow() { return *m_pWindow; }
 
-		void PushLayer(Layer* layer);
-		void PushOverlay(Layer* overlay);
+		void PushLayer(const Ref<Layer>& layer);
+		void PushOverlay(const Ref<Layer>& overlay);
+
+		void SetLayerEnabled(const std::string& name, bool value);
 
 	private:
-		Window* m_pWindow;
-		ImguiLayer* m_pImGuiLayer;
+		Ref<Window> m_pWindow;
+		Ref<ImguiLayer> m_pImGuiLayer;
 		bool m_Running = true;
 		LayerManager m_LayerManager;
 
-		static Application* m_pInstance;
 
-		VertexArray* m_pVertexArray;
-		VertexBuffer* m_pVertexBuffer;
-		IndexBuffer* m_pIndexBuffer;
-		Shader* m_pShader;
+		static Ref<Application> m_pInstance;
 	};
 
 	Application* CreateApplication();

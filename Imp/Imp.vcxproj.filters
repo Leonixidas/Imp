@@ -31,6 +31,9 @@
     <Filter Include="src\Imp">
       <UniqueIdentifier>{82842FA9-EE63-AE44-F77B-391B63DA14A6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Imp\Components">
+      <UniqueIdentifier>{5754B7E2-4338-7838-AC98-728B989B62BA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Imp\Events">
       <UniqueIdentifier>{26CAF654-1298-EA5A-FB2B-5B81E798C6BF}</UniqueIdentifier>
     </Filter>
@@ -39,6 +42,9 @@
     </Filter>
     <Filter Include="src\Imp\Imgui">
       <UniqueIdentifier>{4C5BDE21-B81B-5A58-8156-A3D5EDD59E34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Imp\Managers">
+      <UniqueIdentifier>{9F786593-8B71-84E5-B4A3-696AA0FB63F1}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Imp\Renderer">
       <UniqueIdentifier>{68FACC64-54F3-EBB6-7D25-D13B697DCBC2}</UniqueIdentifier>
@@ -1287,6 +1293,12 @@
     <ClInclude Include="src\Imp\Application.h">
       <Filter>src\Imp</Filter>
     </ClInclude>
+    <ClInclude Include="src\Imp\Components\Component.h">
+      <Filter>src\Imp\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\Components\RenderComponent.h">
+      <Filter>src\Imp\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Imp\Core.h">
       <Filter>src\Imp</Filter>
     </ClInclude>
@@ -1326,10 +1338,19 @@
     <ClInclude Include="src\Imp\Log.h">
       <Filter>src\Imp</Filter>
     </ClInclude>
+    <ClInclude Include="src\Imp\Managers\MeshManager.h">
+      <Filter>src\Imp\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\Managers\TextureManager.h">
+      <Filter>src\Imp\Managers</Filter>
+    </ClInclude>
     <ClInclude Include="src\Imp\MouseButtonCodes.h">
       <Filter>src\Imp</Filter>
     </ClInclude>
     <ClInclude Include="src\Imp\Renderer\Buffer.h">
+      <Filter>src\Imp\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\Renderer\Camera.h">
       <Filter>src\Imp\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Imp\Renderer\GraphicsContext.h">
@@ -1389,11 +1410,6 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Imp\Renderer\Camera.h" />
-    <ClInclude Include="src\Imp\Components\Component.h" />
-    <ClInclude Include="src\Imp\Components\RenderComponent.h" />
-    <ClInclude Include="src\Imp\Managers\MeshManager.h" />
-    <ClInclude Include="src\Imp\Managers\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Libs\stb_image\stb_image.cpp">
@@ -1401,6 +1417,9 @@
     </ClCompile>
     <ClCompile Include="src\Imp\Application.cpp">
       <Filter>src\Imp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Imp\Components\RenderComponent.cpp">
+      <Filter>src\Imp\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Imp\Helpers\ResourceLoader.cpp">
       <Filter>src\Imp\Helpers</Filter>
@@ -1421,6 +1440,9 @@
       <Filter>src\Imp</Filter>
     </ClCompile>
     <ClCompile Include="src\Imp\Renderer\Buffer.cpp">
+      <Filter>src\Imp\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Imp\Renderer\Camera.cpp">
       <Filter>src\Imp\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Imp\Renderer\RenderCommand.cpp">
@@ -1468,7 +1490,6 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Imp\Renderer\Camera.cpp" />
-    <ClCompile Include="src\Imp\Components\RenderComponent.cpp" />
+    <ClCompile Include="src\Imp\Managers\MeshManager.cpp" />
   </ItemGroup>
 </Project>

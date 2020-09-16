@@ -11,7 +11,6 @@ int main(int argc, char** argv)
 {
 	auto app = Imp::CreateApplication();
 	app->Run();
-	delete app;
 	Imp::Log::Info("Apple");
 	Imp::Log::CleanUp();
 }

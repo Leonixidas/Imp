@@ -9,16 +9,10 @@ Imp::LayerManager::LayerManager()
 
 Imp::LayerManager::~LayerManager()
 {
-	for (Layer* l : m_Layers)
-	{
-		delete l;
-		l = nullptr;
-	}
-
 	m_Layers.clear();
 }
 
-void Imp::LayerManager::PushLayer(Layer* layer)
+void Imp::LayerManager::PushLayer(const Ref<Layer>& layer)
 {
 	auto iter = std::find(m_Layers.begin(), m_Layers.end(), layer);
 
@@ -33,7 +27,7 @@ void Imp::LayerManager::PushLayer(Layer* layer)
 	}
 }
 
-void Imp::LayerManager::PopLayer(Layer* layer)
+void Imp::LayerManager::PopLayer(const Ref<Layer>& layer)
 {
 	auto iter = std::find(m_Layers.begin(), m_Layers.end(), layer);
 
@@ -50,7 +44,7 @@ void Imp::LayerManager::PopLayer(Layer* layer)
 	}
 }
 
-void Imp::LayerManager::PushOverlay(Layer* overlay)
+void Imp::LayerManager::PushOverlay(const Ref<Layer>& overlay)
 {
 	auto iter = std::find(m_Layers.begin(), m_Layers.end(), overlay);
 
@@ -65,7 +59,7 @@ void Imp::LayerManager::PushOverlay(Layer* overlay)
 	}
 }
 
-void Imp::LayerManager::PopOverlay(Layer* overlay)
+void Imp::LayerManager::PopOverlay(const Ref<Layer>& overlay)
 {
 	auto iter = std::find(m_Layers.begin(), m_Layers.end(), overlay);
 

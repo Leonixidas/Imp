@@ -49,16 +49,16 @@ public:
 	}
 
 private:
-	std::vector<float> m_VertexArray;
-	Imp::Ref<Imp::VertexArray> m_VertexArray
+	Imp::Ref<Imp::VertexArray> m_VertexArray;
 };
 
 class BubbleBobbleApp : public Imp::Application
 {
 public:
-	BubbleBobbleApp()
+	BubbleBobbleApp(const Imp::WindowProps& props)
+		: Application(props)
 	{
-		PushLayer(new ExampleLayer());
+		PushLayer(std::make_shared<ExampleLayer>(ExampleLayer()));
 	}
 
 	virtual ~BubbleBobbleApp()
@@ -67,5 +67,9 @@ public:
 
 Imp::Application* Imp::CreateApplication()
 {
-	return new BubbleBobbleApp();
+	WindowProps props{};
+	props.m_Height = 720;
+	props.m_Width = 1280;
+	props.m_Title = "Example";
+	return new BubbleBobbleApp(props);
 }

@@ -60,16 +60,16 @@ namespace Imp
 		{
 			uint32_t size = GetShaderDataTypeSize(type);
 
-			if (index + size >= BufferSize) IMP_ERROR("shader data type doesn't fit in buffer starting at given index"); return;
+			if (index + size >= BufferSize) Log::Error("shader data type doesn't fit in buffer starting at given index"); return;
 
-			for(int i = 0; i < size; ++i)
+			for(uint32_t i = 0; i < size; ++i)
 				Buffer[index] = data[i];
 		}
 
 		template<typename T>
 		T* GetShaderProperty(uint32_t index)
 		{
-			if (index + sizeof(T) >= BufferSize) IMP_ERROR("the size of the given type doesn't fit in the buffer at the given index"); return nullptr;
+			if (index + sizeof(T) >= BufferSize) Log::Error("the size of the given type doesn't fit in the buffer at the given index"); return nullptr;
 
 			return static_cast<T*>(&Buffer[index]);
 		}
