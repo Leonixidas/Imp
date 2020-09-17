@@ -1439,6 +1439,9 @@
     <ClCompile Include="src\Imp\Log.cpp">
       <Filter>src\Imp</Filter>
     </ClCompile>
+    <ClCompile Include="src\Imp\Managers\MeshManager.cpp">
+      <Filter>src\Imp\Managers</Filter>
+    </ClCompile>
     <ClCompile Include="src\Imp\Renderer\Buffer.cpp">
       <Filter>src\Imp\Renderer</Filter>
     </ClCompile>
@@ -1490,6 +1493,5 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Imp\Managers\MeshManager.cpp" />
   </ItemGroup>
 </Project>

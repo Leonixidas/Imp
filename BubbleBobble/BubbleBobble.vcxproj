@@ -175,12 +175,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BubbleBobbleApp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Imp\Imp.vcxproj">
       <Project>{EBF7870B-5701-887C-E07C-9E7C4C85937C}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\BubbleBobbleApp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
