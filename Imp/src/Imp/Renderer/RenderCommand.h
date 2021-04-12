@@ -30,6 +30,11 @@ namespace Imp
 			m_pRendererAPI->DrawInstanced(vertexArray, instanceCount);
 		}
 
+		inline static void* GetFrame()
+		{
+			return m_pRendererAPI->GetFrame();
+		}
+
 	private:
 		static Scope<RendererAPI> m_pRendererAPI;
 	};

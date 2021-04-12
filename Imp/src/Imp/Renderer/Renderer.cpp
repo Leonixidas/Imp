@@ -32,6 +32,11 @@ namespace Imp
 		RenderCommand::DrawIndexed(vertexArray);
 	}
 
+	void* Renderer::GetFrame()
+	{
+		return RenderCommand::GetFrame();
+	}
+
 
 	//*******************************************************//
 	//**********************RENDERER2D***********************//

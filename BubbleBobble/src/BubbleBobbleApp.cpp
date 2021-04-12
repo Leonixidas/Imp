@@ -29,6 +29,9 @@ public:
 	{
 		ImGui::Begin("ExampleLayer");
 		ImGui::Text("Hello It's a me!");
+		//ImVec2 size = ImGui::GetWindowSize();
+		//void* id = Imp::Renderer::GetFrame();
+		//ImGui::Image(ImTextureID(id), size);
 		ImGui::End(); 
 	}
 

@@ -28,3 +28,16 @@ Imp::Ref<Imp::IndexBuffer> Imp::IndexBuffer::Create(uint32_t* indices, uint32_t 
 
 	return nullptr;
 }
+
+Imp::Ref<Imp::FrameBuffer> Imp::FrameBuffer::Create()
+{
+	switch (Renderer::GetAPI())
+	{
+	case RendererAPI::API::None: IMP_ERROR("We do not support NONE as an API"); return nullptr;
+	case RendererAPI::API::OpenGL: return std::make_shared<OpenGLFrameBuffer>();
+	}
+
+	IMP_WARNING("Unknown renderAPI type");
+
+	return nullptr;
+}

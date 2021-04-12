@@ -13,6 +13,11 @@ namespace Imp
 		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray) override;
 
 		void DrawInstanced(const Ref<VertexArray>& vertexArray, uint32_t instanceCount) override;
+
+		virtual void* GetFrame() override;
+
+	private:
+		uint32_t m_FrameID = 0;
 	};
 }
 

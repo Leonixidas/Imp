@@ -28,3 +28,9 @@ void Imp::OpenGLRendererAPI::DrawInstanced(const Ref<VertexArray>& vertexArray, 
 	glDrawElementsInstanced(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr, instanceCount);
 }
 
+void* Imp::OpenGLRendererAPI::GetFrame()
+{
+	glGenTextures(1, &m_FrameID);
+	return (void*)m_FrameID;
+}
+

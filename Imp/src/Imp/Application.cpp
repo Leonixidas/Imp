@@ -72,7 +72,7 @@ namespace Imp
 		IMP_INFO("Starting Application");
 		while (m_Running)
 		{
-			Imp::RenderCommand::SetClearColor({ 0.0f,0.f,0.f,1.f });
+			Imp::RenderCommand::SetClearColor({ 1.0f,0.f,1.f,1.f });
 			Imp::RenderCommand::Clear();
 
 			Time::GetInstance()->Update();

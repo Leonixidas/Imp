@@ -19,6 +19,8 @@ namespace Imp
 
 		virtual void DrawInstanced(const Ref<VertexArray>& vertexArray, uint32_t instanceCount) = 0;
 
+		virtual void* GetFrame() = 0;
+
 		inline static API GetAPI() { return m_API; }
 
 	private:

@@ -186,4 +186,17 @@ namespace Imp
 
 		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t count);
 	};
+
+	class FrameBuffer
+	{
+	public:
+		virtual ~FrameBuffer() {};
+
+		virtual void Bind() const = 0;
+		virtual void UnBind() const = 0;
+
+		virtual void* GetFrame() const = 0;
+
+		static Ref<FrameBuffer> Create();
+	};
 }

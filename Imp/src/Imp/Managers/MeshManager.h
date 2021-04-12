@@ -4,11 +4,12 @@
 #include <unordered_map>
 #include "Imp/Singleton.h"
 
+
 namespace Imp
 {
-	uint32_t Mesh::Nr = 0;
-	struct Mesh
+	class Mesh
 	{
+	public:
 		Mesh(const Ref<VertexArray>& va, const std::string& name = "Mesh")
 			: VA(va)
 		{

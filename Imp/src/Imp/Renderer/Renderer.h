@@ -17,7 +17,10 @@ namespace Imp
 
 		static void Submit(const Ref<Shader>& pShader, const Ref<VertexArray>& pVertexArray);
 
+		static void* GetFrame();
+
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+
 
 	private:
 		struct SceneData

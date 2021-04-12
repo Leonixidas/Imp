@@ -55,3 +55,29 @@ void Imp::OpenGLIndexBuffer::UnBind() const
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
+
+Imp::OpenGLFrameBuffer::OpenGLFrameBuffer()
+{
+	glGenFramebuffers(1, &m_BufferID);
+	
+}
+
+Imp::OpenGLFrameBuffer::~OpenGLFrameBuffer()
+{
+
+}
+
+void Imp::OpenGLFrameBuffer::Bind() const
+{
+
+}
+
+void Imp::OpenGLFrameBuffer::UnBind() const
+{
+
+}
+
+void* Imp::OpenGLFrameBuffer::GetFrame() const
+{
+	return (void*)m_TextureID;
+}

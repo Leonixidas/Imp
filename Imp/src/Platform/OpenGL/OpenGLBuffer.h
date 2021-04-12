@@ -35,4 +35,19 @@ namespace Imp
 		uint32_t m_RendererID;
 		uint32_t m_Count;
 	};
+
+	class OpenGLFrameBuffer : public FrameBuffer
+	{
+	public:
+		OpenGLFrameBuffer();
+		virtual ~OpenGLFrameBuffer();
+
+		virtual void Bind() const override;
+		virtual void UnBind() const override;
+
+		virtual void* GetFrame() const override;
+
+	private:
+		uint32_t m_BufferID, m_TextureID;
+	};
 }
