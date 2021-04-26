@@ -9,13 +9,13 @@ namespace Imp
 {
 
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
-		: mPath(path)
+		: m_Path(path)
 	{
 		int width, height, channel;
 		stbi_set_flip_vertically_on_load(1);
 		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channel, 0);
-		mWidth = width;
-		mHeight = height;
+		m_Width = width;
+		m_Height = height;
 
 		GLenum storageType = 0, shaderType = 0;
 
@@ -40,43 +40,43 @@ namespace Imp
 			shaderType = GL_RED;
 		}
 
-		glCreateTextures(GL_TEXTURE_2D,1, &mRendererID);
-		glTextureStorage2D(mRendererID, 1, storageType, mWidth, mHeight);
+		glCreateTextures(GL_TEXTURE_2D,1, &m_RendererID);
+		glTextureStorage2D(m_RendererID, 1, storageType, m_Width, m_Height);
 
-		glTextureParameteri(mRendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(mRendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glTextureSubImage2D(mRendererID, 0, 0, 0, mWidth, mHeight, shaderType, GL_UNSIGNED_BYTE, data);
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, shaderType, GL_UNSIGNED_BYTE, data);
 
 		stbi_image_free(data);
 	}
 
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
-		glDeleteTextures(1, &mRendererID);
+		glDeleteTextures(1, &m_RendererID);
 	}
 
 	void OpenGLTexture2D::Bind(uint32_t slot)
 	{
-		glBindTextureUnit(slot, mRendererID);
+		glBindTextureUnit(slot, m_RendererID);
 	}
 
 	OpenGLFontTexture::~OpenGLFontTexture()
 	{
-		mFontCharacters.clear();
+		m_FontCharacters.clear();
 	}
 
 	void OpenGLFontTexture::Bind(const std::string& fontName)
 	{
-		auto iter = mFontTextures.find(fontName);
+		auto iter = m_FontTextures.find(fontName);
 
-		if(iter != mFontTextures.end())
-			mFontTextures[fontName]->Bind();
+		if(iter != m_FontTextures.end())
+			m_FontTextures[fontName]->Bind();
 	}
 
 	bool OpenGLFontTexture::HasTexture(const std::string& fontName)
 	{
-		return mFontTextures.find(fontName) != mFontTextures.end();
+		return m_FontTextures.find(fontName) != m_FontTextures.end();
 	}
 
 	void OpenGLFontTexture::LoadFont(const std::string& filepath)
@@ -89,7 +89,7 @@ namespace Imp
 		std::string result{};
 		std::ifstream in(filepath, std::ios::in);
 
-		mFontTextures[fontName] = Texture2D::Create(path + fontName + ".png");
+		m_FontTextures[fontName] = Texture2D::Create(path + fontName + ".png");
 
 		size_t count = 0;
 		float w = 0.f, h = 0.f, y = 0.f;
@@ -114,7 +114,7 @@ namespace Imp
 			if (count != std::string::npos)
 			{
 				size_t size = std::stoi(result.substr(count + countstr.length()));
-				mFontCharacters[fontName].reserve(size);
+				m_FontCharacters[fontName].reserve(size);
 				continue;
 			}
 
@@ -191,7 +191,7 @@ namespace Imp
 				chr.uv.z += 1 / h;
 				chr.uv.z += y / w;
 				chr.uv.w += y / h;
-				mFontCharacters[fontName][c] = chr;
+				m_FontCharacters[fontName][c] = chr;
 			}
 		}
 	}

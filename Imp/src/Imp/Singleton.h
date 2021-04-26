@@ -7,22 +7,22 @@ namespace Imp
 	public:
 		static T* GetInstance()
 		{
-			if (mpInstance == nullptr)
-				mpInstance = new T();
+			if (m_pInstance == nullptr)
+				m_pInstance = new T();
 
-			return mpInstance;
+			return m_pInstance;
 		}
 
 		static void Destory()
 		{
-			if (mpInstance != nullptr)
-				delete mpInstance;
+			if (m_pInstance != nullptr)
+				delete m_pInstance;
 		}
 
 	private:
-		static T* mpInstance;
+		static T* m_pInstance;
 	};
 
 	template<class T>
-	T* Singleton<T>::mpInstance = nullptr;
+	T* Singleton<T>::m_pInstance = nullptr;
 }

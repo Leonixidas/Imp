@@ -21,7 +21,7 @@ namespace Imp
 
 	private:
 		//Variables
-		float mTime = 0.0f;
+		float m_Time = 0.0f;
 	};
 }
 

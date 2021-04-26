@@ -30,7 +30,7 @@ void Imp::OpenGLRendererAPI::DrawInstanced(const Ref<VertexArray>& vertexArray, 
 
 void* Imp::OpenGLRendererAPI::GetFrame()
 {
-	glGenTextures(1, &mFrameID);
-	return (void*)mFrameID;
+	glGenTextures(1, &m_FrameID);
+	return (void*)m_FrameID;
 }
 

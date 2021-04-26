@@ -18,6 +18,6 @@ namespace Imp
 		Ref<Texture2D>& GetTexture(const std::string& name);
 
 	private:
-		std::unordered_map<std::string, Texture2D> mTextures;
+		std::unordered_map<std::string, Texture2D> m_Textures;
 	};
 }

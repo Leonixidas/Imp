@@ -30,17 +30,17 @@ namespace Imp
 
 Imp::OpenGLVertexArray::OpenGLVertexArray()
 {
-	glCreateVertexArrays(1, &mRendererID);
+	glCreateVertexArrays(1, &m_RendererID);
 }
 
 Imp::OpenGLVertexArray::~OpenGLVertexArray()
 {
-	glDeleteVertexArrays(1, &mRendererID);
+	glDeleteVertexArrays(1, &m_RendererID);
 }
 
 void Imp::OpenGLVertexArray::Bind() const
 {
-	glBindVertexArray(mRendererID);
+	glBindVertexArray(m_RendererID);
 }
 
 void Imp::OpenGLVertexArray::UnBind() const
@@ -50,14 +50,14 @@ void Imp::OpenGLVertexArray::UnBind() const
 
 void Imp::OpenGLVertexArray::SubmitBufferData(uint32_t bufferSlot, float* vertices, uint32_t size)
 {
-	glBindVertexArray(mRendererID);
-	glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffers[bufferSlot]->GetRendererID());
+	glBindVertexArray(m_RendererID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffers[bufferSlot]->GetRendererID());
 	glBufferSubData(GL_ARRAY_BUFFER, 0, size, vertices);
 }
 
 void Imp::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 {
-	glBindVertexArray(mRendererID);
+	glBindVertexArray(m_RendererID);
 	vertexBuffer->Bind();
 
 	uint32_t index = 0;
@@ -74,14 +74,14 @@ void Imp::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuff
 		++index;
 	}
 
-	mVertexBuffers.push_back(vertexBuffer);
+	m_VertexBuffers.push_back(vertexBuffer);
 }
 
 void Imp::OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 {
-	glBindVertexArray(mRendererID);
+	glBindVertexArray(m_RendererID);
 	indexBuffer->Bind();
-	mpIndexBuffer = indexBuffer;
+	m_pIndexBuffer = indexBuffer;
 }
 
 //for matrices
@@ -113,5 +113,5 @@ void Imp::OpenGLVertexArray::AddInstancedBuffer(const Ref<VertexBuffer>& vertexB
 		glVertexAttribDivisor(pos1, 4);
 	}
 
-	mVertexBuffers.push_back(vertexBuffer);
+	m_VertexBuffers.push_back(vertexBuffer);
 }

@@ -8,34 +8,34 @@ namespace Imp
 	public:
 		inline static void Init()
 		{
-			mpRendererAPI->Init();
+			m_pRendererAPI->Init();
 		}
 		inline static void SetClearColor(const glm::vec4& color)
 		{
-			mpRendererAPI->SetClearColor(color);
+			m_pRendererAPI->SetClearColor(color);
 		}
 
 		inline static void Clear()
 		{
-			mpRendererAPI->Clear();
+			m_pRendererAPI->Clear();
 		}
 
 		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray)
 		{
-			mpRendererAPI->DrawIndexed(vertexArray);
+			m_pRendererAPI->DrawIndexed(vertexArray);
 		}
 
 		inline static void DrawInstanced(const Ref<VertexArray>& vertexArray, uint32_t instanceCount)
 		{
-			mpRendererAPI->DrawInstanced(vertexArray, instanceCount);
+			m_pRendererAPI->DrawInstanced(vertexArray, instanceCount);
 		}
 
 		inline static void* GetFrame()
 		{
-			return mpRendererAPI->GetFrame();
+			return m_pRendererAPI->GetFrame();
 		}
 
 	private:
-		static Scope<RendererAPI> mpRendererAPI;
+		static Scope<RendererAPI> m_pRendererAPI;
 	};
 }

@@ -6,16 +6,16 @@ namespace Imp
 	class Input
 	{
 	public:
-		inline static bool IsKeyPressed(int keycode) { return mpInstance->IsKeyPressedImpl(keycode); }
+		inline static bool IsKeyPressed(int keycode) { return m_pInstance->IsKeyPressedImpl(keycode); }
 
-		inline static bool IsMouseButtonPressed(int button) { return mpInstance->IsMouseButtonPressedImpl(button); }
-		inline static float GetMouseX() { return mpInstance->GetMouseXImpl(); }
-		inline static float GetMouseY() { return mpInstance->GetMouseYImpl(); }
-		inline static std::pair<float, float> GetMousePosition() { return mpInstance->GetMousePositionImpl(); }
+		inline static bool IsMouseButtonPressed(int button) { return m_pInstance->IsMouseButtonPressedImpl(button); }
+		inline static float GetMouseX() { return m_pInstance->GetMouseXImpl(); }
+		inline static float GetMouseY() { return m_pInstance->GetMouseYImpl(); }
+		inline static std::pair<float, float> GetMousePosition() { return m_pInstance->GetMousePositionImpl(); }
 
 		inline static void ShutDown()
 		{
-			if (mpInstance)  delete mpInstance;
+			if (m_pInstance)  delete m_pInstance;
 		}
 	
 	protected:
@@ -26,6 +26,6 @@ namespace Imp
 		virtual std::pair<float, float> GetMousePositionImpl() = 0;
 
 	private:
-		static Input* mpInstance;
+		static Input* m_pInstance;
 	};
 }

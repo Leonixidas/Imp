@@ -4,14 +4,14 @@
 #include "Imp/Log.h"
 
 Imp::OpenGLContext::OpenGLContext(GLFWwindow* window)
-	: mpWindowHandle(window)
+	: m_pWindowHandle(window)
 {
 
 }
 
 void Imp::OpenGLContext::Init()
 {
-	glfwMakeContextCurrent(mpWindowHandle);
+	glfwMakeContextCurrent(m_pWindowHandle);
 	// INITIALIZING GLAD
 	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	if (status > 0)
@@ -27,5 +27,5 @@ void Imp::OpenGLContext::Init()
 
 void Imp::OpenGLContext::SwapBuffers()
 {
-	glfwSwapBuffers(mpWindowHandle);
+	glfwSwapBuffers(m_pWindowHandle);
 }

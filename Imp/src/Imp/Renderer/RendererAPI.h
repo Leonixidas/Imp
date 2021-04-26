@@ -21,9 +21,9 @@ namespace Imp
 
 		virtual void* GetFrame() = 0;
 
-		inline static API GetAPI() { return mAPI; }
+		inline static API GetAPI() { return m_API; }
 
 	private:
-		static API mAPI;
+		static API m_API;
 	};
 }

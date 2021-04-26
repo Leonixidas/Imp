@@ -3,22 +3,22 @@
 #include "Log.h"
 
 Imp::LayerManager::LayerManager()
-	: mLayers()
+	: m_Layers()
 {
 }
 
 Imp::LayerManager::~LayerManager()
 {
-	mLayers.clear();
+	m_Layers.clear();
 }
 
 void Imp::LayerManager::PushLayer(const Ref<Layer>& layer)
 {
-	auto iter = std::find(mLayers.begin(), mLayers.end(), layer);
+	auto iter = std::find(m_Layers.begin(), m_Layers.end(), layer);
 
-	if (iter == mLayers.end())
+	if (iter == m_Layers.end())
 	{
-		mLayers.emplace(mLayers.begin() + mLayerInsert, layer);
+		m_Layers.emplace(m_Layers.begin() + m_LayerInsert, layer);
 		layer->OnAttach();
 	}
 	else
@@ -29,12 +29,12 @@ void Imp::LayerManager::PushLayer(const Ref<Layer>& layer)
 
 void Imp::LayerManager::PopLayer(const Ref<Layer>& layer)
 {
-	auto iter = std::find(mLayers.begin(), mLayers.end(), layer);
+	auto iter = std::find(m_Layers.begin(), m_Layers.end(), layer);
 
-	if (iter != mLayers.end())
+	if (iter != m_Layers.end())
 	{
-		mLayers.erase(iter);
-		--mLayerInsert;
+		m_Layers.erase(iter);
+		--m_LayerInsert;
 
 		layer->OnDetach();
 	}
@@ -46,11 +46,11 @@ void Imp::LayerManager::PopLayer(const Ref<Layer>& layer)
 
 void Imp::LayerManager::PushOverlay(const Ref<Layer>& overlay)
 {
-	auto iter = std::find(mLayers.begin(), mLayers.end(), overlay);
+	auto iter = std::find(m_Layers.begin(), m_Layers.end(), overlay);
 
-	if (iter == mLayers.end())
+	if (iter == m_Layers.end())
 	{
-		mLayers.emplace_back(overlay);
+		m_Layers.emplace_back(overlay);
 		overlay->OnAttach();
 	}
 	else
@@ -61,11 +61,11 @@ void Imp::LayerManager::PushOverlay(const Ref<Layer>& overlay)
 
 void Imp::LayerManager::PopOverlay(const Ref<Layer>& overlay)
 {
-	auto iter = std::find(mLayers.begin(), mLayers.end(), overlay);
+	auto iter = std::find(m_Layers.begin(), m_Layers.end(), overlay);
 
-	if (iter != mLayers.end())
+	if (iter != m_Layers.end())
 	{
-		mLayers.erase(iter);
+		m_Layers.erase(iter);
 		overlay->OnDetach();
 	}
 	else

@@ -7,9 +7,9 @@ namespace Imp
 
 	void MeshManager::AddMesh(const Ref<Mesh>& mesh)
 	{
-		if (mMeshes.find(mesh->Name) == mMeshes.end())
+		if (m_Meshes.find(mesh->Name) == m_Meshes.end())
 		{
-			mMeshes[mesh->Name] = mesh;
+			m_Meshes[mesh->Name] = mesh;
 		}
 		else
 		{
@@ -24,7 +24,7 @@ namespace Imp
 
 	Ref<Mesh>& MeshManager::GetMesh(const std::string& name)
 	{
-		return mMeshes[name];
+		return m_Meshes[name];
 	}
 
 }

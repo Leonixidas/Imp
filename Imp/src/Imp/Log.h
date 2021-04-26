@@ -28,7 +28,7 @@ namespace Imp
 	private:
 		static void CalculateTime();
 		static void PrintTime();
-		static tm* mpTime;
+		static tm* m_pTime;
 	};
 }
 

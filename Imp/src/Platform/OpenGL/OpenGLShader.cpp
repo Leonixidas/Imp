@@ -31,12 +31,12 @@ Imp::OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string&
 
 Imp::OpenGLShader::~OpenGLShader()
 {
-	glDeleteProgram(mRendererID);
+	glDeleteProgram(m_RendererID);
 }
 
 void Imp::OpenGLShader::Bind() const
 {
-	glUseProgram(mRendererID);
+	glUseProgram(m_RendererID);
 }
 
 void Imp::OpenGLShader::UnBind() const
@@ -112,7 +112,7 @@ void Imp::OpenGLShader::LoadSVBool(const std::string& name, bool value)
 
 uint32_t Imp::OpenGLShader::GetAttributeLocation(const std::string& attribName)
 {
-	return (uint32_t)glGetAttribLocation(mRendererID, attribName.c_str());
+	return (uint32_t)glGetAttribLocation(m_RendererID, attribName.c_str());
 }
 
 void Imp::OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::string>& sources)
@@ -185,7 +185,7 @@ void Imp::OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::stri
 	for (auto id : glShaderIDs)
 		glDetachShader(program, id);
 
-	mRendererID = program;
+	m_RendererID = program;
 }
 
 std::string Imp::OpenGLShader::ReadFile(const std::string& filePath)
@@ -232,10 +232,10 @@ std::unordered_map<GLenum, std::string> Imp::OpenGLShader::PreProcess(const std:
 
 GLint Imp::OpenGLShader::GetUniformLocation(const std::string& name) const
 {
-	if (mUniformCache.find(name) != mUniformCache.end())
-		return mUniformCache[name];
+	if (m_UniformCache.find(name) != m_UniformCache.end())
+		return m_UniformCache[name];
 
-	GLint location = glGetUniformLocation(mRendererID, name.c_str());
-	mUniformCache[name] = location;
+	GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+	m_UniformCache[name] = location;
 	return location;
 }

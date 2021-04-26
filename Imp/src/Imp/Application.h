@@ -29,11 +29,11 @@ namespace Imp
 
 		virtual void CleanUp();
 
-		static Application& GetInstance() { return *mpInstance; }
+		static Application& GetInstance() { return *m_pInstance; }
 
-		void SetIsRunning(bool value) { mRunning = value; }
+		void SetIsRunning(bool value) { m_Running = value; }
 
-		Window& GetWindow() { return *mpWindow; }
+		Window& GetWindow() { return *m_pWindow; }
 
 		void PushLayer(const Ref<Layer>& layer);
 		void PushOverlay(const Ref<Layer>& overlay);
@@ -41,13 +41,13 @@ namespace Imp
 		void SetLayerEnabled(const std::string& name, bool value);
 
 	private:
-		Ref<Window> mpWindow;
-		Ref<ImguiLayer> mpImGuiLayer;
-		bool mRunning = true;
-		LayerManager mLayerManager;
+		Ref<Window> m_pWindow;
+		Ref<ImguiLayer> m_pImGuiLayer;
+		bool m_Running = true;
+		LayerManager m_LayerManager;
 
 
-		static Ref<Application> mpInstance;
+		static Ref<Application> m_pInstance;
 	};
 
 	Application* CreateApplication();

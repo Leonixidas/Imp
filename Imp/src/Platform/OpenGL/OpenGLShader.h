@@ -38,7 +38,7 @@ namespace Imp
 		void CompileShader(const std::unordered_map<GLenum, std::string>& sources);
 		GLint GetUniformLocation(const std::string& name) const;
 
-		mutable std::unordered_map<std::string, GLint> mUniformCache;
-		uint32_t mRendererID;
+		mutable std::unordered_map<std::string, GLint> m_UniformCache;
+		uint32_t m_RendererID;
 	};
 }

@@ -21,13 +21,13 @@ namespace Imp
 		virtual void OnEnabled() {}
 
 		void SetEnabled(bool enabled);
-		inline bool GetEnabled() const { return mIsEnabled; }
+		inline bool GetEnabled() const { return m_IsEnabled; }
 
-		inline const std::string& GetName() const { return mLayerName; }
+		inline const std::string& GetName() const { return m_LayerName; }
 
 	protected:
-		std::string mLayerName;
-		bool mIsEnabled = true;
+		std::string m_LayerName;
+		bool m_IsEnabled = true;
 	};
 }
 

@@ -28,7 +28,7 @@ namespace Imp
 			Ref<Camera> pCamera = nullptr;
 		};
 
-		static Scope<SceneData> mpSceneData;
+		static Scope<SceneData> m_pSceneData;
 	};
 
 	class Renderer2D
@@ -68,17 +68,17 @@ namespace Imp
 
 		struct SceneData2D
 		{
-			Ref<OrthographicCamera> mpOrthoCamera;
-			Ref<Shader> mpTextureShader;
-			Ref<Shader> mpColorShader;
-			Ref<Shader> mpTextShader;
-			Ref<Shader> mpTextureInstShader;
-			Ref<VertexArray> mpVertexArray;
-			Ref<VertexArray> mpInstanceVertexArray;
-			std::vector<Vertex> mVertices;
-			Ref<FontTexture> mpFonts;
+			Ref<OrthographicCamera> m_pOrthoCamera;
+			Ref<Shader> m_pTextureShader;
+			Ref<Shader> m_pColorShader;
+			Ref<Shader> m_pTextShader;
+			Ref<Shader> m_pTextureInstShader;
+			Ref<VertexArray> m_pVertexArray;
+			Ref<VertexArray> m_pInstanceVertexArray;
+			std::vector<Vertex> m_Vertices;
+			Ref<FontTexture> m_pFonts;
 		};
 
-		static Scope<SceneData2D> mp2DData;
+		static Scope<SceneData2D> m_p2DData;
 	};
 }

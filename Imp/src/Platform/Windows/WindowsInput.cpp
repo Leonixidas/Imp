@@ -4,7 +4,7 @@
 #include "Imp/Application.h"
 #include <GLFW/glfw3.h>
 
-Imp::Input* Imp::Input::mpInstance = new WindowsInput();
+Imp::Input* Imp::Input::m_pInstance = new WindowsInput();
 
 bool Imp::WindowsInput::IsKeyPressedImpl(int keycode)
 {

@@ -38,12 +38,12 @@ namespace Imp
 			return GetCategoryFlags() & category;
 		}
 
-		bool IsHandeled() { return mIsHandeled; }
+		bool IsHandeled() { return m_IsHandeled; }
 
 		virtual const std::string DebugInfo() const = 0;
 
 	protected:
-		bool mIsHandeled = false;
+		bool m_IsHandeled = false;
 	};
 
 	// This class basically checks if the incoming event equals the templated typename
@@ -55,7 +55,7 @@ namespace Imp
 	{
 	public:
 		EventDispatcher(Event& e)
-			: mEvent(e)
+			: m_Event(e)
 		{ }
 
 		~EventDispatcher() = default;
@@ -63,9 +63,9 @@ namespace Imp
 		template<typename T>
 		bool Dispatch(std::function<bool(T&)> func)
 		{
-			if (mEvent.GetEventType() == T::GetStaticType())
+			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				mEvent.mIsHandeled = func(*(T*)&mEvent);
+				m_Event.m_IsHandeled = func(*(T*)&m_Event);
 
 				return true;
 			}
@@ -74,6 +74,6 @@ namespace Imp
 		}
 
 	private:
-		Event& mEvent;
+		Event& m_Event;
 	};
 }
