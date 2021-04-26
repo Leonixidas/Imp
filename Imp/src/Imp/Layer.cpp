@@ -2,7 +2,7 @@
 #include "Layer.h"
 
 Imp::Layer::Layer(const std::string& name)
-	: m_LayerName(name)
+	: mLayerName(name)
 {
 }
 
@@ -38,7 +38,7 @@ void Imp::Layer::OnEvent(Event& e)
 
 void Imp::Layer::SetEnabled(bool enabled)
 {
-	m_IsEnabled = enabled;
+	mIsEnabled = enabled;
 	if (enabled)
 		OnEnabled();
 }

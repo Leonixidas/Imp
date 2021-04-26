@@ -7,14 +7,14 @@ namespace Imp
 {
 	struct WindowProps
 	{
-		std::string m_Title;
-		unsigned int m_Width;
-		unsigned int m_Height;
+		std::string mTitle;
+		unsigned int mWidth;
+		unsigned int mHeight;
 
 		WindowProps()
-			: m_Title("Imp Engine")
-			, m_Width(1280)
-			, m_Height(720)
+			: mTitle("Imp Engine")
+			, mWidth(1280)
+			, mHeight(720)
 		{ }
 	};
 

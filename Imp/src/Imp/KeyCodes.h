@@ -69,7 +69,7 @@
 #define IMP_KEY_END                269
 #define IMP_KEY_CAPS_LOCK          280
 #define IMP_KEY_SCROLL_LOCK        281
-#define IMP_KEY_NUM_LOCK           282
+#define IMP_KEY_NUmLOCK           282
 #define IMP_KEY_PRINT_SCREEN       283
 #define IMP_KEY_PAUSE              284
 #define IMP_KEY_F1                 290

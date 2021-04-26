@@ -13,13 +13,13 @@ namespace Imp
 		virtual void Bind() const override;
 		virtual void UnBind() const override;
 
-		virtual uint32_t GetRendererID() { return m_RendererID; }
+		virtual uint32_t GetRendererID() { return mRendererID; }
 
-		virtual void SetLayout(const BufferLayout& layout) override { m_Layout = layout; }
-		virtual const BufferLayout& GetLayout() const override { return m_Layout; }
+		virtual void SetLayout(const BufferLayout& layout) override { mLayout = layout; }
+		virtual const BufferLayout& GetLayout() const override { return mLayout; }
 	private:
-		BufferLayout m_Layout;
-		uint32_t m_RendererID;
+		BufferLayout mLayout;
+		uint32_t mRendererID;
 	};
 
 	class OpenGLIndexBuffer : public IndexBuffer
@@ -30,10 +30,10 @@ namespace Imp
 		virtual void Bind() const override;
 		virtual void UnBind() const override;
 
-		virtual uint32_t GetCount() const override { return m_Count; }
+		virtual uint32_t GetCount() const override { return mCount; }
 	private:
-		uint32_t m_RendererID;
-		uint32_t m_Count;
+		uint32_t mRendererID;
+		uint32_t mCount;
 	};
 
 	class OpenGLFrameBuffer : public FrameBuffer
@@ -48,6 +48,6 @@ namespace Imp
 		virtual void* GetFrame() const override;
 
 	private:
-		uint32_t m_BufferID, m_TextureID;
+		uint32_t mBufferID, mTextureID;
 	};
 }

@@ -22,23 +22,23 @@ namespace Imp
 	{
 	public:
 		WindowResizeEvent(float x, float y)
-			: m_XSize(x)
-			, m_YSize(y)
+			: mXSize(x)
+			, mYSize(y)
 		{ }
 
 		static EventType GetStaticType() { return EventType::WindowResize; }
 		virtual EventType GetEventType()const override { return GetStaticType(); }
 		virtual int GetCategoryFlags() const override { return int(EventCategory::Window); }
 
-		inline float GetX() { return m_XSize; }
-		inline float GetY() { return m_YSize; }
+		inline float GetX() { return mXSize; }
+		inline float GetY() { return mYSize; }
 
 		virtual const std::string DebugInfo() const override
 		{
-			return "WindowResizeEvent: new window size [" + std::to_string(m_XSize) + ',' + std::to_string(m_YSize) + "].";
+			return "WindowResizeEvent: new window size [" + std::to_string(mXSize) + ',' + std::to_string(mYSize) + "].";
 		}
 
 	private:
-		float m_XSize, m_YSize;
+		float mXSize, mYSize;
 	};
 }

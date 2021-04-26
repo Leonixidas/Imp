@@ -12,26 +12,26 @@
 
 namespace Imp
 {
-	Ref<Application> Application::m_pInstance = nullptr;
+	Ref<Application> Application::mpInstance = nullptr;
 
 	Application::Application(const WindowProps& props)
-		: m_LayerManager()
+		: mLayerManager()
 	{
-		if (m_pInstance != nullptr)
+		if (mpInstance != nullptr)
 		{
 			IMP_ERROR("There already exists an application");
 		}
 
-		m_pInstance.reset(this);
-		m_pWindow = Window::Create(props);
-		m_pWindow->SetEventCallBack(BIND_EVENT_FUNC(Application::OnEvent));
-		m_pWindow->SetVSync(false);
+		mpInstance.reset(this);
+		mpWindow = Window::Create(props);
+		mpWindow->SetEventCallBack(BIND_EVENT_FUNC(Application::OnEvent));
+		mpWindow->SetVSync(false);
 
 		Renderer2D::Init();
 		Time::GetInstance()->Initialize();
 	
-		m_pImGuiLayer = std::make_shared<ImguiLayer>();
-		PushOverlay(m_pImGuiLayer);
+		mpImGuiLayer = std::make_shared<ImguiLayer>();
+		PushOverlay(mpImGuiLayer);
 
 		//Imp::Renderer2D::LoadFont("Assets/Fonts/GameFont.fnt");
 		//Imp::Renderer2D::LoadFont("Assets/Fonts/Arial.fnt");
@@ -48,7 +48,7 @@ namespace Imp
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(Application::OnWindowClose));
 
-		for (auto iter = m_LayerManager.rbegin(); iter != m_LayerManager.rend();)
+		for (auto iter = mLayerManager.rbegin(); iter != mLayerManager.rend();)
 		{
 			if ((*iter)->GetEnabled())
 			{
@@ -63,27 +63,27 @@ namespace Imp
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
-		m_Running = false;
+		mRunning = false;
 		return true;
 	}
 
 	void Application::Run()
 	{
 		IMP_INFO("Starting Application");
-		while (m_Running)
+		while (mRunning)
 		{
 			Imp::RenderCommand::SetClearColor({ 1.0f,0.f,1.f,1.f });
 			Imp::RenderCommand::Clear();
 
 			Time::GetInstance()->Update();
 
-			for (Ref<Layer> layer : m_LayerManager)
+			for (Ref<Layer> layer : mLayerManager)
 			{
 				if (layer->GetEnabled()) 
 					layer->Update();
 			}
 
-			for (Ref<Layer> layer : m_LayerManager)
+			for (Ref<Layer> layer : mLayerManager)
 			{
 				if (layer->GetEnabled())
 					layer->Render();
@@ -91,15 +91,15 @@ namespace Imp
 
 			//PhysicsManager::Render();
 #ifdef IMP_DEBUG
-			m_pImGuiLayer->Begin();
-			for (Ref<Layer> layer : m_LayerManager)
+			mpImGuiLayer->Begin();
+			for (Ref<Layer> layer : mLayerManager)
 			{
 				if (layer->GetEnabled())
 					layer->OnImGuiRender();
 			}
-			m_pImGuiLayer->End();
+			mpImGuiLayer->End();
 #endif
-			m_pWindow->Update();
+			mpWindow->Update();
 		}
 
 		IMP_INFO("Closing Application");
@@ -112,16 +112,16 @@ namespace Imp
 	}
 	void Application::PushLayer(const Ref<Layer>& layer)
 	{
-		m_LayerManager.PushLayer(layer);
+		mLayerManager.PushLayer(layer);
 	}
 	void Application::PushOverlay(const Ref<Layer>& overlay)
 	{
-		m_LayerManager.PushOverlay(overlay);
+		mLayerManager.PushOverlay(overlay);
 	}
 
 	void Application::SetLayerEnabled(const std::string& name, bool value)
 	{
-		for (Ref<Layer> layer : m_LayerManager)
+		for (Ref<Layer> layer : mLayerManager)
 		{
 			if (layer->GetName() == name)
 				layer->SetEnabled(value);

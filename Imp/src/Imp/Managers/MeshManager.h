@@ -41,6 +41,6 @@ namespace Imp
 		Ref<Mesh>& GetMesh(const std::string& name);
 
 	private:
-		std::unordered_map<std::string, Ref<Mesh>> m_Meshes;
+		std::unordered_map<std::string, Ref<Mesh>> mMeshes;
 	};
 }

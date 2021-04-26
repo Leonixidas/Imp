@@ -3,5 +3,5 @@
 
 namespace Imp
 {
-	RendererAPI::API RendererAPI::m_API = RendererAPI::API::OpenGL;
+	RendererAPI::API RendererAPI::mAPI = RendererAPI::API::OpenGL;
 }

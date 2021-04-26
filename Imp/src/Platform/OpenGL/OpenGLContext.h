@@ -13,6 +13,6 @@ namespace Imp
 		virtual void SwapBuffers() override;
 
 	private:
-		GLFWwindow* m_pWindowHandle;
+		GLFWwindow* mpWindowHandle;
 	};
 }

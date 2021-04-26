@@ -11,26 +11,26 @@ namespace Imp
 
 		friend class Application;
 
-		std::chrono::high_resolution_clock::time_point m_Prev{};
-		std::chrono::high_resolution_clock::time_point m_Now{};
+		std::chrono::high_resolution_clock::time_point mPrev{};
+		std::chrono::high_resolution_clock::time_point mNow{};
 
-		unsigned int m_Frames{};
-		float m_AccumTime{}, m_ElapsedTime{};
+		unsigned int mFrames{};
+		float mAccumTime{}, mElapsedTime{};
 
 
 		void Update()
 		{
-			m_Now = std::chrono::high_resolution_clock::now();
-			m_ElapsedTime = std::chrono::duration<float>(m_Now - m_Prev).count();
-			m_AccumTime += m_ElapsedTime;
+			mNow = std::chrono::high_resolution_clock::now();
+			mElapsedTime = std::chrono::duration<float>(mNow - mPrev).count();
+			mAccumTime += mElapsedTime;
 		}
 
 		bool Initialize()
 		{
-			m_Prev = std::chrono::high_resolution_clock::now();
-			m_Now = m_Prev;
+			mPrev = std::chrono::high_resolution_clock::now();
+			mNow = mPrev;
 
-			++m_Frames;
+			++mFrames;
 
 			return true;
 		}
@@ -39,17 +39,17 @@ namespace Imp
 
 		float GetElapsed()
 		{
-			return m_ElapsedTime;
+			return mElapsedTime;
 		}
 
 		float GetFPS()
 		{
-			return m_Frames / (float)m_AccumTime;
+			return mFrames / (float)mAccumTime;
 		}
 
 		float GetAverageTime()
 		{
-			return m_AccumTime / m_Frames;
+			return mAccumTime / mFrames;
 		}
 	};
 }

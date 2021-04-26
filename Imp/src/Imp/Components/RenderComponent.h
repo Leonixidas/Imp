@@ -10,7 +10,7 @@ namespace Imp
 		void SelectMaterial(const uint8_t matID);
 
 	private:
-		uint8_t m_MeshID, m_MaterialID;
+		uint8_t mMeshID, mMaterialID;
 	};
 }
 

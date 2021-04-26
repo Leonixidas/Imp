@@ -4,7 +4,7 @@
 //TODO improve the logging system
 namespace Imp
 {
-	tm* Log::m_pTime = new tm();
+	tm* Log::mpTime = new tm();
 
 	void Log::Info(const std::string& message)
 	{
@@ -49,19 +49,19 @@ namespace Imp
 
 	void Log::CleanUp()
 	{
-		delete m_pTime;
+		delete mpTime;
 	}
 
 	void Log::CalculateTime()
 	{
 		time_t t = time(0);
 
-		localtime_s(m_pTime, &t);
+		localtime_s(mpTime, &t);
 	}
 	void Log::PrintTime()
 	{
-		std::cout << '[' << std::setw(2) << std::setfill('0') << m_pTime->tm_hour << ':' 
-			<< std::setw(2) << std::setfill('0') << m_pTime->tm_min << ':' 
-			<< std::setw(2) << std::setfill('0') << m_pTime->tm_sec << "] ";
+		std::cout << '[' << std::setw(2) << std::setfill('0') << mpTime->tm_hour << ':' 
+			<< std::setw(2) << std::setfill('0') << mpTime->tm_min << ':' 
+			<< std::setw(2) << std::setfill('0') << mpTime->tm_sec << "] ";
 	}
 }

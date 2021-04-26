@@ -5,5 +5,5 @@
 
 namespace Imp
 {
-	Scope<RendererAPI> RenderCommand::m_pRendererAPI = std::make_unique<OpenGLRendererAPI>();
+	Scope<RendererAPI> RenderCommand::mpRendererAPI = std::make_unique<OpenGLRendererAPI>();
 }

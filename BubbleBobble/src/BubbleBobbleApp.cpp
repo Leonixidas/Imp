@@ -71,8 +71,8 @@ public:
 Imp::Application* Imp::CreateApplication()
 {
 	WindowProps props{};
-	props.m_Height = 720;
-	props.m_Width = 1280;
-	props.m_Title = "Example";
+	props.mHeight = 720;
+	props.mWidth = 1280;
+	props.mTitle = "Example";
 	return new BubbleBobbleApp(props);
 }

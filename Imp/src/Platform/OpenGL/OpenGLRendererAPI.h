@@ -17,7 +17,7 @@ namespace Imp
 		virtual void* GetFrame() override;
 
 	private:
-		uint32_t m_FrameID = 0;
+		uint32_t mFrameID = 0;
 	};
 }
 

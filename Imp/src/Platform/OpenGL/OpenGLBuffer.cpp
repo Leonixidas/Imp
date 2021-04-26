@@ -9,19 +9,19 @@
 
 Imp::OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
 {
-	glCreateBuffers(1, &m_RendererID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+	glCreateBuffers(1, &mRendererID);
+	glBindBuffer(GL_ARRAY_BUFFER, mRendererID);
 	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW);
 }
 
 Imp::OpenGLVertexBuffer::~OpenGLVertexBuffer()
 {
-	glDeleteBuffers(1, &m_RendererID);
+	glDeleteBuffers(1, &mRendererID);
 }
 
 void Imp::OpenGLVertexBuffer::Bind() const
 {
-	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+	glBindBuffer(GL_ARRAY_BUFFER, mRendererID);
 }
 
 void Imp::OpenGLVertexBuffer::UnBind() const
@@ -34,21 +34,21 @@ void Imp::OpenGLVertexBuffer::UnBind() const
 ///////////////////////////////////////////////////////////////////////////
 
 Imp::OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
-	: m_Count(count)
+	: mCount(count)
 {
-	glCreateBuffers(1, &m_RendererID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+	glCreateBuffers(1, &mRendererID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mRendererID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 }
 
 Imp::OpenGLIndexBuffer::~OpenGLIndexBuffer()
 {
-	glDeleteBuffers(1, &m_RendererID);
+	glDeleteBuffers(1, &mRendererID);
 }
 
 void Imp::OpenGLIndexBuffer::Bind() const
 {
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mRendererID);
 }
 
 void Imp::OpenGLIndexBuffer::UnBind() const
@@ -57,8 +57,9 @@ void Imp::OpenGLIndexBuffer::UnBind() const
 }
 
 Imp::OpenGLFrameBuffer::OpenGLFrameBuffer()
+	: mTextureID()
 {
-	glGenFramebuffers(1, &m_BufferID);
+	glGenFramebuffers(1, &mBufferID);
 	
 }
 
@@ -79,5 +80,5 @@ void Imp::OpenGLFrameBuffer::UnBind() const
 
 void* Imp::OpenGLFrameBuffer::GetFrame() const
 {
-	return (void*)m_TextureID;
+	return (void*)(&mTextureID);
 }

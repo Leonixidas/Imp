@@ -21,15 +21,15 @@ namespace Imp
 
 		virtual void Update() override;
 
-		inline virtual void* GetNativeWindow() const override { return m_pWindow; }
+		inline virtual void* GetNativeWindow() const override { return mpWindow; }
 
 	protected:
 		virtual void Init(const WindowProps& props);
 		virtual void ShutDown();
 
 	private:
-		GLFWwindow* m_pWindow;
-		Ref<GraphicsContext> m_pContext;
+		GLFWwindow* mpWindow;
+		Ref<GraphicsContext> mpContext;
 
 		struct WindowData
 		{
@@ -41,9 +41,9 @@ namespace Imp
 			EventCallBack callback{};
 		};
 
-		WindowData m_Data;
+		WindowData mData;
 
-		bool m_Initialized = false;
+		bool mInitialized = false;
 	};
 }
 

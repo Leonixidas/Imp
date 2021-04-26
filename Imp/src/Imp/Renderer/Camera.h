@@ -16,10 +16,10 @@ namespace Imp
 	{
 	public:
 		explicit Camera(const glm::vec3& pos, const glm::vec3& rot)
-			: m_Position(pos)
-			, m_Rotation(rot)
-			, m_Proj()
-			, m_View()
+			: mPosition(pos)
+			, mRotation(rot)
+			, mProj()
+			, mView()
 		{
 		}
 		virtual ~Camera() = default;
@@ -28,27 +28,27 @@ namespace Imp
 		void Translate(const glm::vec3& t);
 
 		//getters
-		const glm::mat4& GetViewMatrix() { return m_View; }
-		const glm::mat4& GetProjectionMatrix() { return m_Proj; }
-		glm::mat4 GetViewProjectionMatrix()	{return m_Proj * m_View;}
+		const glm::mat4& GetViewMatrix() { return mView; }
+		const glm::mat4& GetProjectionMatrix() { return mProj; }
+		glm::mat4 GetViewProjectionMatrix()	{return mProj * mView;}
 
-		const glm::vec3& GetPosition() { return m_Position; }
-		const glm::vec3& GetRotationEuler() { return m_Rotation; }
+		const glm::vec3& GetPosition() { return mPosition; }
+		const glm::vec3& GetRotationEuler() { return mRotation; }
 
-		const CameraType& GetCameraType() { return m_Type; }
+		const CameraType& GetCameraType() { return mType; }
 
 		//setters
-		void SetPosition(const glm::vec3& pos) { m_Position = pos; CalculateViewMatrix(); }
-		void SetRotation(const glm::vec3& rot) { m_Rotation = rot; CalculateViewMatrix(); }
+		void SetPosition(const glm::vec3& pos) { mPosition = pos; CalculateViewMatrix(); }
+		void SetRotation(const glm::vec3& rot) { mRotation = rot; CalculateViewMatrix(); }
 
 		virtual void CalculateViewMatrix() = 0;
 		virtual void CalculateProjectionMatrix() = 0;
 
 	protected:
-		glm::mat4 m_View, m_Proj;
-		glm::vec3 m_Position, m_Rotation;
+		glm::mat4 mView, mProj;
+		glm::vec3 mPosition, mRotation;
 
-		CameraType m_Type = CameraType::DEFAULT;
+		CameraType mType = CameraType::DEFAULT;
 	};
 
 	class PerspectiveCamera : public Camera
@@ -58,16 +58,16 @@ namespace Imp
 		~PerspectiveCamera() = default;
 
 		//getters
-		float GetFOV() { return m_FOVx; }
-		float GetNear() { return m_Near; }
-		float GetFar() { return m_Far; }
-		float GetAspectRatio() { return m_AspectRatio; }
+		float GetFOV() { return mFOVx; }
+		float GetNear() { return mNear; }
+		float GetFar() { return mFar; }
+		float GetAspectRatio() { return mAspectRatio; }
 
 		//setters
-		void SetFOV(float fov) { m_FOVx = fov; CalculateVerticalFOV(); }
-		void SetNear(float n) { m_Near = n;}
-		void SetFar(float f) { m_Far = f;}
-		void SetAspectRatio(float ar) {	m_AspectRatio = ar; CalculateVerticalFOV();	}
+		void SetFOV(float fov) { mFOVx = fov; CalculateVerticalFOV(); }
+		void SetNear(float n) { mNear = n;}
+		void SetFar(float f) { mFar = f;}
+		void SetAspectRatio(float ar) {	mAspectRatio = ar; CalculateVerticalFOV();	}
 
 		//transforms
 		void Translate(const glm::vec3& t);
@@ -79,7 +79,7 @@ namespace Imp
 	private:
 		void CalculateVerticalFOV();
 
-		float m_FOVx, m_FOVy, m_Near, m_Far, m_AspectRatio;
+		float mFOVx, mFOVy, mNear, mFar, mAspectRatio;
 	};
 
 	class OrthographicCamera : public Camera
@@ -92,7 +92,7 @@ namespace Imp
 		virtual void CalculateViewMatrix() override;
 
 	private:
-		float m_Left, m_Right, m_Top, m_Bottom;
+		float mLeft, mRight, mTop, mBottom;
 	};
 }
 
