@@ -6,11 +6,9 @@
 #include "examples/imgui_impl_opengl3.h"
 
 #include "Imp/Application.h"
-#include "Imp/Log.h"
 
 //temporary
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
 
 Imp::ImguiLayer::ImguiLayer()
 	: Layer("ImGuiLayer")
@@ -36,7 +34,7 @@ void Imp::ImguiLayer::OnAttach()
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
-	
+
 	ImGui::StyleColorsDark();
 
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -75,7 +73,7 @@ void Imp::ImguiLayer::End()
 {
 	ImGuiIO& io = ImGui::GetIO();
 	Application& app = Application::GetInstance();
-	io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
+	io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow().GetWidth()), static_cast<float>(app.GetWindow().GetHeight()));
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

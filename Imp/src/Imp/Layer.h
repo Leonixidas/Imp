@@ -1,33 +1,31 @@
 #pragma once
-#include "Core.h"
 #include "Events/Event.h"
-#include <string>
 
 namespace Imp
 {
-	class Layer
-	{
-	public:
-		explicit Layer(const std::string& name);
+class Layer
+{
+public:
+	explicit Layer(std::string const& name);
 
-		virtual ~Layer();
+	virtual ~Layer() = default;
 
-		virtual void OnAttach();
-		virtual void OnDetach();
-		virtual void Update();
-		virtual void Render();
-		virtual void OnImGuiRender();
-		virtual void OnEvent(Event& e);
-		virtual void OnEnabled() {}
+	virtual void OnAttach() = 0;
+	virtual void OnDetach() = 0;
+	virtual void Update() = 0;
+	virtual void Render() = 0;
+	virtual void OnImGuiRender() = 0;
+	virtual void OnEvent(Event& e) = 0;
+	virtual void OnEnabled() = 0;
 
-		void SetEnabled(bool enabled);
-		inline bool GetEnabled() const { return m_IsEnabled; }
+	void SetEnabled(bool const enabled);
+	bool GetEnabled() const { return m_IsEnabled; }
 
-		inline const std::string& GetName() const { return m_LayerName; }
+	std::string const& GetName() const { return m_LayerName; }
 
-	protected:
-		std::string m_LayerName;
-		bool m_IsEnabled = true;
-	};
+protected:
+	std::string m_LayerName;
+	bool m_IsEnabled = true;
+};
 }
 

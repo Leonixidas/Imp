@@ -5,26 +5,26 @@
 namespace Imp
 {
 
-	void MeshManager::AddMesh(const Ref<Mesh>& mesh)
+void MeshManager::AddMesh(Ref<Mesh> const& mesh)
+{
+	if (m_Meshes.find(mesh->m_Name) == m_Meshes.end())
 	{
-		if (m_Meshes.find(mesh->Name) == m_Meshes.end())
-		{
-			m_Meshes[mesh->Name] = mesh;
-		}
-		else
-		{
-			Log::Error("Mesh with name '" + mesh->Name + "' already exists");
-		}
+		m_Meshes[mesh->m_Name] = mesh;
 	}
+	else
+	{
+		Log::Error("Mesh with name '" + mesh->m_Name + "' already exists");
+	}
+}
 
-	void MeshManager::DeleteMesh(const std::string& name)
-	{
-		
-	}
+void MeshManager::DeleteMesh(std::string const& name)
+{
 
-	Ref<Mesh>& MeshManager::GetMesh(const std::string& name)
-	{
-		return m_Meshes[name];
-	}
+}
+
+Ref<Mesh>& MeshManager::GetMesh(std::string const& name)
+{
+	return m_Meshes[name];
+}
 
 }

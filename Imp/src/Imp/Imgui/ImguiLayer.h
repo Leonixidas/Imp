@@ -6,23 +6,23 @@
 
 namespace Imp
 {
-	class ImguiLayer :	public Layer
-	{
-	public:
-		ImguiLayer();
-		~ImguiLayer();
+class ImguiLayer :	public Layer
+{
+public:
+	ImguiLayer();
+	~ImguiLayer() override;
 
-		virtual void OnAttach() override;
-		virtual void OnDetach() override;
-		virtual void OnImGuiRender() override;
+	virtual void OnAttach() override;
+	virtual void OnDetach() override;
+	virtual void OnImGuiRender() override;
 
-		void Begin();
-		void End();
+	void Begin();
+	void End();
 
-	private:
-		//Variables
-		float m_Time = 0.0f;
-	};
+private:
+	//Variables
+	float m_Time = 0.0f;
+};
 }
 
 

@@ -3,95 +3,109 @@
 
 namespace Imp
 {
-	class KeyEvent : public Event
+class KeyEvent : public Event
+{
+public:
+	virtual int GetCategoryFlags() const override { return int(EventCategory::Input) & int(EventCategory::Keyboard); }
+	inline int GetKeyCode() { return m_KeyCode; }
+
+protected:
+	KeyEvent(int const keyCode)
+		: m_KeyCode(keyCode)
+	{ }
+
+	int m_KeyCode = 0;
+};
+
+
+class KeyPressedEvent : public KeyEvent
+{
+public:
+	KeyPressedEvent(int const keyCode, bool const repeated)
+		: KeyEvent(keyCode)
+		, m_Repeated(repeated)
+	{ }
+
+	bool GetIsRepeated() const { return m_Repeated; }
+
+	static EventType GetStaticType() { return EventType::KeyPressed; }
+	virtual EventType GetEventType() const override { return GetStaticType(); }
+
+	virtual std::string DebugInfo() const override
 	{
-	public:
-		virtual int GetCategoryFlags() const override { return int(EventCategory::Input) & int(EventCategory::Keyboard); }
-		inline int GetKeyCode() { return m_KeyCode; }
-
-	protected:
-		KeyEvent(int keyCode)
-			: m_KeyCode(keyCode)
-		{ }
-
-		int m_KeyCode = 0;
-	};
-
-
-	class KeyPressedEvent : public KeyEvent
-	{
-	public:
-		KeyPressedEvent(int keyCode, bool repeated)
-			: KeyEvent(keyCode)
-			, m_Repeated(repeated)
-		{ }
-
-		bool GetIsRepeated() { return m_Repeated; }
-
-		static EventType GetStaticType() { return EventType::KeyPressed; }
-		virtual EventType GetEventType() const override { return GetStaticType(); }
-
-		virtual const std::string DebugInfo() const override
+		int scanCode = glfwGetKeyScancode(m_KeyCode);
+		const char* name = glfwGetKeyName(m_KeyCode, scanCode);
+		if (name != nullptr)
 		{
-			int scanCode = glfwGetKeyScancode(m_KeyCode);
-			const char* name = glfwGetKeyName(m_KeyCode, scanCode);
-			if (name != nullptr)
+			if (!m_Repeated)
 			{
-				if (!m_Repeated)
-					return "KeyPressedEvent: '" + std::string(name) + "' got pressed";
-				else
-					return "KeyPressedEvent: '" + std::string(name) + "' got pressed as a repeat";
+				return "KeyPressedEvent: '" + std::string(name) + "' got pressed";
 			}
 			else
-				return "";
-
+			{
+				return "KeyPressedEvent: '" + std::string(name) + "' got pressed as a repeat";
+			}
+		}
+		else
+		{
+			return "";
 		}
 
-	private:
-		bool m_Repeated = false;
-	};
+	}
 
-	class KeyReleasedEvent : public KeyEvent
+private:
+	bool m_Repeated = false;
+};
+
+class KeyReleasedEvent : public KeyEvent
+{
+public:
+	KeyReleasedEvent(int const keyCode)
+		: KeyEvent(keyCode)
 	{
-	public:
-		KeyReleasedEvent(int keyCode)
-			: KeyEvent(keyCode)
-		{
-		}
+	}
 
-		static EventType GetStaticType() { return EventType::KeyReleased; }
-		virtual EventType GetEventType() const override { return GetStaticType(); }
+	static EventType GetStaticType() { return EventType::KeyReleased; }
+	virtual EventType GetEventType() const override { return GetStaticType(); }
 
-		virtual const std::string DebugInfo() const override
-		{
-			int scanCode = glfwGetKeyScancode(m_KeyCode);
-			const char* name = glfwGetKeyName(m_KeyCode, scanCode);
-			if (name != nullptr)
-				return "KeyReleasedEvent: '" + std::string(name) + "' got released";
-			else
-				return "";
-		}
-	};
-
-	class KeyTypedEvent : public KeyEvent
+	virtual std::string DebugInfo() const override
 	{
-	public:
-		KeyTypedEvent(int keyCode)
-			: KeyEvent(keyCode)
+		int scanCode = glfwGetKeyScancode(m_KeyCode);
+		const char* name = glfwGetKeyName(m_KeyCode, scanCode);
+		if (name != nullptr)
 		{
+			return "KeyReleasedEvent: '" + std::string(name) + "' got released";
 		}
-
-		static EventType GetStaticType() { return EventType::KeyTyped; }
-		virtual EventType GetEventType() const override { return GetStaticType(); }
-
-		virtual const std::string DebugInfo() const override
+		else
 		{
-			int scanCode = glfwGetKeyScancode(m_KeyCode);
-			const char* name = glfwGetKeyName(m_KeyCode, scanCode);
-			if (name != nullptr)
-				return "KeyTypedEvent: '" + std::string(name) + "'";
-			else
-				return "";
+			return "";
 		}
-	};
+	}
+};
+
+class KeyTypedEvent : public KeyEvent
+{
+public:
+	KeyTypedEvent(int const keyCode)
+		: KeyEvent(keyCode)
+	{
+	}
+
+	static EventType GetStaticType() { return EventType::KeyTyped; }
+	virtual EventType GetEventType() const override { return GetStaticType(); }
+
+	virtual std::string DebugInfo() const override
+	{
+		int scanCode = glfwGetKeyScancode(m_KeyCode);
+		const char* name = glfwGetKeyName(m_KeyCode, scanCode);
+		if (name != nullptr)
+		{
+			return "KeyTypedEvent: '" + std::string(name) + "'";
+		}
+		else
+		{
+			return "";
+		}
+	}
+};
 }

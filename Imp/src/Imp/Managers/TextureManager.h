@@ -6,18 +6,18 @@
 
 namespace Imp
 {
-	class TextureManager : public Singleton<TextureManager>
-	{
-	public:
-		TextureManager() {}
-		~TextureManager() = default;
+class TextureManager : public Singleton<TextureManager>
+{
+public:
+	TextureManager() = default;
+	~TextureManager() = default;
 
-		void AddTexture(const Ref<Texture2D>& tex, const std::string& name = "Texture");
-		void DeleteTexture(const std::string& name);
+	void AddTexture(Ref<Texture2D> const& tex, std::string const& name = "Texture");
+	void DeleteTexture(std::string const& name);
 
-		Ref<Texture2D>& GetTexture(const std::string& name);
+	Ref<Texture2D>& GetTexture(std::string const& name);
 
-	private:
-		std::unordered_map<std::string, Texture2D> m_Textures;
-	};
+private:
+	std::unordered_map<std::string, Texture2D> m_Textures;
+};
 }

@@ -3,14 +3,10 @@
 
 namespace Imp
 {
-	class Component
-	{
-	public:
-		Component() {};
-		virtual ~Component() = default;
-
-	private:
-		//friend class GameObject;
-
-	};
+class Component
+{
+public:
+	Component() {};
+	virtual ~Component() = default;
+};
 }

@@ -5,7 +5,7 @@
 #include "Imp/Log.h"
 
 
-Imp::Ref<Imp::Shader> Imp::Shader::Create(const std::string& filePath)
+Imp::Ref<Imp::Shader> Imp::Shader::Create(std::string const& filePath)
 {
 	switch (Renderer::GetAPI())
 	{
@@ -17,7 +17,7 @@ Imp::Ref<Imp::Shader> Imp::Shader::Create(const std::string& filePath)
 	return nullptr;
 }
 
-Imp::Ref<Imp::Shader> Imp::Shader::Create(const std::string& vertexSrc, const std::string& pixelSrc)
+Imp::Ref<Imp::Shader> Imp::Shader::Create(std::string const& vertexSrc, std::string const& pixelSrc)
 {
 	switch (Renderer::GetAPI())
 	{

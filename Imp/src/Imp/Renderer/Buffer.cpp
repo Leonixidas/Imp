@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
-Imp::Ref<Imp::VertexBuffer> Imp::VertexBuffer::Create(float* vertices, uint32_t size)
+Imp::Ref<Imp::VertexBuffer> Imp::VertexBuffer::Create(float* vertices, uint32_t const size)
 {
 	switch (Renderer::GetAPI())
 	{
@@ -16,7 +16,7 @@ Imp::Ref<Imp::VertexBuffer> Imp::VertexBuffer::Create(float* vertices, uint32_t 
 	return nullptr;
 }
 
-Imp::Ref<Imp::IndexBuffer> Imp::IndexBuffer::Create(uint32_t* indices, uint32_t count)
+Imp::Ref<Imp::IndexBuffer> Imp::IndexBuffer::Create(uint32_t* indices, uint32_t const count)
 {
 	switch (Renderer::GetAPI())
 	{

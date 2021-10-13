@@ -7,40 +7,38 @@
 
 namespace Imp
 {
-	class Mesh
+class Mesh
+{
+public:
+	Mesh(Ref<VertexArray> const& va, std::string const& name = "Mesh")
+		: m_VA(va)
 	{
-	public:
-		Mesh(const Ref<VertexArray>& va, const std::string& name = "Mesh")
-			: VA(va)
+		if (name == "Mesh")
 		{
-			if (name == "Mesh")
-			{
-				++Nr;
-				Name = name + '_' + std::to_string(Nr);
-			}
+			++m_Nr;
+			m_Name = name + '_' + std::to_string(m_Nr);
 		}
+	}
 
-		Ref<VertexArray> VA;
-		std::string Name;
+	Ref<VertexArray> m_VA;
+	std::string m_Name;
 
-	private:
-		static uint32_t Nr;
-	};
+private:
+	static uint32_t m_Nr;
+};
 
-	class MeshManager : public Singleton<MeshManager>
-	{
-	public:
-		MeshManager() {}
-		~MeshManager() = default;
+class MeshManager : public Singleton<MeshManager>
+{
+public:
+	MeshManager() {}
+	~MeshManager() = default;
 
-		void AddMesh(const Ref<Mesh>& mesh);
-		//void DeleteMesh(uint32_t id);
-		void DeleteMesh(const std::string& name);
+	void AddMesh(Ref<Mesh> const& mesh);
+	void DeleteMesh(std::string const& name);
 
-		//Ref<VertexArray>& GetMesh(uint32_t id);
-		Ref<Mesh>& GetMesh(const std::string& name);
+	Ref<Mesh>& GetMesh(std::string const& name);
 
-	private:
-		std::unordered_map<std::string, Ref<Mesh>> m_Meshes;
-	};
+private:
+	std::unordered_map<std::string, Ref<Mesh>> m_Meshes;
+};
 }

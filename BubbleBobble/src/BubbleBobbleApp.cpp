@@ -25,6 +25,21 @@ public:
 
 	}
 
+	virtual void Update() override
+	{
+
+	}
+
+	virtual void Render() override
+	{
+
+	}
+
+	virtual void OnEnabled() override
+	{
+
+	}
+
 	virtual void OnImGuiRender() override
 	{
 		ImGui::Begin("ExampleLayer");
@@ -32,12 +47,7 @@ public:
 		//ImVec2 size = ImGui::GetWindowSize();
 		//void* id = Imp::Renderer::GetFrame();
 		//ImGui::Image(ImTextureID(id), size);
-		ImGui::End(); 
-	}
-
-	virtual void Update() override
-	{
-
+		ImGui::End();
 	}
 
 	virtual void OnEvent(Imp::Event& e) override
