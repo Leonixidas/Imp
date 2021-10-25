@@ -15,10 +15,12 @@ void Imp::OpenGLContext::Init()
 	// INITIALIZING GLAD
 	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	if (status > 0)
-		IMP_INFO("Glad is initialized");
+	{
+		IMP_CORE_TRACE("Glad is initialized");
+	}
 	else
 	{
-		IMP_ERROR("Glad was not initialized!");
+		IMP_CORE_FATAL("Glad was not initialized! Exited with id = {0}", status);
 #ifdef IMP_DEBUG
 		__debugbreak();
 #endif

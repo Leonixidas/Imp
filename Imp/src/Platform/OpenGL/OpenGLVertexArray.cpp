@@ -5,27 +5,26 @@
 namespace Imp
 {
 
-	static GLenum GetShaderDataTypeToGLenum(ShaderDataType type)
+static GLenum GetShaderDataTypeToGLenum(ShaderDataType type)
+{
+	switch (type)
 	{
-		switch (type)
-		{
-		case ShaderDataType::Float:		return GL_FLOAT;
-		case ShaderDataType::Float2:	return GL_FLOAT;
-		case ShaderDataType::Float3:	return GL_FLOAT;
-		case ShaderDataType::Float4:	return GL_FLOAT;
-		case ShaderDataType::Mat3:		return GL_FLOAT;
-		case ShaderDataType::Mat4:		return GL_FLOAT;
-		case ShaderDataType::Int:		return GL_INT;
-		case ShaderDataType::Int2:		return GL_INT;
-		case ShaderDataType::Int3:		return GL_INT;
-		case ShaderDataType::Int4:		return GL_INT;
-		case ShaderDataType::Bool:		return GL_BOOL;
-		}
-
-		IMP_ERROR("UNKNOWN SHADER DATA TYPE!");
-
+	case ShaderDataType::Float:		return GL_FLOAT;
+	case ShaderDataType::Float2:	return GL_FLOAT;
+	case ShaderDataType::Float3:	return GL_FLOAT;
+	case ShaderDataType::Float4:	return GL_FLOAT;
+	case ShaderDataType::Mat3:		return GL_FLOAT;
+	case ShaderDataType::Mat4:		return GL_FLOAT;
+	case ShaderDataType::Int:		return GL_INT;
+	case ShaderDataType::Int2:		return GL_INT;
+	case ShaderDataType::Int3:		return GL_INT;
+	case ShaderDataType::Int4:		return GL_INT;
+	case ShaderDataType::Bool:		return GL_BOOL;
+	default:
+		IMP_CORE_FATAL("UNKNOWN SHADER DATA TYPE!");
 		return 0;
 	}
+}
 }
 
 Imp::OpenGLVertexArray::OpenGLVertexArray()
@@ -66,11 +65,11 @@ void Imp::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuff
 	{
 		glEnableVertexAttribArray(index);
 		glVertexAttribPointer(index,
-			element.GetComponentCount(),
-			GetShaderDataTypeToGLenum(element.Type),
-			element.Normalized,
-			layout.GetStride(),
-			(const void*)size_t(element.Offset));
+							  element.GetComponentCount(),
+							  GetShaderDataTypeToGLenum(element.Type),
+							  element.Normalized,
+							  layout.GetStride(),
+							  (const void*)size_t(element.Offset));
 		++index;
 	}
 

@@ -23,7 +23,7 @@ void Imp::LayerManager::PushLayer(Ref<Layer> const& layer)
 	}
 	else
 	{
-		Log::Warn("Layer already pushed on the stack: " + layer->GetName());
+		IMP_CORE_WARN("Layer already pushed on the stack: {0}", layer->GetName());
 	}
 }
 
@@ -40,7 +40,7 @@ void Imp::LayerManager::PopLayer(Ref<Layer> const& layer)
 	}
 	else
 	{
-		Log::Warn("Layer is not in the stack: " + layer->GetName());
+		IMP_CORE_WARN("Layer is not in the stack: {0}", layer->GetName());
 	}
 }
 
@@ -55,7 +55,7 @@ void Imp::LayerManager::PushOverlay(Ref<Layer> const& overlay)
 	}
 	else
 	{
-		Log::Warn("Layer already pushed on the stack: " + overlay->GetName());
+		IMP_CORE_WARN("Layer already pushed on the stack: {0}", overlay->GetName());
 	}
 }
 
@@ -70,6 +70,6 @@ void Imp::LayerManager::PopOverlay(Ref<Layer> const& overlay)
 	}
 	else
 	{
-		Log::Warn("Layer is not in the stack: " + overlay->GetName());
+		IMP_CORE_WARN("Layer is not in the stack: {0}", overlay->GetName());
 	}
 }

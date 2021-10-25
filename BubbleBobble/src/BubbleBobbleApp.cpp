@@ -16,7 +16,7 @@ public:
 
 	virtual void OnAttach() override
 	{
-		IMP_INFO("CLIENT: ExampleLayer attached");
+		IMP_TRACE("ExampleLayer attached");
 
 	}
 

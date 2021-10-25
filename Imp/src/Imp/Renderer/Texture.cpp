@@ -5,28 +5,24 @@
 
 namespace Imp
 {
-	Ref<Texture2D> Texture2D::Create(const std::string& path)
+Ref<Texture2D> Texture2D::Create(const std::string& path)
+{
+	switch (Renderer::GetAPI())
 	{
-		switch (Renderer::GetAPI())
-		{
-		case RendererAPI::API::None: IMP_ERROR("We do not support NONE as an API"); return nullptr;
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLTexture2D>(path);
-		}
-
-		IMP_WARNING("Unknown renderAPI type");
-
+	case RendererAPI::API::OpenGL: return std::make_shared<OpenGLTexture2D>(path);
+	default:
+		IMP_CORE_ERROR("We do not support NONE as an API");
 		return nullptr;
 	}
-	Ref<FontTexture> FontTexture::Create()
+}
+Ref<FontTexture> FontTexture::Create()
+{
+	switch (Renderer::GetAPI())
 	{
-		switch (Renderer::GetAPI())
-		{
-		case RendererAPI::API::None: IMP_ERROR("We do not support NONE as an API"); return nullptr;
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLFontTexture>();
-		}
-
-		IMP_WARNING("Unknown renderAPI type");
-
+	case RendererAPI::API::OpenGL: return std::make_shared<OpenGLFontTexture>();
+	default:
+		IMP_CORE_ERROR("We do not support NONE as an API");
 		return nullptr;
 	}
+}
 }

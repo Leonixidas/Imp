@@ -1,46 +1,34 @@
 #pragma once
 #include "Core.h"
 #include <string>
+#include "spdlog/spdlog.h"
 
 namespace Imp
 {
-	enum class Level
-	{
-		INFO = 0x0007,
-		SUCCEED = 0x0002,
-		WARN = 0x0006,
-		FATAL = 0x0004
-	};
+class Log
+{
+public:
+	static void Init();
 
-	class Log
-	{
-	public:
-		static void Info(const std::string& message);
-		static void Succeed(const std::string& message);
-		static void Warn(const std::string& message);
-		static void Error(const std::string& message);
+	inline static Ref<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+	inline static Ref<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
 
-		static void StartFileLogging(const std::string& fileName);
-		static void EndFileLogging();
-
-		static void CleanUp();
-
-	private:
-		static void CalculateTime();
-		static void PrintTime();
-		static tm* m_pTime;
-	};
+private:
+	static Ref<spdlog::logger> s_CoreLogger;
+	static Ref<spdlog::logger> s_ClientLogger;
+};
 }
 
-#ifdef IMP_DEBUG
-#define IMP_INFO(x) ::Imp::Log::Info(x)
-#define IMP_SUCCEED(x) ::Imp::Log::Succeed(x)
-#define IMP_WARNING(x) ::Imp::Log::Warn(x)
-#define IMP_ERROR(x) ::Imp::Log::Error(x)
-#else
-#define IMP_INFO(x)
-#define IMP_SUCCEED(x)
-#define IMP_WARNING(x)
-#define IMP_ERROR(x)
-#endif
+//Core log macros
+#define IMP_CORE_ERROR(...)	::Imp::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define IMP_CORE_WARN(...)	::Imp::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define IMP_CORE_INFO(...)	::Imp::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define IMP_CORE_TRACE(...) ::Imp::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define IMP_CORE_FATAL(...) ::Imp::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
+//Client log macros
+#define IMP_ERROR(...)		::Imp::Log::GetClientLogger()->error(__VA_ARGS__)
+#define IMP_WARN(...)		::Imp::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define IMP_INFO(...)		::Imp::Log::GetClientLogger()->info(__VA_ARGS__)
+#define IMP_TRACE(...)		::Imp::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define IMP_FATAL(...)		::Imp::Log::GetClientLogger()->critical(__VA_ARGS__)

@@ -25,6 +25,7 @@ IncludeDir["glm"] = "Imp/Libs/glm"
 IncludeDir["Imgui"] = "Imp/Libs/Imgui"
 IncludeDir["stb_image"] = "Imp/Libs/stb_image"
 IncludeDir["box2d"] = "Imp/Libs/box2d"
+IncludeDir["spdlog"] = "Imp/Libs/spdlog/include"
 
 
 LibDirs = {}
@@ -67,6 +68,7 @@ project "Imp"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.Imgui}",
+		"%{IncludeDir.spdlog}",
         "%{IncludeDir.stb_image}",
         "%{IncludeDir.box2d}/include",
         "%{IncludeDir.box2d}/src",
@@ -142,7 +144,8 @@ project "BubbleBobble"
             "3rdParty/VLD/include",
             "Imp/Libs",
             "%{IncludeDir.glm}",
-            "%{IncludeDir.box2d}"
+            "%{IncludeDir.box2d}",
+			"%{IncludeDir.spdlog}"
         }
 
         links

@@ -1,5 +1,6 @@
 #pragma once
 #include "Event.h"
+#include <sstream>
 
 namespace Imp
 {
@@ -8,37 +9,33 @@ class WindowCloseEvent : public Event
 {
 public:
 	WindowCloseEvent() = default;
-	static EventType GetStaticType() { return EventType::WindowClose; }
-	virtual EventType GetEventType() const override { return GetStaticType(); }
-	virtual int GetCategoryFlags() const override { return int(EventCategory::Window); }
-
-	virtual std::string DebugInfo() const override
-	{
-		return "WindowCloseEvent: Window is being closed.";
-	}
+	EVENT_CLASS_TYPE(WindowClose)
+	EVENT_CLASS_CATEGORY(EventCategoryApplication)
 };
 
 class WindowResizeEvent : public Event
 {
 public:
-	WindowResizeEvent(float const w, float const h)
+	WindowResizeEvent(int const w, int const h)
 		: m_Width(w)
 		, m_Height(h)
 	{ }
 
-	static EventType GetStaticType() { return EventType::WindowResize; }
-	virtual EventType GetEventType()const override { return GetStaticType(); }
-	virtual int GetCategoryFlags() const override { return static_cast<int>(EventCategory::Window); }
+	inline int GetWidth() const { return m_Width; }
+	inline int GetHeight() const { return m_Height; }
 
-	inline float GetWidth() const { return m_Width; }
-	inline float GetHeight() const { return m_Height; }
-
-	virtual std::string DebugInfo() const override
+	std::string ToString() const override
 	{
-		return "WindowResizeEvent: new window size [" + std::to_string(m_Width) + ',' + std::to_string(m_Height) + "].";
+		std::stringstream ss;
+		ss << GetName() << ": x=" << m_Width << " y=" << m_Height;
+		return ss.str();
 	}
 
+	EVENT_CLASS_TYPE(WindowResize)
+	EVENT_CLASS_CATEGORY(EventCategoryApplication)
+
+
 private:
-	float m_Width, m_Height;
+	int m_Width, m_Height;
 };
 }

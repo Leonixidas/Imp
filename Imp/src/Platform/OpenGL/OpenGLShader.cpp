@@ -7,9 +7,13 @@
 static GLenum ShaderTypeFromString(const std::string& type)
 {
 	if (type == "vertex")
+	{
 		return GL_VERTEX_SHADER;
+	}
 	else if (type == "pixel" || type == "fragment")
+	{
 		return GL_FRAGMENT_SHADER;
+	}
 
 	return 0;
 }
@@ -89,7 +93,7 @@ void Imp::OpenGLShader::LoadSVInt(const std::string& name, int value)
 void Imp::OpenGLShader::LoadSVInt2(const std::string& name, const glm::ivec2& value)
 {
 	GLint location = GetUniformLocation(name);
-	glUniform2iv(location,1, glm::value_ptr(value));
+	glUniform2iv(location, 1, glm::value_ptr(value));
 }
 
 void Imp::OpenGLShader::LoadSVInt3(const std::string& name, const glm::ivec3& value)
@@ -172,8 +176,10 @@ void Imp::OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::stri
 		glDeleteProgram(program);
 		// Don't leak shaders either.
 		for (auto id : glShaderIDs)
+		{
 			glDeleteShader(id);
-		
+		}
+
 
 #ifdef IMP_DEBUG
 		__debugbreak();
@@ -183,7 +189,9 @@ void Imp::OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::stri
 	}
 
 	for (auto id : glShaderIDs)
+	{
 		glDetachShader(program, id);
+	}
 
 	m_RendererID = program;
 }
@@ -202,7 +210,7 @@ std::string Imp::OpenGLShader::ReadFile(const std::string& filePath)
 	}
 	else
 	{
-		IMP_ERROR("Could not open file: " + filePath);
+		IMP_CORE_ERROR("Could not open file: {0}", filePath);
 	}
 	return result;
 }
@@ -219,7 +227,8 @@ std::unordered_map<GLenum, std::string> Imp::OpenGLShader::PreProcess(const std:
 	while (pos != std::string::npos)
 	{
 		size_t eol = source.find_first_of("\r\n", pos);
-		if (eol == std::string::npos) return {};
+		if (eol == std::string::npos)
+			return {};
 		size_t begin = pos + typeTokenLength + 1;
 		std::string type = source.substr(begin, eol - begin);
 		size_t nextLine = source.find_first_not_of("\r\n", eol);
@@ -233,7 +242,9 @@ std::unordered_map<GLenum, std::string> Imp::OpenGLShader::PreProcess(const std:
 GLint Imp::OpenGLShader::GetUniformLocation(const std::string& name) const
 {
 	if (m_UniformCache.find(name) != m_UniformCache.end())
+	{
 		return m_UniformCache[name];
+	}
 
 	GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 	m_UniformCache[name] = location;

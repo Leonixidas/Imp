@@ -9,11 +9,10 @@ Imp::Ref<Imp::VertexArray> Imp::VertexArray::Create()
 {
 	switch (Renderer::GetAPI())
 	{
-	case RendererAPI::API::None: IMP_ERROR("NONE as API is not supported"); return nullptr;
 	case RendererAPI::API::OpenGL: return std::make_shared<OpenGLVertexArray>();
+	default:
+		IMP_CORE_FATAL("API with id: {0} is not supported!", Renderer::GetAPI());
+		return nullptr;
 	}
 
-	IMP_ERROR("Unknown Render API");
-
-	return nullptr;
 }

@@ -19,7 +19,7 @@ Application::Application(const WindowProps& props)
 {
 	if (m_pInstance != nullptr)
 	{
-		IMP_ERROR("There already exists an application");
+		IMP_CORE_WARN("There already exists an application");
 	}
 
 	m_pInstance.reset(this);
@@ -63,7 +63,6 @@ void Application::OnEvent(Event& e)
 			++iter;
 		}
 	}
-
 }
 
 bool Application::OnWindowClose(WindowCloseEvent& e)
@@ -74,7 +73,7 @@ bool Application::OnWindowClose(WindowCloseEvent& e)
 
 void Application::Run()
 {
-	IMP_INFO("Starting Application");
+	IMP_CORE_TRACE("Starting Application");
 	while (m_Running)
 	{
 		RenderCommand::SetClearColor({ 1.0f, 0.f, 1.f, 1.f });
@@ -112,7 +111,7 @@ void Application::Run()
 		m_pWindow->Update();
 	}
 
-	IMP_INFO("Closing Application");
+	IMP_CORE_TRACE("Closing Application");
 }
 void Application::CleanUp()
 {

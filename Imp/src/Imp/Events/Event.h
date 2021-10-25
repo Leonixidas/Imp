@@ -15,15 +15,21 @@ enum class EventType
 // Categories will help us sort the events in groups that allows us to only notify the observers that want events from a certain category
 // for example: The Input manager manager only wants to get events that are initiated by the actions of the user (like a mouse click)
 // an event can have multiple flags enabled, this allows for a more specific distribution inside the input manager for example
-enum class EventCategory
+enum EventCategory
 {
 	None			= 0,
-	Input			= 1 << 0,
-	Mouse			= 1 << 1,
-	Keyboard		= 1 << 2,
-	MouseButton		= 1 << 3,
-	Window			= 1 << 4
+	EventCategoryApplication		= 1 << 0,
+	EventCategoryInput			= 1 << 1,
+	EventCategoryMouse			= 1 << 2,
+	EventCategoryKeyboard		= 1 << 3,
+	EventCategoryMouseButton		= 1 << 4
 };
+
+#define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
+	virtual EventType GetEventType() const override { return GetStaticType(); }\
+	virtual char const* GetName() const override { return #type; }
+
+#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
 class Event
 {
@@ -33,7 +39,9 @@ public:
 	virtual ~Event() = default;
 
 	virtual EventType GetEventType() const = 0;
+	virtual char const* GetName() const = 0;
 	virtual int GetCategoryFlags() const = 0;
+	virtual std::string ToString() const { return GetName(); }
 
 	inline bool IsInCategory(int const category)
 	{
@@ -41,8 +49,6 @@ public:
 	}
 
 	bool IsHandled() { return m_IsHandled; }
-
-	virtual std::string DebugInfo() const = 0;
 
 protected:
 	bool m_IsHandled = false;
@@ -78,4 +84,9 @@ public:
 private:
 	Event& m_Event;
 };
+
+inline std::ostream& operator<<(std::ostream& os, Event const& e)
+{
+	return os << e.ToString();
+}
 }

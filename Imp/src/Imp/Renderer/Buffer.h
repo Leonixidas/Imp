@@ -24,12 +24,10 @@ static uint32_t GetShaderDataTypeSize(ShaderDataType type)
 	case ShaderDataType::Int3:		return 4 * 3;
 	case ShaderDataType::Int4:		return 4 * 4;
 	case ShaderDataType::Bool:		return 1;
-	case ShaderDataType::None:		return 0;
+	default:
+		IMP_CORE_FATAL("UNKNOWN SHADER DATA TYPE!");
+		return 0;
 	}
-
-	IMP_ERROR("UNKNOWN SHADER DATA TYPE!");
-
-	return 0;
 }
 
 struct Vertex
@@ -63,8 +61,9 @@ public:
 
 		if (index + size >= BufferSize)
 		{
-			Log::Error("shader data type doesn't fit in buffer starting at given index");
-		} return;
+			IMP_CORE_ERROR("Shader data type doesn't fit in buffer starting at given index");
+			return;
+		}
 
 		for (uint32_t i = 0; i < size; ++i)
 		{
@@ -77,7 +76,7 @@ public:
 	{
 		if (index + sizeof(T) >= BufferSize)
 		{
-			Log::Error("the size of the given type doesn't fit in the buffer at the given index");
+			IMP_CORE_ERROR("The size of the given type doesn't fit in the buffer at the given index");
 			return nullptr;
 		}
 
@@ -120,12 +119,10 @@ struct BufferElement
 		case ShaderDataType::Int3:		return 3;
 		case ShaderDataType::Int4:		return 4;
 		case ShaderDataType::Bool:		return 1;
-		case ShaderDataType::None:		return 0;
+		default:
+			IMP_CORE_FATAL("UNKNOWN SHADER DATA TYPE!");
+			return 0;
 		}
-
-		IMP_ERROR("UNKNOWN SHADER DATA TYPE!");
-
-		return 0;
 	}
 };
 

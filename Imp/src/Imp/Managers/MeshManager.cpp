@@ -13,7 +13,7 @@ void MeshManager::AddMesh(Ref<Mesh> const& mesh)
 	}
 	else
 	{
-		Log::Error("Mesh with name '" + mesh->m_Name + "' already exists");
+		IMP_CORE_WARN("Mesh with name {0} already exists", mesh->m_Name);
 	}
 }
 
