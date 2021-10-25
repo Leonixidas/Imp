@@ -61,18 +61,6 @@ void Renderer2D::EndScene()
 
 }
 
-void Renderer2D::CreateInstancedBuffer(std::vector<glm::mat4>& matrices)
-{
-	Ref<VertexBuffer> vert = VertexBuffer::Create(&matrices[0][0][0], uint32_t(matrices.size() * sizeof(glm::mat4)));
-
-	Imp::BufferLayout layout =
-	{
-		{ShaderDataType::Mat4, "vWorld"}
-	};
-
-	m_p2DData->m_pInstanceVertexArray->AddInstancedBuffer(vert, m_p2DData->m_pTextureInstShader->GetAttributeLocation("vWorld"));
-}
-
 void Renderer2D::Submit(const Ref<VertexArray>& pVertexArray, const Ref<Texture2D>& pTexture, const glm::mat4& world)
 {
 	pTexture->Bind();
@@ -127,29 +115,6 @@ void Renderer2D::DrawQuadFlatColor(const glm::vec4& color)
 	//Bind the vertex array for drawing
 	m_p2DData->m_pVertexArray->Bind();
 	RenderCommand::DrawIndexed(m_p2DData->m_pVertexArray);
-}
-
-void Renderer2D::DrawQuadInstanced(const Ref<Texture2D>& pTexture, const std::vector<glm::mat4>& matrices, const glm::vec4& texCoords)
-{
-	//Update shader variables
-	m_p2DData->m_pTextureInstShader->Bind();
-	m_p2DData->m_pTextureInstShader->LoadSVMat4("u_ViewProjection", m_p2DData->m_pOrthoCamera->GetViewProjectionMatrix());
-
-	for (size_t i = 0; i < matrices.size(); ++i)
-	{
-		m_p2DData->m_pTextureInstShader->LoadSVMat4("u_Matrices[" + std::to_string(i) + ']', matrices[i]);
-	}
-
-	//Bind the texture to use
-	pTexture->Bind();
-
-	//Bind the vertex array for drawing
-	m_p2DData->m_pVertexArray->Bind();
-	RenderCommand::DrawInstanced(m_p2DData->m_pVertexArray, uint32_t(matrices.size()));
-}
-
-void Renderer2D::SubmitInstancedBufferData(std::vector<glm::mat4>& world)
-{
 }
 
 void Renderer2D::SubmitBufferData(const glm::vec4& uvs)

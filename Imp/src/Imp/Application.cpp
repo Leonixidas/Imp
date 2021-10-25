@@ -77,8 +77,8 @@ void Application::Run()
 	IMP_INFO("Starting Application");
 	while (m_Running)
 	{
-		Imp::RenderCommand::SetClearColor({ 1.0f, 0.f, 1.f, 1.f });
-		Imp::RenderCommand::Clear();
+		RenderCommand::SetClearColor({ 1.0f, 0.f, 1.f, 1.f });
+		RenderCommand::Clear();
 
 		Time::GetInstance()->Update();
 
@@ -98,7 +98,6 @@ void Application::Run()
 			}
 		}
 
-		//PhysicsManager::Render();
 #ifdef IMP_DEBUG
 		m_pImGuiLayer->Begin();
 		for (Ref<Layer> layer : m_LayerManager)
