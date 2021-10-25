@@ -11,3 +11,6 @@
 [submodule "Imp/Libs/box2d"]
 	path = Imp/Libs/box2d
 	url = https://github.com/Leonixidas/box2d
+[submodule "Imp/Libs/spdlog"]
+	path = Imp/Libs/spdlog
+	url = https://github.com/gabime/spdlog
