@@ -10,13 +10,13 @@ public:
 
 	virtual ~Layer() = default;
 
-	virtual void OnAttach() = 0;
-	virtual void OnDetach() = 0;
-	virtual void Update() = 0;
-	virtual void Render() = 0;
-	virtual void OnImGuiRender() = 0;
-	virtual void OnEvent(Event& e) = 0;
-	virtual void OnEnabled() = 0;
+	virtual void OnAttach();
+	virtual void OnDetach();
+	virtual void Update();
+	virtual void Render();
+	virtual void OnImGuiRender() ;
+	virtual void OnEvent(Event& e);
+	virtual void OnEnabled() {}
 
 	void SetEnabled(bool const enabled);
 	bool GetEnabled() const { return m_IsEnabled; }
