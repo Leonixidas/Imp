@@ -50,23 +50,23 @@ void WindowsWindow::Init(const WindowProps& props)
 	}
 
 
-	m_pWindow = glfwCreateWindow(m_Data.width, m_Data.height, m_Data.title.c_str(), nullptr, nullptr);
-	m_pContext = Ref<GraphicsContext>(new OpenGLContext(m_pWindow));
+	m_Window = glfwCreateWindow(m_Data.width, m_Data.height, m_Data.title.c_str(), nullptr, nullptr);
+	m_pContext = Ref<GraphicsContext>(new OpenGLContext(m_Window));
 
 	m_pContext->Init();
 
-	glfwSetWindowUserPointer(m_pWindow, &m_Data);
+	glfwSetWindowUserPointer(m_Window, &m_Data);
 	SetVSync(true);
 
 	//Set GLFW callback functions for events
-	glfwSetWindowCloseCallback(m_pWindow, [](GLFWwindow * window)
+	glfwSetWindowCloseCallback(m_Window, [](GLFWwindow * window)
 	{
 		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 		WindowCloseEvent e;
 		data.callback(e);
 	});
 
-	glfwSetWindowSizeCallback(m_pWindow, [](GLFWwindow * window, int x, int y)
+	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow * window, int x, int y)
 	{
 		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 		data.width = x;
@@ -77,7 +77,7 @@ void WindowsWindow::Init(const WindowProps& props)
 		data.callback(e);
 	});
 
-	glfwSetMouseButtonCallback(m_pWindow, [](GLFWwindow * window, int button, int action, int mods)
+	glfwSetMouseButtonCallback(m_Window, [](GLFWwindow * window, int button, int action, int mods)
 	{
 		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -85,13 +85,13 @@ void WindowsWindow::Init(const WindowProps& props)
 		{
 		case GLFW_PRESS:
 		{
-			MouseButtonPressedEvent e{ button, false };
+			MouseButtonPressedEvent e{ static_cast<MouseCode>(button), false };
 			data.callback(e);
 			break;
 		}
 		case GLFW_RELEASE:
 		{
-			MouseButtonReleasedEvent e{ button };
+			MouseButtonReleasedEvent e{ static_cast<MouseCode>(button) };
 
 			data.callback(e);
 			break;
@@ -99,7 +99,7 @@ void WindowsWindow::Init(const WindowProps& props)
 		}
 	});
 
-	glfwSetKeyCallback(m_pWindow, [](GLFWwindow * window, int key, int scancode, int action, int mods)
+	glfwSetKeyCallback(m_Window, [](GLFWwindow * window, int key, int scancode, int action, int mods)
 	{
 		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -107,33 +107,33 @@ void WindowsWindow::Init(const WindowProps& props)
 		{
 		case GLFW_PRESS:
 		{
-			KeyPressedEvent e{ key, false };
+			KeyPressedEvent e{ static_cast<KeyCode>(key), false };
 			data.callback(e);
 			break;
 		}
 		case GLFW_RELEASE:
 		{
-			KeyReleasedEvent e{ key };
+			KeyReleasedEvent e{ static_cast<KeyCode>(key) };
 			data.callback(e);
 			break;
 		}
 		case GLFW_REPEAT:
 		{
-			KeyPressedEvent e{ key, true };
+			KeyPressedEvent e{ static_cast<KeyCode>(key), true };
 			data.callback(e);
 			break;
 		}
 		}
 	});
 
-	glfwSetCharCallback(m_pWindow, [](GLFWwindow * window, uint32_t key)
+	glfwSetCharCallback(m_Window, [](GLFWwindow * window, uint32_t key)
 	{
 		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-		KeyTypedEvent e{ (int)key };
+		KeyTypedEvent e{ static_cast<KeyCode>(key) };
 		data.callback(e);
 	});
 
-	glfwSetScrollCallback(m_pWindow, [](GLFWwindow * window, double xOffset, double yOffset)
+	glfwSetScrollCallback(m_Window, [](GLFWwindow * window, double xOffset, double yOffset)
 	{
 		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -142,7 +142,7 @@ void WindowsWindow::Init(const WindowProps& props)
 		data.callback(e);
 	});
 
-	glfwSetCursorPosCallback(m_pWindow, [](GLFWwindow * window, double x, double y)
+	glfwSetCursorPosCallback(m_Window, [](GLFWwindow * window, double x, double y)
 	{
 		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -188,7 +188,7 @@ void WindowsWindow::SetVSync(bool vsync)
 
 void WindowsWindow::ShutDown()
 {
-	glfwDestroyWindow(m_pWindow);
+	glfwDestroyWindow(m_Window);
 	glfwTerminate();
 }
 }

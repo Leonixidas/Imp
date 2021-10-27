@@ -611,7 +611,7 @@
     <ClInclude Include="src\Imp\Log.h" />
     <ClInclude Include="src\Imp\Managers\MeshManager.h" />
     <ClInclude Include="src\Imp\Managers\TextureManager.h" />
-    <ClInclude Include="src\Imp\MouseButtonCodes.h" />
+    <ClInclude Include="src\Imp\MouseCodes.h" />
     <ClInclude Include="src\Imp\Renderer\Buffer.h" />
     <ClInclude Include="src\Imp\Renderer\Camera.h" />
     <ClInclude Include="src\Imp\Renderer\GraphicsContext.h" />

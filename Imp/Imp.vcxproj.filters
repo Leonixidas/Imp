@@ -1344,9 +1344,6 @@
     <ClInclude Include="src\Imp\Managers\TextureManager.h">
       <Filter>src\Imp\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Imp\MouseButtonCodes.h">
-      <Filter>src\Imp</Filter>
-    </ClInclude>
     <ClInclude Include="src\Imp\Renderer\Buffer.h">
       <Filter>src\Imp\Renderer</Filter>
     </ClInclude>
@@ -1409,6 +1406,9 @@
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Imp\MouseCodes.h">
+      <Filter>src\Imp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

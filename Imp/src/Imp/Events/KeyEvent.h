@@ -1,6 +1,7 @@
 #pragma once
 #include "Event.h"
 #include <sstream>
+#include "Imp/KeyCodes.h"
 
 namespace Imp
 {
@@ -8,21 +9,21 @@ class KeyEvent : public Event
 {
 public:
 	EVENT_CLASS_CATEGORY(EventCategoryInput | EventCategoryKeyboard)
-	inline int GetKeyCode() { return m_KeyCode; }
+	inline KeyCode GetKeyCode() { return m_KeyCode; }
 
 protected:
-	KeyEvent(int const keyCode)
+	KeyEvent(KeyCode const keyCode)
 		: m_KeyCode(keyCode)
 	{ }
 
-	int m_KeyCode = 0;
+	KeyCode m_KeyCode = 0;
 };
 
 
 class KeyPressedEvent : public KeyEvent
 {
 public:
-	KeyPressedEvent(int const keyCode, uint16_t const repeated)
+	KeyPressedEvent(KeyCode const keyCode, uint16_t const repeated)
 		: KeyEvent(keyCode)
 		, m_RepeatCount(repeated)
 	{ }
@@ -45,7 +46,7 @@ private:
 class KeyReleasedEvent : public KeyEvent
 {
 public:
-	KeyReleasedEvent(int const keyCode)
+	KeyReleasedEvent(KeyCode const keyCode)
 		: KeyEvent(keyCode)
 	{
 	}
@@ -63,7 +64,7 @@ public:
 class KeyTypedEvent : public KeyEvent
 {
 public:
-	KeyTypedEvent(int const keyCode)
+	KeyTypedEvent(KeyCode const keyCode)
 		: KeyEvent(keyCode)
 	{
 	}
