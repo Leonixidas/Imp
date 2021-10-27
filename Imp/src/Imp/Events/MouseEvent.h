@@ -1,6 +1,7 @@
 #pragma once
 #include "Event.h"
 #include <sstream>
+#include "Imp/MouseCodes.h"
 
 namespace Imp
 {
@@ -12,16 +13,17 @@ public:
 	EVENT_CLASS_CATEGORY(EventCategoryMouseButton | EventCategoryInput | EventCategoryMouse)
 
 protected:
-	MouseButtonEvent(int const mouseButton)
+	MouseButtonEvent(MouseCode const mouseButton)
 		: m_MouseButton(mouseButton)
 	{}
-	int m_MouseButton;
+
+	MouseCode m_MouseButton;
 };
 
 class MouseButtonPressedEvent : public MouseButtonEvent
 {
 public:
-	MouseButtonPressedEvent(int const mouseButton, bool const repeated)
+	MouseButtonPressedEvent(MouseCode const mouseButton, bool const repeated)
 		: MouseButtonEvent(mouseButton)
 		, m_IsRepeated(repeated)
 	{ }
@@ -44,7 +46,7 @@ private:
 class MouseButtonReleasedEvent : public MouseButtonEvent
 {
 public:
-	MouseButtonReleasedEvent(int const mouseButton)
+	MouseButtonReleasedEvent(MouseCode const mouseButton)
 		: MouseButtonEvent(mouseButton)
 	{ }
 

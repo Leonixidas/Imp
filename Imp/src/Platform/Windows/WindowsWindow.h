@@ -21,14 +21,14 @@ namespace Imp
 
 		virtual void Update() override;
 
-		inline virtual void* GetNativeWindow() const override { return m_pWindow; }
+		inline virtual void* GetNativeWindow() const override { return m_Window; }
 
 	protected:
 		virtual void Init(const WindowProps& props);
 		virtual void ShutDown();
 
 	private:
-		GLFWwindow* m_pWindow;
+		GLFWwindow* m_Window;
 		Ref<GraphicsContext> m_pContext;
 
 		struct WindowData
