@@ -1,6 +1,6 @@
  [submodule "Imp/Libs/GLFW"]
  	path = Imp/Libs/GLFW
- 	url = https://github.com/Leonixidas/glfw
+	url = git@github.com:Leonixidas/glfw.git
 [submodule "Imp/Libs/glm"]
 	path = Imp/Libs/glm
 	url = https://github.com/g-truc/glm
