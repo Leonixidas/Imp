@@ -11,7 +11,7 @@ Imp::Ref<Imp::Shader> Imp::Shader::Create(std::string const& filePath)
 	{
 	case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(filePath);
 	default:
-		IMP_CORE_FATAL("API with id: {0} is not supported!", Renderer::GetAPI());
+		IMP_CORE_FATAL("API with id: {0} is not supported!", static_cast<int>(Renderer::GetAPI()));
 		return nullptr;
 
 	}
@@ -23,7 +23,7 @@ Imp::Ref<Imp::Shader> Imp::Shader::Create(std::string const& vertexSrc, std::str
 	{
 	case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(vertexSrc, pixelSrc);
 	default:
-		IMP_CORE_FATAL("API with id: {0} is not supported!", Renderer::GetAPI());
+		IMP_CORE_FATAL("API with id: {0} is not supported!", static_cast<int>(RendererAPI::GetAPI()));
 		return nullptr;
 	}
 }

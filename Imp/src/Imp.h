@@ -1,5 +1,5 @@
 #pragma once
-
+#define GLM_ENABLE_EXPERIMENTAL
 //This needs to be included by the applications using Imp
 //Core engine classes
 #include "Imp/Application.h"

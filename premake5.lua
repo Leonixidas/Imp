@@ -41,9 +41,10 @@ project "Imp"
         location "Imp"
         kind "StaticLib"
         language "C++"
-        cppdialect "C++21"
+        cppdialect "C++23"
         staticruntime "on"
-
+    
+    buildoptions{"/utf-8"}
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -126,9 +127,10 @@ project "BubbleBobble"
         location "BubbleBobble"
         kind "ConsoleApp"
         language "C++"
-        cppdialect "C++21"
+        cppdialect "C++23"
         staticruntime "on"
-
+        
+        buildoptions{"/utf-8"}
         targetdir ("bin/" .. outputdir .. "/%{prj.name}")
         objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 

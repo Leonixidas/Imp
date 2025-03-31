@@ -11,7 +11,7 @@ Imp::Ref<Imp::VertexArray> Imp::VertexArray::Create()
 	{
 	case RendererAPI::API::OpenGL: return std::make_shared<OpenGLVertexArray>();
 	default:
-		IMP_CORE_FATAL("API with id: {0} is not supported!", Renderer::GetAPI());
+		IMP_CORE_FATAL("API with id: {0} is not supported!", static_cast<int>(Renderer::GetAPI()));
 		return nullptr;
 	}
 

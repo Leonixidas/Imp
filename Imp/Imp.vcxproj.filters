@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Libs">
@@ -82,6 +82,9 @@
       <Filter>Libs\glm\glm\detail</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\detail\compute_common.hpp">
+      <Filter>Libs\glm\glm\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\glm\glm\detail\compute_vector_decl.hpp">
       <Filter>Libs\glm\glm\detail</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\detail\compute_vector_relational.hpp">
@@ -240,7 +243,7 @@
     <ClInclude Include="Libs\glm\glm\detail\type_vec4.inl">
       <Filter>Libs\glm\glm\detail</Filter>
     </ClInclude>
-    <ClInclude Include="Libs\glm\glm\detail\type_vec4_simd.inl">
+    <ClInclude Include="Libs\glm\glm\detail\type_vec_simd.inl">
       <Filter>Libs\glm\glm\detail</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\exponential.hpp">
@@ -248,6 +251,9 @@
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\ext.hpp">
       <Filter>Libs\glm\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\glm\glm\ext\_matrix_vectorize.hpp">
+      <Filter>Libs\glm\glm\ext</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\ext\matrix_clip_space.hpp">
       <Filter>Libs\glm\glm\ext</Filter>
@@ -423,6 +429,12 @@
     <ClInclude Include="Libs\glm\glm\ext\matrix_int4x4_sized.hpp">
       <Filter>Libs\glm\glm\ext</Filter>
     </ClInclude>
+    <ClInclude Include="Libs\glm\glm\ext\matrix_integer.hpp">
+      <Filter>Libs\glm\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\glm\glm\ext\matrix_integer.inl">
+      <Filter>Libs\glm\glm\ext</Filter>
+    </ClInclude>
     <ClInclude Include="Libs\glm\glm\ext\matrix_projection.hpp">
       <Filter>Libs\glm\glm\ext</Filter>
     </ClInclude>
@@ -573,6 +585,12 @@
     <ClInclude Include="Libs\glm\glm\ext\scalar_packing.inl">
       <Filter>Libs\glm\glm\ext</Filter>
     </ClInclude>
+    <ClInclude Include="Libs\glm\glm\ext\scalar_reciprocal.hpp">
+      <Filter>Libs\glm\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\glm\glm\ext\scalar_reciprocal.inl">
+      <Filter>Libs\glm\glm\ext</Filter>
+    </ClInclude>
     <ClInclude Include="Libs\glm\glm\ext\scalar_relational.hpp">
       <Filter>Libs\glm\glm\ext</Filter>
     </ClInclude>
@@ -702,6 +720,12 @@
     <ClInclude Include="Libs\glm\glm\ext\vector_packing.inl">
       <Filter>Libs\glm\glm\ext</Filter>
     </ClInclude>
+    <ClInclude Include="Libs\glm\glm\ext\vector_reciprocal.hpp">
+      <Filter>Libs\glm\glm\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\glm\glm\ext\vector_reciprocal.inl">
+      <Filter>Libs\glm\glm\ext</Filter>
+    </ClInclude>
     <ClInclude Include="Libs\glm\glm\ext\vector_relational.hpp">
       <Filter>Libs\glm\glm\ext</Filter>
     </ClInclude>
@@ -826,9 +850,6 @@
       <Filter>Libs\glm\glm\gtc</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\gtc\reciprocal.hpp">
-      <Filter>Libs\glm\glm\gtc</Filter>
-    </ClInclude>
-    <ClInclude Include="Libs\glm\glm\gtc\reciprocal.inl">
       <Filter>Libs\glm\glm\gtc</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\gtc\round.hpp">
@@ -969,7 +990,7 @@
     <ClInclude Include="Libs\glm\glm\gtx\fast_trigonometry.inl">
       <Filter>Libs\glm\glm\gtx</Filter>
     </ClInclude>
-    <ClInclude Include="Libs\glm\glm\gtx\float_notmalize.inl">
+    <ClInclude Include="Libs\glm\glm\gtx\float_normalize.inl">
       <Filter>Libs\glm\glm\gtx</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\gtx\functions.hpp">
@@ -1095,9 +1116,6 @@
     <ClInclude Include="Libs\glm\glm\gtx\number_precision.hpp">
       <Filter>Libs\glm\glm\gtx</Filter>
     </ClInclude>
-    <ClInclude Include="Libs\glm\glm\gtx\number_precision.inl">
-      <Filter>Libs\glm\glm\gtx</Filter>
-    </ClInclude>
     <ClInclude Include="Libs\glm\glm\gtx\optimum_pow.hpp">
       <Filter>Libs\glm\glm\gtx</Filter>
     </ClInclude>
@@ -1108,6 +1126,12 @@
       <Filter>Libs\glm\glm\gtx</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\gtx\orthonormalize.inl">
+      <Filter>Libs\glm\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\glm\glm\gtx\pca.hpp">
+      <Filter>Libs\glm\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\glm\glm\gtx\pca.inl">
       <Filter>Libs\glm\glm\gtx</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\gtx\perpendicular.hpp">
@@ -1180,6 +1204,12 @@
       <Filter>Libs\glm\glm\gtx</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\gtx\string_cast.inl">
+      <Filter>Libs\glm\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\glm\glm\gtx\structured_bindings.hpp">
+      <Filter>Libs\glm\glm\gtx</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\glm\glm\gtx\structured_bindings.inl">
       <Filter>Libs\glm\glm\gtx</Filter>
     </ClInclude>
     <ClInclude Include="Libs\glm\glm\gtx\texture.hpp">

@@ -100,7 +100,9 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,7 +123,9 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,7 +149,9 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -170,7 +176,9 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -191,6 +199,7 @@
     <ClInclude Include="Libs\glm\glm\detail\_swizzle_func.hpp" />
     <ClInclude Include="Libs\glm\glm\detail\_vectorize.hpp" />
     <ClInclude Include="Libs\glm\glm\detail\compute_common.hpp" />
+    <ClInclude Include="Libs\glm\glm\detail\compute_vector_decl.hpp" />
     <ClInclude Include="Libs\glm\glm\detail\compute_vector_relational.hpp" />
     <ClInclude Include="Libs\glm\glm\detail\func_common.inl" />
     <ClInclude Include="Libs\glm\glm\detail\func_common_simd.inl" />
@@ -243,9 +252,10 @@
     <ClInclude Include="Libs\glm\glm\detail\type_vec3.inl" />
     <ClInclude Include="Libs\glm\glm\detail\type_vec4.hpp" />
     <ClInclude Include="Libs\glm\glm\detail\type_vec4.inl" />
-    <ClInclude Include="Libs\glm\glm\detail\type_vec4_simd.inl" />
+    <ClInclude Include="Libs\glm\glm\detail\type_vec_simd.inl" />
     <ClInclude Include="Libs\glm\glm\exponential.hpp" />
     <ClInclude Include="Libs\glm\glm\ext.hpp" />
+    <ClInclude Include="Libs\glm\glm\ext\_matrix_vectorize.hpp" />
     <ClInclude Include="Libs\glm\glm\ext\matrix_clip_space.hpp" />
     <ClInclude Include="Libs\glm\glm\ext\matrix_clip_space.inl" />
     <ClInclude Include="Libs\glm\glm\ext\matrix_common.hpp" />
@@ -304,6 +314,8 @@
     <ClInclude Include="Libs\glm\glm\ext\matrix_int4x3_sized.hpp" />
     <ClInclude Include="Libs\glm\glm\ext\matrix_int4x4.hpp" />
     <ClInclude Include="Libs\glm\glm\ext\matrix_int4x4_sized.hpp" />
+    <ClInclude Include="Libs\glm\glm\ext\matrix_integer.hpp" />
+    <ClInclude Include="Libs\glm\glm\ext\matrix_integer.inl" />
     <ClInclude Include="Libs\glm\glm\ext\matrix_projection.hpp" />
     <ClInclude Include="Libs\glm\glm\ext\matrix_projection.inl" />
     <ClInclude Include="Libs\glm\glm\ext\matrix_relational.hpp" />
@@ -354,6 +366,8 @@
     <ClInclude Include="Libs\glm\glm\ext\scalar_integer.inl" />
     <ClInclude Include="Libs\glm\glm\ext\scalar_packing.hpp" />
     <ClInclude Include="Libs\glm\glm\ext\scalar_packing.inl" />
+    <ClInclude Include="Libs\glm\glm\ext\scalar_reciprocal.hpp" />
+    <ClInclude Include="Libs\glm\glm\ext\scalar_reciprocal.inl" />
     <ClInclude Include="Libs\glm\glm\ext\scalar_relational.hpp" />
     <ClInclude Include="Libs\glm\glm\ext\scalar_relational.inl" />
     <ClInclude Include="Libs\glm\glm\ext\scalar_uint_sized.hpp" />
@@ -397,6 +411,8 @@
     <ClInclude Include="Libs\glm\glm\ext\vector_integer.inl" />
     <ClInclude Include="Libs\glm\glm\ext\vector_packing.hpp" />
     <ClInclude Include="Libs\glm\glm\ext\vector_packing.inl" />
+    <ClInclude Include="Libs\glm\glm\ext\vector_reciprocal.hpp" />
+    <ClInclude Include="Libs\glm\glm\ext\vector_reciprocal.inl" />
     <ClInclude Include="Libs\glm\glm\ext\vector_relational.hpp" />
     <ClInclude Include="Libs\glm\glm\ext\vector_relational.inl" />
     <ClInclude Include="Libs\glm\glm\ext\vector_uint1.hpp" />
@@ -439,7 +455,6 @@
     <ClInclude Include="Libs\glm\glm\gtc\random.hpp" />
     <ClInclude Include="Libs\glm\glm\gtc\random.inl" />
     <ClInclude Include="Libs\glm\glm\gtc\reciprocal.hpp" />
-    <ClInclude Include="Libs\glm\glm\gtc\reciprocal.inl" />
     <ClInclude Include="Libs\glm\glm\gtc\round.hpp" />
     <ClInclude Include="Libs\glm\glm\gtc\round.inl" />
     <ClInclude Include="Libs\glm\glm\gtc\type_aligned.hpp" />
@@ -486,7 +501,7 @@
     <ClInclude Include="Libs\glm\glm\gtx\fast_square_root.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\fast_trigonometry.hpp" />
     <ClInclude Include="Libs\glm\glm\gtx\fast_trigonometry.inl" />
-    <ClInclude Include="Libs\glm\glm\gtx\float_notmalize.inl" />
+    <ClInclude Include="Libs\glm\glm\gtx\float_normalize.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\functions.hpp" />
     <ClInclude Include="Libs\glm\glm\gtx\functions.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\gradient_paint.hpp" />
@@ -528,11 +543,12 @@
     <ClInclude Include="Libs\glm\glm\gtx\normalize_dot.hpp" />
     <ClInclude Include="Libs\glm\glm\gtx\normalize_dot.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\number_precision.hpp" />
-    <ClInclude Include="Libs\glm\glm\gtx\number_precision.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\optimum_pow.hpp" />
     <ClInclude Include="Libs\glm\glm\gtx\optimum_pow.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\orthonormalize.hpp" />
     <ClInclude Include="Libs\glm\glm\gtx\orthonormalize.inl" />
+    <ClInclude Include="Libs\glm\glm\gtx\pca.hpp" />
+    <ClInclude Include="Libs\glm\glm\gtx\pca.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\perpendicular.hpp" />
     <ClInclude Include="Libs\glm\glm\gtx\perpendicular.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\polar_coordinates.hpp" />
@@ -557,6 +573,8 @@
     <ClInclude Include="Libs\glm\glm\gtx\std_based_type.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\string_cast.hpp" />
     <ClInclude Include="Libs\glm\glm\gtx\string_cast.inl" />
+    <ClInclude Include="Libs\glm\glm\gtx\structured_bindings.hpp" />
+    <ClInclude Include="Libs\glm\glm\gtx\structured_bindings.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\texture.hpp" />
     <ClInclude Include="Libs\glm\glm\gtx\texture.inl" />
     <ClInclude Include="Libs\glm\glm\gtx\transform.hpp" />
