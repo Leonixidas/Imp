@@ -7,10 +7,10 @@ namespace Imp
 {
 	struct Character
 	{
-		glm::vec4 uv;
-		glm::vec2 Size;
-		glm::vec2 Offset;
-		float AdvanceX;
+		glm::vec4 m_Uv;
+		glm::vec2 m_Size;
+		glm::vec2 m_Offset;
+		float m_AdvanceX;
 	};
 
 	class Texture

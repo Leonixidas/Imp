@@ -1392,7 +1392,7 @@
     <ClInclude Include="src\Imp\Renderer\Renderer.h">
       <Filter>src\Imp\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Imp\Renderer\RendererAPI.h">
+    <ClInclude Include="src\Imp\Renderer\RendererApi.h">
       <Filter>src\Imp\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Imp\Renderer\Shader.h">
@@ -1484,7 +1484,7 @@
     <ClCompile Include="src\Imp\Renderer\Renderer.cpp">
       <Filter>src\Imp\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Imp\Renderer\RendererAPI.cpp">
+    <ClCompile Include="src\Imp\Renderer\RendererApi.cpp">
       <Filter>src\Imp\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Imp\Renderer\Shader.cpp">

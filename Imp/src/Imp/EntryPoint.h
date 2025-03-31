@@ -9,6 +9,5 @@ int main(int argc, char** argv)
 	Imp::Log::Init();
 	auto app = Imp::CreateApplication();
 	app->Run();
-
 }
 #endif

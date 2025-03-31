@@ -17,8 +17,8 @@ PerspectiveCamera::PerspectiveCamera(glm::vec3 const& pos, glm::vec3 const& rot,
 {
 	m_Type = CameraType::PERSPECTIVE;
 	CalculateVerticalFOV();
-	CalculateViewMatrix();
-	CalculateProjectionMatrix();
+	PerspectiveCamera::CalculateViewMatrix();
+	PerspectiveCamera::CalculateProjectionMatrix();
 }
 
 void PerspectiveCamera::CalculateProjectionMatrix()
@@ -61,8 +61,8 @@ OrthographicCamera::OrthographicCamera(glm::vec3 const& pos, glm::vec3 const& ro
 	, m_Bottom(bottom)
 {
 	m_Type = CameraType::ORTHO;
-	CalculateViewMatrix();
-	CalculateProjectionMatrix();
+	OrthographicCamera::CalculateViewMatrix();
+	OrthographicCamera::CalculateProjectionMatrix();
 }
 
 void OrthographicCamera::CalculateProjectionMatrix()

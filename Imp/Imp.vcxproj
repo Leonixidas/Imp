@@ -635,7 +635,7 @@
     <ClInclude Include="src\Imp\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Imp\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Imp\Renderer\Renderer.h" />
-    <ClInclude Include="src\Imp\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Imp\Renderer\RendererApi.h" />
     <ClInclude Include="src\Imp\Renderer\Shader.h" />
     <ClInclude Include="src\Imp\Renderer\Texture.h" />
     <ClInclude Include="src\Imp\Renderer\VertexArray.h" />
@@ -667,7 +667,7 @@
     <ClCompile Include="src\Imp\Renderer\Camera.cpp" />
     <ClCompile Include="src\Imp\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Imp\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Imp\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Imp\Renderer\RendererApi.cpp" />
     <ClCompile Include="src\Imp\Renderer\Shader.cpp" />
     <ClCompile Include="src\Imp\Renderer\Texture.cpp" />
     <ClCompile Include="src\Imp\Renderer\VertexArray.cpp" />

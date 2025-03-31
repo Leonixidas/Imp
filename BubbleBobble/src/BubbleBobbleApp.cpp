@@ -10,14 +10,15 @@ public:
 	ExampleLayer()
 		: Layer("Example Layer")
 	{
+		Imp::RenderCommand::SetClearColor(glm::vec4(1, 1, 1, 1));
+		Imp::RenderCommand::Clear();
 	}
 
-	~ExampleLayer() = default;
+	~ExampleLayer() override = default;
 
 	virtual void OnAttach() override
 	{
 		IMP_TRACE("ExampleLayer attached");
-
 	}
 
 	virtual void OnDetach() override
@@ -32,7 +33,7 @@ public:
 
 	virtual void Render() override
 	{
-
+		
 	}
 
 	virtual void OnEnabled() override
@@ -44,16 +45,19 @@ public:
 	{
 		ImGui::Begin("ExampleLayer");
 		ImGui::Text("Hello It's a me!");
-		//ImVec2 size = ImGui::GetWindowSize();
-		//void* id = Imp::Renderer::GetFrame();
-		//ImGui::Image(ImTextureID(id), size);
+		ImVec2 size = ImGui::GetWindowSize();
+		auto const id = Imp::Renderer::GetFrame();
+		ImGui::GetWindowDrawList()->AddImage(id, ImVec2(0,0), size);
 		ImGui::End();
 	}
 
 	virtual void OnEvent(Imp::Event& e) override
 	{
 		Imp::EventDispatcher dispatcher{ e };
-		dispatcher.Dispatch<Imp::MouseMovedEvent>(BIND_EVENT_FUNC(ExampleLayer::OnMouseMovedEvent));
+		dispatcher.Dispatch<Imp::MouseMovedEvent>([this]<typename T0>(T0 && ph1)
+		{
+			return OnMouseMovedEvent(std::forward<T0>(ph1));
+		});
 	}
 
 	bool OnMouseMovedEvent(Imp::MouseMovedEvent& e)
@@ -68,14 +72,13 @@ private:
 class BubbleBobbleApp : public Imp::Application
 {
 public:
-	BubbleBobbleApp(const Imp::WindowProps& props)
+	explicit BubbleBobbleApp(const Imp::WindowProps& props)
 		: Application(props)
 	{
 		PushLayer(std::make_shared<ExampleLayer>(ExampleLayer()));
 	}
 
-	virtual ~BubbleBobbleApp()
-	{}
+	~BubbleBobbleApp() override = default;
 };
 
 Imp::Application* Imp::CreateApplication()

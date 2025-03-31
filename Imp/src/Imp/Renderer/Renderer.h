@@ -17,9 +17,9 @@ public:
 
 	static void Submit(const Ref<Shader>& pShader, const Ref<VertexArray>& pVertexArray);
 
-	static void* GetFrame();
+	static uint32_t GetFrame();
 
-	inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+	inline static RendererApi::Api GetApi() { return RendererApi::GetApi(); }
 
 
 private:
@@ -57,7 +57,7 @@ public:
 
 	static bool HasFont(const std::string& fontname);
 
-	inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
+	inline static RendererApi::Api GetApi() { return RendererApi::GetApi(); }
 
 private:
 	static void SetUVsAndDefaultPos(const glm::vec4& uv);

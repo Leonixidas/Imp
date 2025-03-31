@@ -4,10 +4,10 @@
 
 
 ///////////////////////////////////////////////////////////////////////////
-////////////////////VERTEXBUFFER///////////////////////////////////////////
+////////////////////  VERTEX BUFFER  //////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-Imp::OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
+Imp::OpenGLVertexBuffer::OpenGLVertexBuffer(const float* vertices, uint32_t size)
 {
 	glCreateBuffers(1, &m_RendererID);
 	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
@@ -29,16 +29,16 @@ void Imp::OpenGLVertexBuffer::UnBind() const
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-///////////////////////////////////////////////////////////////////////////
-////////////////////INDEXBUFFER////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+//////////////////// INDEX BUFFER //////////////////////
+////////////////////////////////////////////////////////
 
-Imp::OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
+Imp::OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* indices, uint32_t count)
 	: m_Count(count)
 {
 	glCreateBuffers(1, &m_RendererID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * count, indices, GL_STATIC_DRAW);
 }
 
 Imp::OpenGLIndexBuffer::~OpenGLIndexBuffer()
@@ -56,15 +56,9 @@ void Imp::OpenGLIndexBuffer::UnBind() const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-Imp::OpenGLFrameBuffer::OpenGLFrameBuffer()
+Imp::OpenGLFrameBuffer::OpenGLFrameBuffer(): m_TextureID(0)
 {
 	glGenFramebuffers(1, &m_BufferID);
-	
-}
-
-Imp::OpenGLFrameBuffer::~OpenGLFrameBuffer()
-{
-
 }
 
 void Imp::OpenGLFrameBuffer::Bind() const
@@ -77,7 +71,7 @@ void Imp::OpenGLFrameBuffer::UnBind() const
 
 }
 
-void* Imp::OpenGLFrameBuffer::GetFrame() const
+uint32_t Imp::OpenGLFrameBuffer::GetFrame() const
 {
-	return (void*)m_TextureID;
+	return m_TextureID;
 }

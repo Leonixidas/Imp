@@ -24,7 +24,7 @@ Application::Application(const WindowProps& props)
 
 	m_pInstance.reset(this);
 	m_pWindow = Window::Create(props);
-	m_pWindow->SetEventCallBack(BIND_EVENT_FUNC(Application::OnEvent));
+	m_pWindow->SetEventCallBack([this]<typename T0>(T0&& ph1) { return OnEvent(std::forward<T0>(ph1)); });
 	m_pWindow->SetVSync(false);
 
 	Renderer2D::Init();
@@ -33,20 +33,22 @@ Application::Application(const WindowProps& props)
 	m_pImGuiLayer = std::make_shared<ImguiLayer>();
 	PushOverlay(m_pImGuiLayer);
 
+	RenderCommand::SetClearColor({ 1.0f, 0.f, 1.f, 1.f });
+
 	//Imp::Renderer2D::LoadFont("Assets/Fonts/GameFont.fnt");
 	//Imp::Renderer2D::LoadFont("Assets/Fonts/Arial.fnt");
-
 }
 
 Application::~Application()
 {
-	CleanUp();
+	Application::CleanUp();
 }
 
 void Application::OnEvent(Event& e)
 {
 	EventDispatcher dispatcher(e);
-	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(Application::OnWindowClose));
+	dispatcher.Dispatch<WindowCloseEvent>(
+		[this]<typename T0>(T0&& ph1) { return OnWindowClose(std::forward<T0>(ph1)); });
 
 	for (auto iter = m_LayerManager.rbegin(); iter != m_LayerManager.rend();)
 	{
@@ -76,12 +78,11 @@ void Application::Run()
 	IMP_CORE_TRACE("Starting Application");
 	while (m_Running)
 	{
-		RenderCommand::SetClearColor({ 1.0f, 0.f, 1.f, 1.f });
 		RenderCommand::Clear();
 
 		Time::GetInstance()->Update();
 
-		for (Ref<Layer> layer : m_LayerManager)
+		for (Ref<Layer> const& layer : m_LayerManager)
 		{
 			if (layer->GetEnabled())
 			{
@@ -89,7 +90,7 @@ void Application::Run()
 			}
 		}
 
-		for (Ref<Layer> layer : m_LayerManager)
+		for (Ref<Layer> const& layer : m_LayerManager)
 		{
 			if (layer->GetEnabled())
 			{
@@ -99,7 +100,7 @@ void Application::Run()
 
 #ifdef IMP_DEBUG
 		m_pImGuiLayer->Begin();
-		for (Ref<Layer> layer : m_LayerManager)
+		for (Ref<Layer> const& layer : m_LayerManager)
 		{
 			if (layer->GetEnabled())
 			{
@@ -117,7 +118,7 @@ void Application::CleanUp()
 {
 	Input::ShutDown();
 	Renderer2D::ShutDown();
-	Time::Destory();
+	Time::Destroy();
 }
 void Application::PushLayer(const Ref<Layer>& layer)
 {
@@ -130,7 +131,7 @@ void Application::PushOverlay(const Ref<Layer>& overlay)
 
 void Application::SetLayerEnabled(const std::string& name, bool value)
 {
-	for (Ref<Layer> layer : m_LayerManager)
+	for (Ref<Layer> const& layer : m_LayerManager)
 	{
 		if (layer->GetName() == name)
 		{

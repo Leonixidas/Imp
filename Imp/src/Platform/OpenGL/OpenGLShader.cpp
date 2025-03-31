@@ -48,67 +48,67 @@ void Imp::OpenGLShader::UnBind() const
 	glUseProgram(0);
 }
 
-void Imp::OpenGLShader::LoadSVFloat(const std::string& name, float value)
+void Imp::OpenGLShader::LoadFloat(const std::string& name, float value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform1f(location, value);
 }
 
-void Imp::OpenGLShader::LoadSVFloat2(const std::string& name, const glm::vec2& value)
+void Imp::OpenGLShader::LoadFloat2(const std::string& name, const glm::vec2& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform2fv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadSVFloat3(const std::string& name, const glm::vec3& value)
+void Imp::OpenGLShader::LoadFloat3(const std::string& name, const glm::vec3& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform3fv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadSVFloat4(const std::string& name, const glm::vec4& value)
+void Imp::OpenGLShader::LoadFloat4(const std::string& name, const glm::vec4& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform4fv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadSVMat3(const std::string& name, const glm::mat3& matrix)
+void Imp::OpenGLShader::LoadMat3(const std::string& name, const glm::mat3& matrix)
 {
 	GLint location = GetUniformLocation(name);
 	glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void Imp::OpenGLShader::LoadSVMat4(const std::string& name, const glm::mat4& matrix)
+void Imp::OpenGLShader::LoadMat4(const std::string& name, const glm::mat4& matrix)
 {
 	GLint location = GetUniformLocation(name);
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void Imp::OpenGLShader::LoadSVInt(const std::string& name, int value)
+void Imp::OpenGLShader::LoadInt(const std::string& name, int value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform1i(location, value);
 }
 
-void Imp::OpenGLShader::LoadSVInt2(const std::string& name, const glm::ivec2& value)
+void Imp::OpenGLShader::LoadInt2(const std::string& name, const glm::ivec2& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform2iv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadSVInt3(const std::string& name, const glm::ivec3& value)
+void Imp::OpenGLShader::LoadInt3(const std::string& name, const glm::ivec3& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform3iv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadSVInt4(const std::string& name, const glm::ivec4& value)
+void Imp::OpenGLShader::LoadInt4(const std::string& name, const glm::ivec4& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform4iv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadSVBool(const std::string& name, bool value)
+void Imp::OpenGLShader::LoadBool(const std::string& name, bool value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform1i(location, value);

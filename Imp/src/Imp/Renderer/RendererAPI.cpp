@@ -1,7 +1,7 @@
 #include "ImpPCH.h"
-#include "RendererAPI.h"
+#include "RendererApi.h"
 
 namespace Imp
 {
-	RendererAPI::API RendererAPI::m_API = RendererAPI::API::OpenGL;
+	RendererApi::Api RendererApi::m_Api = RendererApi::Api::OpenGl;
 }

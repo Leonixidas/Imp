@@ -1,5 +1,5 @@
 #pragma once
-#include "RendererAPI.h"
+#include "RendererApi.h"
 
 namespace Imp
 {
@@ -30,12 +30,12 @@ public:
 		m_pRendererAPI->DrawInstanced(vertexArray, instanceCount);
 	}
 
-	inline static void* GetFrame()
+	inline static uint32_t GetFrame()
 	{
-		return m_pRendererAPI->GetFrame();
+		return m_pRendererAPI->GetFrameId();
 	}
 
 private:
-	static Scope<RendererAPI> m_pRendererAPI;
+	static Scope<RendererApi> m_pRendererAPI;
 };
 }

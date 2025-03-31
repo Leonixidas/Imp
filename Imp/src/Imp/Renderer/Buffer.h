@@ -24,89 +24,56 @@ static uint32_t GetShaderDataTypeSize(ShaderDataType type)
 	case ShaderDataType::Int3:		return 4 * 3;
 	case ShaderDataType::Int4:		return 4 * 4;
 	case ShaderDataType::Bool:		return 1;
-	default:
+	case ShaderDataType::None:
 		IMP_CORE_FATAL("UNKNOWN SHADER DATA TYPE!");
 		return 0;
 	}
+
+	return 0;
 }
 
 struct Vertex
 {
-	glm::vec3 Position = {};
-	glm::vec2 uv = {};
+	glm::vec3 m_Position = {};
+	glm::vec2 m_Uv = {};
 };
 
 class ShaderProps
 {
 public:
-	ShaderProps(std::vector<ShaderDataType> const& props)
-	{
-		for (ShaderDataType const& d : props)
-		{
-			BufferSize += GetShaderDataTypeSize(d);
-		}
+	ShaderProps(std::vector<ShaderDataType> const& props);
 
-		Buffer = new char[BufferSize];
-	}
+	~ShaderProps();
 
-	~ShaderProps()
-	{
-		delete[] Buffer;
-		Buffer = nullptr;
-	}
-
-	void SetShaderProperty(uint32_t const index, char const* data, ShaderDataType const type) const
-	{
-		uint32_t size = GetShaderDataTypeSize(type);
-
-		if (index + size >= BufferSize)
-		{
-			IMP_CORE_ERROR("Shader data type doesn't fit in buffer starting at given index");
-			return;
-		}
-
-		for (uint32_t i = 0; i < size; ++i)
-		{
-			Buffer[index] = data[i];
-		}
-	}
+	void SetShaderProperty(uint32_t const index, char const* data, ShaderDataType const type) const;
 
 	template<typename T>
-	T* GetShaderProperty(uint32_t const index)
-	{
-		if (index + sizeof(T) >= BufferSize)
-		{
-			IMP_CORE_ERROR("The size of the given type doesn't fit in the buffer at the given index");
-			return nullptr;
-		}
-
-		return static_cast<T*>(&Buffer[index]);
-	}
+	T* GetShaderProperty(uint32_t const index);
 
 private:
-	char* Buffer = nullptr;
-	uint32_t BufferSize = 0;
+	char* m_Buffer = nullptr;
+	uint32_t m_BufferSize = 0;
 };
 
 struct BufferElement
 {
-	ShaderDataType Type;
-	std::string Name;
-	uint32_t Size;
-	uint32_t Offset;
-	bool Normalized;
+	ShaderDataType m_Type;
+	std::string m_Name;
+	uint32_t m_Size;
+	uint32_t m_Offset;
+	bool m_Normalized;
 
-	BufferElement(ShaderDataType const type, std::string const& name, bool const normalized = false)
-		: Type(type)
-		, Name(name)
-		, Size(GetShaderDataTypeSize(type))
-		, Offset(0)
-		, Normalized(normalized)
+	BufferElement(ShaderDataType const type, std::string name, bool const normalized = false)
+		: m_Type(type)
+		, m_Name(std::move(name))
+		, m_Size(GetShaderDataTypeSize(type))
+		, m_Offset(0)
+		, m_Normalized(normalized)
 	{}
 
 	uint32_t GetComponentCount() const
 	{
-		switch (Type)
+		switch (m_Type)
 		{
 		case ShaderDataType::Float:		return 1;
 		case ShaderDataType::Float2:	return 2;
@@ -119,10 +86,13 @@ struct BufferElement
 		case ShaderDataType::Int3:		return 3;
 		case ShaderDataType::Int4:		return 4;
 		case ShaderDataType::Bool:		return 1;
-		default:
-			IMP_CORE_FATAL("UNKNOWN SHADER DATA TYPE!");
-			return 0;
+		case ShaderDataType::None:
+			{
+				IMP_CORE_FATAL("SHADER DATA TYPE IS SET TO NONE!");
+				return 0;
+			}
 		}
+		return 0;
 	}
 };
 
@@ -130,15 +100,13 @@ class BufferLayout
 {
 public:
 
-	BufferLayout() {}
+	BufferLayout() = default;
 
 	BufferLayout(std::initializer_list<BufferElement> const& layout)
 		: m_Elements(layout)
 	{
 		CalculateElementOffsetAndStride();
 	}
-
-	virtual ~BufferLayout() = default;
 
 	uint32_t GetStride() const { return m_Stride; }
 	inline std::vector<BufferElement> const& GetElements() const { return m_Elements; }
@@ -156,9 +124,9 @@ private:
 		m_Stride = 0;
 		for (auto& element : m_Elements)
 		{
-			element.Offset = offset;
-			offset += element.Size;
-			m_Stride += element.Size;
+			element.m_Offset = offset;
+			offset += element.m_Size;
+			m_Stride += element.m_Size;
 		}
 	}
 
@@ -171,11 +139,11 @@ private:
 class VertexBuffer
 {
 public:
-	virtual ~VertexBuffer() {};
+	virtual ~VertexBuffer() = default;
 	virtual void Bind() const = 0;
 	virtual void UnBind() const = 0;
 
-	virtual uint32_t GetRendererID() = 0;
+	virtual uint32_t GetRendererId() = 0;
 
 	virtual void SetLayout(BufferLayout const& layout) = 0;
 	virtual BufferLayout const& GetLayout() const = 0;
@@ -186,7 +154,7 @@ public:
 class IndexBuffer
 {
 public:
-	virtual ~IndexBuffer() {};
+	virtual ~IndexBuffer() = default;
 	virtual void Bind() const = 0;
 	virtual void UnBind() const = 0;
 
@@ -198,12 +166,12 @@ public:
 class FrameBuffer
 {
 public:
-	virtual ~FrameBuffer() {};
+	virtual ~FrameBuffer() = default;
 
 	virtual void Bind() const = 0;
 	virtual void UnBind() const = 0;
 
-	virtual void* GetFrame() const = 0;
+	virtual uint32_t GetFrame() const = 0;
 
 	static Ref<FrameBuffer> Create();
 };

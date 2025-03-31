@@ -1,9 +1,9 @@
 #pragma once
-#include "Imp/Renderer/RendererAPI.h"
+#include "Imp/Renderer/RendererApi.h"
 
 namespace Imp
 {
-	class OpenGLRendererAPI : public RendererAPI
+	class OpenGLRendererAPI : public RendererApi
 	{
 	public:
 		virtual void Init() override;
@@ -14,7 +14,7 @@ namespace Imp
 
 		void DrawInstanced(const Ref<VertexArray>& vertexArray, uint32_t instanceCount) override;
 
-		virtual void* GetFrame() override;
+		virtual uint32_t GetFrameId() override;
 
 	private:
 		uint32_t m_FrameID = 0;

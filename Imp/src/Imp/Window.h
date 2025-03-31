@@ -23,7 +23,7 @@ namespace Imp
 	public:
 		using EventCallBack = std::function<void(Event&)>;
 
-		virtual ~Window() {}
+		virtual ~Window() = default;
 
 		virtual void Update() = 0;
 		virtual unsigned int GetWidth() const = 0;

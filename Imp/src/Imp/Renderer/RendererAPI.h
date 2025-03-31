@@ -4,26 +4,29 @@
 
 namespace Imp
 {
-class RendererAPI
-{
-public:
-	enum class API
+	class RendererApi
 	{
-		None = 0, OpenGL
+	public:
+		enum class Api
+		{
+			None = 0, OpenGl
+		};
+
+		virtual void Init() = 0;
+		virtual void SetClearColor(glm::vec4 const& color) = 0;
+		virtual void Clear() = 0;
+
+		virtual void DrawIndexed(Ref<VertexArray> const& vertexArray) = 0;
+
+		virtual void DrawInstanced(Ref<VertexArray> const& vertexArray, uint32_t instanceCount) = 0;
+
+		virtual uint32_t GetFrameId() = 0;
+
+		inline static Api GetApi() { return m_Api; }
+
+		virtual ~RendererApi() = default;
+
+	private:
+		static Api m_Api;
 	};
-	virtual void Init() = 0;
-	virtual void SetClearColor(glm::vec4 const& color) = 0;
-	virtual void Clear() = 0;
-
-	virtual void DrawIndexed(Ref<VertexArray> const& vertexArray) = 0;
-
-	virtual void DrawInstanced(Ref<VertexArray> const& vertexArray, uint32_t instanceCount) = 0;
-
-	virtual void* GetFrame() = 0;
-
-	inline static API GetAPI() { return m_API; }
-
-private:
-	static API m_API;
-};
 }

@@ -160,39 +160,39 @@ void OpenGLFontTexture::LoadFont(const std::string& filepath)
 
 			first = result.find(xstr) + xstr.length();
 			second = result.find(' ', first);
-			chr.uv.x = std::stof(result.substr(first, second - first)) / w;
+			chr.m_Uv.x = std::stof(result.substr(first, second - first)) / w;
 
 			first = result.find(ystr) + ystr.length();
 			second = result.find(' ', first);
-			chr.uv.z = std::stof(result.substr(first, second - first)) / h;
+			chr.m_Uv.z = std::stof(result.substr(first, second - first)) / h;
 
 			first = result.find(widthstr) + widthstr.length();
 			second = result.find(' ', first);
-			chr.Size.x = std::stof(result.substr(first, second - first));
-			chr.uv.y = chr.uv.x + chr.Size.x / w;
-			chr.Size.x /= charSize;
+			chr.m_Size.x = std::stof(result.substr(first, second - first));
+			chr.m_Uv.y = chr.m_Uv.x + chr.m_Size.x / w;
+			chr.m_Size.x /= charSize;
 
 			first = result.find(heightstr) + heightstr.length();
 			second = result.find(' ', first);
-			chr.Size.y = y = std::stof(result.substr(first, second - first));
-			chr.uv.w = chr.uv.z - chr.Size.y / h;
-			chr.Size.y /= charSize;
+			chr.m_Size.y = y = std::stof(result.substr(first, second - first));
+			chr.m_Uv.w = chr.m_Uv.z - chr.m_Size.y / h;
+			chr.m_Size.y /= charSize;
 
 			first = result.find(xoffsetstr) + xoffsetstr.length();
 			second = result.find(' ', first);
-			chr.Offset.x = std::stof(result.substr(first, second - first)) / charSize;
+			chr.m_Offset.x = std::stof(result.substr(first, second - first)) / charSize;
 
 			first = result.find(yoffsetstr) + yoffsetstr.length();
 			second = result.find(' ', first);
-			chr.Offset.y = (std::stof(result.substr(first, second - first)) - base) / charSize;
+			chr.m_Offset.y = (std::stof(result.substr(first, second - first)) - base) / charSize;
 
 			first = result.find(xadvancestr) + xadvancestr.length();
 			second = result.find(' ', first);
-			chr.AdvanceX = std::stof(result.substr(first, second - first)) / charSize;
+			chr.m_AdvanceX = std::stof(result.substr(first, second - first)) / charSize;
 
-			chr.uv.z += 1 / h;
-			chr.uv.z += y / w;
-			chr.uv.w += y / h;
+			chr.m_Uv.z += 1 / h;
+			chr.m_Uv.z += y / w;
+			chr.m_Uv.w += y / h;
 			m_FontCharacters[fontName][c] = chr;
 		}
 	}

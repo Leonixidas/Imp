@@ -33,7 +33,7 @@ namespace Imp
 
 		void SetIsRunning(bool value) { m_Running = value; }
 
-		Window& GetWindow() { return *m_pWindow; }
+		Window& GetWindow() const { return *m_pWindow; }
 
 		void PushLayer(const Ref<Layer>& layer);
 		void PushOverlay(const Ref<Layer>& overlay);

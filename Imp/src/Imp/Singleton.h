@@ -4,6 +4,8 @@ namespace Imp
 	template<class T>
 	class Singleton
 	{
+		Singleton() = default;
+
 	public:
 		static T* GetInstance()
 		{
@@ -13,7 +15,7 @@ namespace Imp
 			return m_pInstance;
 		}
 
-		static void Destory()
+		static void Destroy()
 		{
 			if (m_pInstance != nullptr)
 				delete m_pInstance;
@@ -21,6 +23,7 @@ namespace Imp
 
 	private:
 		static T* m_pInstance;
+	friend T;
 	};
 
 	template<class T>

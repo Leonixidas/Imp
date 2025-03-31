@@ -24,18 +24,18 @@ public:
 	}
 	virtual ~Camera() = default;
 
-	void Rotate(glm::vec3 const& rot);
-	void Translate(glm::vec3 const& t);
+	virtual void Rotate(glm::vec3 const& rot);
+	virtual void Translate(glm::vec3 const& t);
 
 	//getters
-	glm::mat4 const& GetViewMatrix() { return m_View; }
-	glm::mat4 const& GetProjectionMatrix() { return m_Proj; }
-	glm::mat4 GetViewProjectionMatrix()	{return m_Proj * m_View;}
+	glm::mat4 const& GetViewMatrix() const { return m_View; }
+	glm::mat4 const& GetProjectionMatrix() const { return m_Proj; }
+	glm::mat4 GetViewProjectionMatrix() const {return m_Proj * m_View;}
 
-	glm::vec3 const& GetPosition() { return m_Position; }
-	glm::vec3 const& GetRotationEuler() { return m_Rotation; }
+	glm::vec3 const& GetPosition() const { return m_Position; }
+	glm::vec3 const& GetRotationEuler() const { return m_Rotation; }
 
-	CameraType const& GetCameraType() { return m_Type; }
+	CameraType const& GetCameraType() const { return m_Type; }
 
 	//setters
 	void SetPosition(glm::vec3 const& pos) { m_Position = pos; CalculateViewMatrix(); }
@@ -70,8 +70,8 @@ public:
 	void SetAspectRatio(float const aspectRatio) {	m_AspectRatio = aspectRatio; CalculateVerticalFOV();	}
 
 	//transforms
-	void Translate(glm::vec3 const& t);
-	void Rotate(glm::vec3 const& r);
+	void Translate(glm::vec3 const& t) override;
+	void Rotate(glm::vec3 const& r) override;
 
 	virtual void CalculateViewMatrix() override;
 	virtual void CalculateProjectionMatrix() override;

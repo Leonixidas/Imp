@@ -10,7 +10,7 @@ namespace Imp
 	{
 	public:
 		WindowsWindow(const WindowProps& props);
-		~WindowsWindow();
+		~WindowsWindow() override;
 
 		virtual uint32_t GetWidth() const override;
 		virtual uint32_t GetHeight() const override;

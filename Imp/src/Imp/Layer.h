@@ -6,7 +6,7 @@ namespace Imp
 class Layer
 {
 public:
-	explicit Layer(std::string const& name);
+	explicit Layer(std::string name);
 
 	virtual ~Layer() = default;
 

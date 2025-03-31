@@ -25,12 +25,12 @@ void Imp::OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
 
 void Imp::OpenGLRendererAPI::DrawInstanced(const Ref<VertexArray>& vertexArray, uint32_t instanceCount)
 {
-	glDrawElementsInstanced(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr, instanceCount);
+	glDrawElementsInstanced(GL_TRIANGLES, static_cast<int>(vertexArray->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr, static_cast<int>(instanceCount));
 }
 
-void* Imp::OpenGLRendererAPI::GetFrame()
+uint32_t Imp::OpenGLRendererAPI::GetFrameId()
 {
 	glGenTextures(1, &m_FrameID);
-	return reinterpret_cast<void*>(m_FrameID);
+	return m_FrameID;
 }
 

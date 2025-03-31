@@ -37,19 +37,19 @@ namespace Imp
 
 	public:
 
-		float GetElapsed()
+		float GetElapsed() const
 		{
 			return m_ElapsedTime;
 		}
 
-		float GetFPS()
+		float GetFps() const
 		{
-			return m_Frames / (float)m_AccumTime;
+			return static_cast<float>(m_Frames) / static_cast<float>(m_AccumTime);
 		}
 
-		float GetAverageTime()
+		float GetAverageTime() const
 		{
-			return m_AccumTime / m_Frames;
+			return m_AccumTime / static_cast<float>(m_Frames);
 		}
 	};
 }

@@ -14,7 +14,7 @@ Imp::LayerManager::~LayerManager()
 
 void Imp::LayerManager::PushLayer(Ref<Layer> const& layer)
 {
-	auto iter = std::find(m_Layers.begin(), m_Layers.end(), layer);
+	auto iter = std::ranges::find(m_Layers, layer);
 
 	if (iter == m_Layers.end())
 	{
@@ -29,7 +29,7 @@ void Imp::LayerManager::PushLayer(Ref<Layer> const& layer)
 
 void Imp::LayerManager::PopLayer(Ref<Layer> const& layer)
 {
-	auto iter = std::find(m_Layers.begin(), m_Layers.end(), layer);
+	auto iter = std::ranges::find(m_Layers, layer);
 
 	if (iter != m_Layers.end())
 	{
@@ -46,7 +46,7 @@ void Imp::LayerManager::PopLayer(Ref<Layer> const& layer)
 
 void Imp::LayerManager::PushOverlay(Ref<Layer> const& overlay)
 {
-	auto iter = std::find(m_Layers.begin(), m_Layers.end(), overlay);
+	auto iter = std::ranges::find(m_Layers, overlay);
 
 	if (iter == m_Layers.end())
 	{
@@ -61,7 +61,7 @@ void Imp::LayerManager::PushOverlay(Ref<Layer> const& overlay)
 
 void Imp::LayerManager::PopOverlay(Ref<Layer> const& overlay)
 {
-	auto iter = std::find(m_Layers.begin(), m_Layers.end(), overlay);
+	auto iter = std::ranges::find(m_Layers, overlay);
 
 	if (iter != m_Layers.end())
 	{
