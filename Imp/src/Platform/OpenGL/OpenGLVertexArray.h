@@ -17,7 +17,7 @@ namespace Imp
 		virtual void AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) override;
 		virtual void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override;
 
-		virtual Ref<IndexBuffer> GetIndexBuffer() const override  { return m_pIndexBuffer; };
+		virtual Ref<IndexBuffer> GetIndexBuffer() const override  { return m_pIndexBuffer; }
 
 		virtual void AddInstancedBuffer(const Ref<VertexBuffer>& vertexBuffer, uint32_t attribLocation) override;
 

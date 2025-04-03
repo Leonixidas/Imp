@@ -20,7 +20,7 @@ void Imp::OpenGLRendererAPI::Clear()
 
 void Imp::OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
 {
-	glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, static_cast<int>(vertexArray->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr);
 }
 
 void Imp::OpenGLRendererAPI::DrawInstanced(const Ref<VertexArray>& vertexArray, uint32_t instanceCount)

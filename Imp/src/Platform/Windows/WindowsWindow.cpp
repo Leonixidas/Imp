@@ -47,7 +47,6 @@ namespace Imp
 			m_Initialized = true;
 		}
 
-
 		m_Window = glfwCreateWindow(m_Data.width, m_Data.height, m_Data.title.c_str(), nullptr, nullptr);
 		m_pContext = std::make_shared<OpenGLContext>(m_Window);
 
