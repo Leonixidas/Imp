@@ -3,6 +3,6 @@
 
 struct Vertex
 {
-	glm::vec3 m_Position = {};
-	glm::vec2 m_Uv = {};
+	glm::vec3 Position = {};
+	glm::vec2 Uv = {};
 };

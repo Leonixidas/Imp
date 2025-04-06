@@ -1,20 +1,20 @@
 #pragma once
 #include "ImpPCH.h"
-#include "Core.h"
-#include "Events/Event.h"
+#include "Base.h"
+#include "Imp/Events/Event.h"
 
 namespace Imp
 {
 	struct WindowProps
 	{
-		std::string m_Title;
-		unsigned int m_Width;
-		unsigned int m_Height;
+		std::string Title;
+		unsigned int Width;
+		unsigned int Height;
 
-		WindowProps()
-			: m_Title("Imp Engine")
-			, m_Width(1280)
-			, m_Height(720)
+		WindowProps(std::string title = "Imp Engine", uint32_t const width = 1600, uint32_t const height = 900)
+			: Title(std::move(title))
+			, Width(width)
+			, Height(height)
 		{ }
 	};
 

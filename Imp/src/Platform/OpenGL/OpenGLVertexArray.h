@@ -17,13 +17,13 @@ namespace Imp
 		virtual void AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) override;
 		virtual void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override;
 
-		virtual Ref<IndexBuffer> GetIndexBuffer() const override  { return m_pIndexBuffer; }
+		virtual Ref<IndexBuffer> GetIndexBuffer() const override  { return m_IndexBuffer; }
 
 		virtual void AddInstancedBuffer(const Ref<VertexBuffer>& vertexBuffer, uint32_t attribLocation) override;
 
 	private:
 		uint32_t m_RendererID;
 		std::vector<Ref<VertexBuffer>> m_VertexBuffers;
-		Ref<IndexBuffer> m_pIndexBuffer = nullptr;
+		Ref<IndexBuffer> m_IndexBuffer = nullptr;
 	};
 }

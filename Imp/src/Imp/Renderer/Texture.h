@@ -1,5 +1,5 @@
 #pragma once
-#include "Imp/Core.h"
+#include "Imp/Core/Base.h"
 #include <string>
 #include <glm/glm.hpp>
 
@@ -7,10 +7,10 @@ namespace Imp
 {
 	struct Character
 	{
-		glm::vec4 m_Uv;
-		glm::vec2 m_Size;
-		glm::vec2 m_Offset;
-		float m_AdvanceX;
+		glm::vec4 Uv;
+		glm::vec2 Size;
+		glm::vec2 Offset;
+		float AdvanceX;
 	};
 
 	class Texture
@@ -27,21 +27,21 @@ namespace Imp
 	class Texture2D : public Texture
 	{
 	public:
-		static Ref<Texture2D> Create(const std::string& path);
+		static Ref<Texture2D> Create(std::string const& path);
 	};
 
 	class FontTexture
 	{
 	public:
 		virtual ~FontTexture() = default;
-		
-		virtual void LoadFont(const std::string& filepath) = 0;
-		virtual void Bind(const std::string& fontName) = 0;
 
-		virtual std::unordered_map<char, Character>& GetFontCharacters(const std::string& fontName) = 0;
-		virtual Ref<Texture2D> GetFontTexture(const std::string& fontName) = 0;
+		virtual void LoadFont(std::string const& filepath) = 0;
+		virtual void Bind(std::string const& fontName) = 0;
 
-		virtual bool HasTexture(const std::string& fontName) = 0;
+		virtual std::unordered_map<char, Character>& GetFontCharacters(std::string const& fontName) = 0;
+		virtual Ref<Texture2D> GetFontTexture(std::string const& fontName) = 0;
+
+		virtual bool HasTexture(std::string const& fontName) = 0;
 
 		static Ref<FontTexture> Create();
 

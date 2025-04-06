@@ -5,25 +5,25 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 
-#include "Imp/Application.h"
+#include "Imp/Core/Application.h"
 
 //temporary
 #include <GLFW/glfw3.h>
 
-Imp::ImguiLayer::ImguiLayer()
+Imp::ImGuiLayer::ImGuiLayer()
 	: Layer("ImGuiLayer")
 {
 
 }
 
-Imp::ImguiLayer::~ImguiLayer()
+Imp::ImGuiLayer::~ImGuiLayer()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
 }
 
-void Imp::ImguiLayer::OnAttach()
+void Imp::ImGuiLayer::OnAttach()
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -44,35 +44,35 @@ void Imp::ImguiLayer::OnAttach()
 		style.Colors[ImGuiCol_WindowBg].w = 1.f;
 	}
 
-	Application& app = Application::GetInstance();
+	Application& app = Application::Get();
 	GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 430");
 }
 
-void Imp::ImguiLayer::OnDetach()
+void Imp::ImGuiLayer::OnDetach()
 {
 
 }
 
-void Imp::ImguiLayer::OnImGuiRender()
+void Imp::ImGuiLayer::OnImGuiRender()
 {
 	static bool show = true;
 	ImGui::ShowDemoWindow(&show);
 }
 
-void Imp::ImguiLayer::Begin()
+void Imp::ImGuiLayer::Begin()
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 }
 
-void Imp::ImguiLayer::End()
+void Imp::ImGuiLayer::End()
 {
 	ImGuiIO& io = ImGui::GetIO();
-	Application& app = Application::GetInstance();
+	Application& app = Application::Get();
 	io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow().GetWidth()), static_cast<float>(app.GetWindow().GetHeight()));
 
 	ImGui::Render();

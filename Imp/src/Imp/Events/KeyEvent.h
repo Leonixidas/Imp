@@ -1,7 +1,7 @@
 #pragma once
 #include "Event.h"
 #include <sstream>
-#include "Imp/KeyCodes.h"
+#include "Imp/Core/KeyCodes.h"
 
 namespace Imp
 {

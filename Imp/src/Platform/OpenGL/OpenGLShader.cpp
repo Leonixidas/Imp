@@ -2,30 +2,43 @@
 #include "OpenGLShader.h"
 #include "glm/gtc/type_ptr.hpp"
 #include <fstream>
-#include "Imp/Log.h"
+#include "Imp/Core/Log.h"
 
-static GLenum ShaderTypeFromString(const std::string& type)
+namespace
 {
-	if (type == "vertex")
+	GLenum ShaderTypeFromString(std::string const& type)
 	{
-		return GL_VERTEX_SHADER;
-	}
-	else if (type == "pixel" || type == "fragment")
-	{
-		return GL_FRAGMENT_SHADER;
-	}
+		if (type == "vertex")
+		{
+			return GL_VERTEX_SHADER;
+		}
+		else if (type == "pixel" || type == "fragment")
+		{
+			return GL_FRAGMENT_SHADER;
+		}
 
-	return 0;
+		return 0;
+	}
 }
 
-Imp::OpenGLShader::OpenGLShader(const std::string& filePath)
+Imp::OpenGLShader::OpenGLShader(std::string const& filePath)
+	: m_FilePath(filePath)
 {
 	std::string source = ReadFile(filePath);
 	auto shaderSources = PreProcess(source);
 	CompileShader(shaderSources);
 }
 
-Imp::OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& pixelSrc)
+Imp::OpenGLShader::OpenGLShader(std::string const& vertexSrc, std::string const& pixelSrc)
+{
+	std::unordered_map<GLenum, std::string> sources;
+	sources[GL_VERTEX_SHADER] = vertexSrc;
+	sources[GL_FRAGMENT_SHADER] = pixelSrc;
+	CompileShader(sources);
+}
+
+Imp::OpenGLShader::OpenGLShader(std::string const& name, std::string const& vertexSrc, std::string const& pixelSrc)
+	: m_Name(name)
 {
 	std::unordered_map<GLenum, std::string> sources;
 	sources[GL_VERTEX_SHADER] = vertexSrc;
@@ -48,78 +61,78 @@ void Imp::OpenGLShader::UnBind() const
 	glUseProgram(0);
 }
 
-void Imp::OpenGLShader::LoadFloat(const std::string& name, float value)
+void Imp::OpenGLShader::LoadFloat(std::string const& name, float value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform1f(location, value);
 }
 
-void Imp::OpenGLShader::LoadFloat2(const std::string& name, const glm::vec2& value)
+void Imp::OpenGLShader::LoadFloat2(std::string const& name, glm::vec2 const& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform2fv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadFloat3(const std::string& name, const glm::vec3& value)
+void Imp::OpenGLShader::LoadFloat3(std::string const& name, glm::vec3 const& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform3fv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadFloat4(const std::string& name, const glm::vec4& value)
+void Imp::OpenGLShader::LoadFloat4(std::string const& name, glm::vec4 const& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform4fv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadMat3(const std::string& name, const glm::mat3& matrix)
+void Imp::OpenGLShader::LoadMat3(std::string const& name, glm::mat3 const& matrix)
 {
 	GLint location = GetUniformLocation(name);
 	glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void Imp::OpenGLShader::LoadMat4(const std::string& name, const glm::mat4& matrix)
+void Imp::OpenGLShader::LoadMat4(std::string const& name, glm::mat4 const& matrix)
 {
 	GLint location = GetUniformLocation(name);
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void Imp::OpenGLShader::LoadInt(const std::string& name, int value)
+void Imp::OpenGLShader::LoadInt(std::string const& name, int value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform1i(location, value);
 }
 
-void Imp::OpenGLShader::LoadInt2(const std::string& name, const glm::ivec2& value)
+void Imp::OpenGLShader::LoadInt2(std::string const& name, glm::ivec2 const& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform2iv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadInt3(const std::string& name, const glm::ivec3& value)
+void Imp::OpenGLShader::LoadInt3(std::string const& name, glm::ivec3 const& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform3iv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadInt4(const std::string& name, const glm::ivec4& value)
+void Imp::OpenGLShader::LoadInt4(std::string const& name, glm::ivec4 const& value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform4iv(location, 1, glm::value_ptr(value));
 }
 
-void Imp::OpenGLShader::LoadBool(const std::string& name, bool value)
+void Imp::OpenGLShader::LoadBool(std::string const& name, bool value)
 {
 	GLint location = GetUniformLocation(name);
 	glUniform1i(location, value);
 }
 
-uint32_t Imp::OpenGLShader::GetAttributeLocation(const std::string& attribName)
+uint32_t Imp::OpenGLShader::GetAttributeLocation(std::string const& attribName)
 {
-	return (uint32_t)glGetAttribLocation(m_RendererID, attribName.c_str());
+	return static_cast<uint32_t>(glGetAttribLocation(m_RendererID, attribName.c_str()));
 }
 
-void Imp::OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::string>& sources)
+void Imp::OpenGLShader::CompileShader(std::unordered_map<GLenum, std::string> const& sources)
 {
 	GLuint program = glCreateProgram();
 	std::vector<GLenum> glShaderIDs;
@@ -127,7 +140,7 @@ void Imp::OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::stri
 	for (auto& kv : sources)
 	{
 		GLenum type = kv.first;
-		const std::string& source = kv.second;
+		std::string const& source = kv.second;
 		GLuint shader = glCreateShader(type);
 
 		const GLchar* sourceCSTR = source.c_str();
@@ -145,7 +158,7 @@ void Imp::OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::stri
 
 			// The maxLength includes the NULL character
 			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
+			glGetShaderInfoLog(shader, maxLength, &maxLength, infoLog.data());
 
 			glDeleteShader(shader);
 #ifdef IMP_DEBUG
@@ -170,7 +183,7 @@ void Imp::OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::stri
 
 		// The maxLength includes the NULL character
 		std::vector<GLchar> infoLog(maxLength);
-		glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
+		glGetProgramInfoLog(program, maxLength, &maxLength, infoLog.data());
 
 		// We don't need the program anymore.
 		glDeleteProgram(program);
@@ -191,12 +204,13 @@ void Imp::OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::stri
 	for (auto id : glShaderIDs)
 	{
 		glDetachShader(program, id);
+		glDeleteShader(id);
 	}
 
 	m_RendererID = program;
 }
 
-std::string Imp::OpenGLShader::ReadFile(const std::string& filePath)
+std::string Imp::OpenGLShader::ReadFile(std::string const& filePath)
 {
 	std::string result;
 	std::ifstream in(filePath, std::ios::in, std::ios::binary);
@@ -206,7 +220,7 @@ std::string Imp::OpenGLShader::ReadFile(const std::string& filePath)
 		in.seekg(0, std::ios::end);
 		result.resize((uint32_t)in.tellg());
 		in.seekg(0, std::ios::beg);
-		in.read(&result[0], result.size());
+		in.read(result.data(), static_cast<std::streamsize>(result.size()));
 	}
 	else
 	{
@@ -215,7 +229,7 @@ std::string Imp::OpenGLShader::ReadFile(const std::string& filePath)
 	return result;
 }
 
-std::unordered_map<GLenum, std::string> Imp::OpenGLShader::PreProcess(const std::string& source)
+std::unordered_map<GLenum, std::string> Imp::OpenGLShader::PreProcess(std::string const& source)
 {
 	std::unordered_map<GLenum, std::string> shaderSources;
 	const char* typeToken = "#type";
@@ -239,9 +253,9 @@ std::unordered_map<GLenum, std::string> Imp::OpenGLShader::PreProcess(const std:
 	return shaderSources;
 }
 
-GLint Imp::OpenGLShader::GetUniformLocation(const std::string& name) const
+GLint Imp::OpenGLShader::GetUniformLocation(std::string const& name) const
 {
-	if (m_UniformCache.find(name) != m_UniformCache.end())
+	if (m_UniformCache.contains(name))
 	{
 		return m_UniformCache[name];
 	}

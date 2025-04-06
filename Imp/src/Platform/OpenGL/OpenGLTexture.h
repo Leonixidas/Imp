@@ -6,7 +6,7 @@ namespace Imp
 	class OpenGLTexture2D : public Texture2D
 	{
 	public:
-		OpenGLTexture2D(const std::string& path);
+		OpenGLTexture2D(std::string const& path);
 
 		virtual ~OpenGLTexture2D();
 
@@ -16,7 +16,7 @@ namespace Imp
 		virtual void Bind(uint32_t slot = 0);
 
 	private:
-		std::string m_Path;
+		std::string ath;
 		uint32_t m_Width, m_Height;
 		uint32_t m_RendererID;
 	};
@@ -27,16 +27,16 @@ namespace Imp
 		OpenGLFontTexture() {}
 		virtual ~OpenGLFontTexture();
 
-		virtual void Bind(const std::string& fontName) override;
-		virtual std::unordered_map<char, Character>& GetFontCharacters(const std::string& fontName) override { return m_FontCharacters[fontName]; }
-		virtual Ref<Texture2D> GetFontTexture(const std::string& fontName) { return m_FontTextures[fontName]; }
+		virtual void Bind(std::string const& fontName) override;
+		virtual std::unordered_map<char, Character>& GetFontCharacters(std::string const& fontName) override { return m_FontCharacters[fontName]; }
+		virtual Ref<Texture2D> GetFontTexture(std::string const& fontName) { return m_FontTextures[fontName]; }
 
-		virtual bool HasTexture(const std::string& fontName) override;
+		virtual bool HasTexture(std::string const& fontName) override;
 
-		virtual void LoadFont(const std::string& filepath) override;
+		virtual void LoadFont(std::string const& filepath) override;
 
 	private:
-		std::string ReadFile(const std::string& filePath);
+		std::string ReadFile(std::string const& filePath);
 
 		std::unordered_map<std::string, std::unordered_map<char, Character>> m_FontCharacters;
 		std::unordered_map<std::string, Ref<Texture2D>> m_FontTextures;

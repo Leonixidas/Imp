@@ -2,7 +2,7 @@
 #include "VertexArray.h"
 
 #include "Renderer.h"
-#include "Imp/Log.h"
+#include "Imp/Core/Log.h"
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 
 Imp::Ref<Imp::VertexArray> Imp::VertexArray::Create()

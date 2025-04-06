@@ -1,28 +1,28 @@
 #pragma once
-#include "../Layer.h"
-#include "../Events/KeyEvent.h"
-#include "../Events/MouseEvent.h"
-#include "../Events/WindowEvent.h"
+#include "Imp/Core/Layer.h"
+#include "Imp/Events/KeyEvent.h"
+#include "Imp/Events/MouseEvent.h"
+#include "Imp/Events/ApplicationEvent.h"
 
 namespace Imp
 {
-class ImguiLayer :	public Layer
-{
-public:
-	ImguiLayer();
-	~ImguiLayer() override;
+	class ImGuiLayer : public Layer
+	{
+	public:
+		ImGuiLayer();
+		~ImGuiLayer() override;
 
-	virtual void OnAttach() override;
-	virtual void OnDetach() override;
-	virtual void OnImGuiRender() override;
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
 
-	void Begin();
-	void End();
+		void Begin();
+		void End();
 
-private:
-	//Variables
-	float m_Time = 0.0f;
-};
+	private:
+		//Variables
+		float m_Time = 0.0f;
+	};
 }
 
 

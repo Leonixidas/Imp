@@ -1,5 +1,4 @@
 #pragma once
-#include "Imp/Core.h"
 
 namespace Imp
 {

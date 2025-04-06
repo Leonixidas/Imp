@@ -5,7 +5,7 @@
 
 namespace Imp
 {
-Ref<Texture2D> Texture2D::Create(const std::string& path)
+Ref<Texture2D> Texture2D::Create(std::string const& path)
 {
 	switch (Renderer::GetApi())
 	{

@@ -66,10 +66,10 @@ void Imp::OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuff
 		glEnableVertexAttribArray(index);
 		glVertexAttribPointer(index,
 							  element.GetComponentCount(),
-							  GetShaderDataTypeToGLenum(element.m_Type),
-							  element.m_Normalized,
+							  GetShaderDataTypeToGLenum(element.Type),
+							  element.Normalized,
 							  layout.GetStride(),
-							  (const void*)size_t(element.m_Offset));
+							  (const void*)size_t(element.Offset));
 		++index;
 	}
 
@@ -80,7 +80,7 @@ void Imp::OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 {
 	glBindVertexArray(m_RendererID);
 	indexBuffer->Bind();
-	m_pIndexBuffer = indexBuffer;
+	m_IndexBuffer = indexBuffer;
 }
 
 //for matrices
@@ -101,10 +101,10 @@ void Imp::OpenGLVertexArray::AddInstancedBuffer(const Ref<VertexBuffer>& vertexB
 		glEnableVertexAttribArray(pos3);
 		glEnableVertexAttribArray(pos4);
 
-		glVertexAttribPointer(pos1, 4, GetShaderDataTypeToGLenum(element.m_Type), element.m_Normalized, layout.GetStride(), (void*)(0));
-		glVertexAttribPointer(pos2, 4, GetShaderDataTypeToGLenum(element.m_Type), element.m_Normalized, layout.GetStride(), (void*)(sizeof(float) * 4));
-		glVertexAttribPointer(pos3, 4, GetShaderDataTypeToGLenum(element.m_Type), element.m_Normalized, layout.GetStride(), (void*)(sizeof(float) * 8));
-		glVertexAttribPointer(pos4, 4, GetShaderDataTypeToGLenum(element.m_Type), element.m_Normalized, layout.GetStride(), (void*)(sizeof(float) * 12));
+		glVertexAttribPointer(pos1, 4, GetShaderDataTypeToGLenum(element.Type), element.Normalized, layout.GetStride(), (void*)(0));
+		glVertexAttribPointer(pos2, 4, GetShaderDataTypeToGLenum(element.Type), element.Normalized, layout.GetStride(), (void*)(sizeof(float) * 4));
+		glVertexAttribPointer(pos3, 4, GetShaderDataTypeToGLenum(element.Type), element.Normalized, layout.GetStride(), (void*)(sizeof(float) * 8));
+		glVertexAttribPointer(pos4, 4, GetShaderDataTypeToGLenum(element.Type), element.Normalized, layout.GetStride(), (void*)(sizeof(float) * 12));
 
 		glVertexAttribDivisor(pos1, 1);
 		glVertexAttribDivisor(pos1, 2);

@@ -2,19 +2,19 @@
 #define GLM_ENABLE_EXPERIMENTAL
 //This needs to be included by the applications using Imp
 //Core engine classes
-#include "Imp/Application.h"
-#include "Imp/Log.h"
-#include "Imp/Layer.h"
-#include "Imp/Time.h"
+#include "Imp/Core/Application.h"
+#include "Imp/Core/Log.h"
+#include "Imp/Core/Layer.h"
+#include "Imp/Utils/PlatformUtils.h"
 
 //Input
-#include "Imp/Input.h"
-#include "Imp/KeyCodes.h"
-#include "Imp/MouseCodes.h"
+#include "Imp/Core/Input.h"
+#include "Imp/Core/KeyCodes.h"
+#include "Imp/Core/MouseCodes.h"
 
 //Events
 #include "Imp/Events/KeyEvent.h"
-#include "Imp/Events/WindowEvent.h"
+#include "Imp/Events/ApplicationEvent.h"
 #include "Imp/Events/MouseEvent.h"
 
 //Rendering
@@ -27,4 +27,4 @@
 #include "Imp/Renderer/VertexArray.h"
 
 //Entry Point
-#include "Imp/EntryPoint.h"
+#include "Imp/Core/EntryPoint.h"

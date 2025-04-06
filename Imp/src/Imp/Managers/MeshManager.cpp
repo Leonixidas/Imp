@@ -1,6 +1,6 @@
 #include "ImpPCH.h"
 #include "MeshManager.h"
-#include "Imp/Log.h"
+#include "Imp/Core/Log.h"
 
 namespace Imp
 {

@@ -8,34 +8,40 @@ class RenderCommand
 public:
 	inline static void Init()
 	{
-		m_pRendererAPI->Init();
+		s_RendererAPI->Init();
 	}
+
+	static void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+	{
+		s_RendererAPI->SetViewport(x, y, width, height);
+	}
+
 	inline static void SetClearColor(glm::vec4 const& color)
 	{
-		m_pRendererAPI->SetClearColor(color);
+		s_RendererAPI->SetClearColor(color);
 	}
 
 	inline static void Clear()
 	{
-		m_pRendererAPI->Clear();
+		s_RendererAPI->Clear();
 	}
 
 	inline static void DrawIndexed(Ref<VertexArray> const& vertexArray)
 	{
-		m_pRendererAPI->DrawIndexed(vertexArray);
+		s_RendererAPI->DrawIndexed(vertexArray);
 	}
 
 	inline static void DrawInstanced(Ref<VertexArray> const& vertexArray, uint32_t const instanceCount)
 	{
-		m_pRendererAPI->DrawInstanced(vertexArray, instanceCount);
+		s_RendererAPI->DrawInstanced(vertexArray, instanceCount);
 	}
 
 	inline static uint32_t GetFrame()
 	{
-		return m_pRendererAPI->GetFrameId();
+		return s_RendererAPI->GetFrameId();
 	}
 
 private:
-	static Scope<RendererApi> m_pRendererAPI;
+	static Scope<RendererApi> s_RendererAPI;
 };
 }

@@ -3,5 +3,5 @@
 
 namespace Imp
 {
-	RendererApi::Api RendererApi::m_Api = RendererApi::Api::OpenGl;
+	RendererApi::Api RendererApi::s_Api = RendererApi::Api::OpenGl;
 }

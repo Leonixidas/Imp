@@ -1,5 +1,5 @@
 #pragma once
-#include "Imp/Window.h"
+#include "Imp/Core/Window.h"
 #include "GLFW/glfw3.h"
 
 namespace Imp
@@ -29,16 +29,16 @@ namespace Imp
 
 	private:
 		GLFWwindow* m_Window;
-		Ref<GraphicsContext> m_pContext;
+		Ref<GraphicsContext> m_Context;
 
 		struct WindowData
 		{
-			std::string title{};
-			uint32_t width{};
-			uint32_t height{};
-			bool vsync{};
+			std::string Title{};
+			uint32_t Width{};
+			uint32_t Height{};
+			bool Vsync{};
 
-			EventCallBack callback{};
+			EventCallBack Callback{};
 		};
 
 		WindowData m_Data;

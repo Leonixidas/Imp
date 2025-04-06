@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "Renderer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
-#include "Imp/Log.h"
+#include "Imp/Core/Log.h"
 
 
 Imp::Ref<Imp::Shader> Imp::Shader::Create(std::string const& filePath)
@@ -22,6 +22,18 @@ Imp::Ref<Imp::Shader> Imp::Shader::Create(std::string const& vertexSrc, std::str
 	switch (Renderer::GetApi())
 	{
 	case RendererApi::Api::OpenGl: return std::make_shared<OpenGLShader>(vertexSrc, pixelSrc);
+	default:
+		IMP_CORE_FATAL("API with id: {0} is not supported!", static_cast<int>(RendererApi::GetApi()));
+		return nullptr;
+	}
+}
+
+Imp::Ref<Imp::Shader> Imp::Shader::Create(std::string const& name, std::string const& vertexSrc,
+	std::string const& pixelSrc)
+{
+	switch (Renderer::GetApi())
+	{
+	case RendererApi::Api::OpenGl: return std::make_shared<OpenGLShader>(name,vertexSrc, pixelSrc);
 	default:
 		IMP_CORE_FATAL("API with id: {0} is not supported!", static_cast<int>(RendererApi::GetApi()));
 		return nullptr;

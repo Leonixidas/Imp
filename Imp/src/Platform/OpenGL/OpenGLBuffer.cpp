@@ -33,12 +33,12 @@ void Imp::OpenGLVertexBuffer::UnBind() const
 //////////////////// INDEX BUFFER //////////////////////
 ////////////////////////////////////////////////////////
 
-Imp::OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* indices, uint32_t count)
+Imp::OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* indices, uint32_t const count)
 	: m_Count(count)
 {
 	glCreateBuffers(1, &m_RendererID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * count, indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(uint32_t) * count), indices, GL_STATIC_DRAW);
 }
 
 Imp::OpenGLIndexBuffer::~OpenGLIndexBuffer()

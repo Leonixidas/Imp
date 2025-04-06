@@ -2,14 +2,14 @@
 #include "OpenGLTexture.h"
 #include "stb_image.h"
 #include "glad/glad.h"
-#include "Imp/Log.h"
+#include "Imp/Core/Log.h"
 #include <fstream>
 
 namespace Imp
 {
 
-OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
-	: m_Path(path)
+OpenGLTexture2D::OpenGLTexture2D(std::string const& path)
+	: ath(path)
 {
 	int width, height, channel;
 	stbi_set_flip_vertically_on_load(1);
@@ -66,7 +66,7 @@ OpenGLFontTexture::~OpenGLFontTexture()
 	m_FontCharacters.clear();
 }
 
-void OpenGLFontTexture::Bind(const std::string& fontName)
+void OpenGLFontTexture::Bind(std::string const& fontName)
 {
 	auto iter = m_FontTextures.find(fontName);
 
@@ -76,12 +76,12 @@ void OpenGLFontTexture::Bind(const std::string& fontName)
 	}
 }
 
-bool OpenGLFontTexture::HasTexture(const std::string& fontName)
+bool OpenGLFontTexture::HasTexture(std::string const& fontName)
 {
 	return m_FontTextures.find(fontName) != m_FontTextures.end();
 }
 
-void OpenGLFontTexture::LoadFont(const std::string& filepath)
+void OpenGLFontTexture::LoadFont(std::string const& filepath)
 {
 	size_t lastSlash = filepath.rfind('/') + 1;
 	size_t eol = filepath.length() - 1;
@@ -160,46 +160,46 @@ void OpenGLFontTexture::LoadFont(const std::string& filepath)
 
 			first = result.find(xstr) + xstr.length();
 			second = result.find(' ', first);
-			chr.m_Uv.x = std::stof(result.substr(first, second - first)) / w;
+			chr.Uv.x = std::stof(result.substr(first, second - first)) / w;
 
 			first = result.find(ystr) + ystr.length();
 			second = result.find(' ', first);
-			chr.m_Uv.z = std::stof(result.substr(first, second - first)) / h;
+			chr.Uv.z = std::stof(result.substr(first, second - first)) / h;
 
 			first = result.find(widthstr) + widthstr.length();
 			second = result.find(' ', first);
-			chr.m_Size.x = std::stof(result.substr(first, second - first));
-			chr.m_Uv.y = chr.m_Uv.x + chr.m_Size.x / w;
-			chr.m_Size.x /= charSize;
+			chr.Size.x = std::stof(result.substr(first, second - first));
+			chr.Uv.y = chr.Uv.x + chr.Size.x / w;
+			chr.Size.x /= charSize;
 
 			first = result.find(heightstr) + heightstr.length();
 			second = result.find(' ', first);
-			chr.m_Size.y = y = std::stof(result.substr(first, second - first));
-			chr.m_Uv.w = chr.m_Uv.z - chr.m_Size.y / h;
-			chr.m_Size.y /= charSize;
+			chr.Size.y = y = std::stof(result.substr(first, second - first));
+			chr.Uv.w = chr.Uv.z - chr.Size.y / h;
+			chr.Size.y /= charSize;
 
 			first = result.find(xoffsetstr) + xoffsetstr.length();
 			second = result.find(' ', first);
-			chr.m_Offset.x = std::stof(result.substr(first, second - first)) / charSize;
+			chr.Offset.x = std::stof(result.substr(first, second - first)) / charSize;
 
 			first = result.find(yoffsetstr) + yoffsetstr.length();
 			second = result.find(' ', first);
-			chr.m_Offset.y = (std::stof(result.substr(first, second - first)) - base) / charSize;
+			chr.Offset.y = (std::stof(result.substr(first, second - first)) - base) / charSize;
 
 			first = result.find(xadvancestr) + xadvancestr.length();
 			second = result.find(' ', first);
-			chr.m_AdvanceX = std::stof(result.substr(first, second - first)) / charSize;
+			chr.AdvanceX = std::stof(result.substr(first, second - first)) / charSize;
 
-			chr.m_Uv.z += 1 / h;
-			chr.m_Uv.z += y / w;
-			chr.m_Uv.w += y / h;
+			chr.Uv.z += 1 / h;
+			chr.Uv.z += y / w;
+			chr.Uv.w += y / h;
 			m_FontCharacters[fontName][c] = chr;
 		}
 	}
 }
 
 
-std::string Imp::OpenGLFontTexture::ReadFile(const std::string& filePath)
+std::string Imp::OpenGLFontTexture::ReadFile(std::string const& filePath)
 {
 	std::string result{};
 	std::ifstream in(filePath, std::ios::in, std::ios::binary);
