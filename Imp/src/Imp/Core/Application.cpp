@@ -27,7 +27,7 @@ namespace Imp
 			std::filesystem::current_path(m_Specification.WorkingDirectory);
 
 		m_Window = Window::Create(WindowProps(specification.Name));
-		m_Window->SetEventCallBack([this]<typename T0>(T0 && ph1) { return OnEvent(std::forward<T0>(ph1)); });
+		m_Window->SetEventCallBack(IMP_BIND_EVENT_FN(Application::OnEvent));
 		m_Window->SetVSync(false);
 
 		Renderer2D::Init();
@@ -55,8 +55,7 @@ namespace Imp
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(
-			[this]<typename T0>(T0 && ph1) { return OnWindowClose(std::forward<T0>(ph1)); });
+		dispatcher.Dispatch<WindowCloseEvent>(IMP_BIND_EVENT_FN(Application::OnWindowClose));
 
 		for (auto const& layer : std::ranges::reverse_view(m_LayerManager))
 		{

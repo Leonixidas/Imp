@@ -8,9 +8,9 @@ void Imp::OpenGLRendererAPI::Init()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Imp::OpenGLRendererAPI::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+void Imp::OpenGLRendererAPI::SetViewport(uint32_t const x, uint32_t  const y, uint32_t const width, uint32_t const height)
 {
-	glViewport(x, y, width, height);
+	glViewport(static_cast<GLint>(x), static_cast<GLint>(y), static_cast<GLint>(width), static_cast<GLint>(height));
 }
 
 void Imp::OpenGLRendererAPI::SetClearColor(const glm::vec4& color)
@@ -37,5 +37,13 @@ uint32_t Imp::OpenGLRendererAPI::GetFrameId()
 {
 	glGenTextures(1, &m_FrameID);
 	return m_FrameID;
+}
+
+void Imp::OpenGLRendererAPI::DrawLines(const Ref<VertexArray>& vertexArray, uint32_t vertexCount)
+{
+}
+
+void Imp::OpenGLRendererAPI::SetLineWidth(float width)
+{
 }
 

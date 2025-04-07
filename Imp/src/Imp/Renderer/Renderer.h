@@ -20,8 +20,6 @@ public:
 
 	static void OnWindowResize(uint32_t width, uint32_t height);
 
-	static void Submit(const Ref<Shader>& pShader, const Ref<VertexArray>& pVertexArray);
-
 	static uint32_t GetFrame();
 
 	inline static RendererApi::Api GetApi() { return RendererApi::GetApi(); }

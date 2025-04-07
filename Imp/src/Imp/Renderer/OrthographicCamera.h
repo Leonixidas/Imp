@@ -21,8 +21,6 @@ namespace Imp
 
 		virtual ~OrthographicCamera() = default;
 
-		virtual void CalculateProjectionMatrix();
-		virtual void CalculateViewMatrix();
 	private:
 		void RecalculateViewMatrix();
 	private:
