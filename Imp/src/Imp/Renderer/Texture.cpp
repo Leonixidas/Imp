@@ -19,7 +19,7 @@ Ref<FontTexture> FontTexture::Create()
 {
 	switch (Renderer::GetApi())
 	{
-	case RendererApi::Api::OpenGl: return std::make_shared<OpenGLFontTexture>();
+	case RendererApi::Api::OpenGl: return CreateRef<OpenGLFontTexture>();
 	default:
 		IMP_CORE_ERROR("We do not support NONE as an API");
 		return nullptr;

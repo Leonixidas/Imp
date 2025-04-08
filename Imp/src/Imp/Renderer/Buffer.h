@@ -140,9 +140,12 @@ namespace Imp
 
 		virtual uint32_t GetRendererId() = 0;
 
+		virtual void SetData(void const* data, uint32_t size) = 0;
+
 		virtual void SetLayout(BufferLayout const& layout) = 0;
 		virtual BufferLayout const& GetLayout() const = 0;
 
+		static Ref<VertexBuffer> Create(uint32_t const size);
 		static Ref<VertexBuffer> Create(float* vertices, uint32_t const size);
 	};
 

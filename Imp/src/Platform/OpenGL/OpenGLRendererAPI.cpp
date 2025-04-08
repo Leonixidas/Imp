@@ -23,12 +23,14 @@ void Imp::OpenGLRendererAPI::Clear()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Imp::OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
+void Imp::OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t const indexCount)
 {
-	glDrawElements(GL_TRIANGLES, static_cast<int>(vertexArray->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr);
+	vertexArray->Bind();
+	uint32_t const count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
+	glDrawElements(GL_TRIANGLES, static_cast<int>(count), GL_UNSIGNED_INT, nullptr);
 }
 
-void Imp::OpenGLRendererAPI::DrawInstanced(const Ref<VertexArray>& vertexArray, uint32_t instanceCount)
+void Imp::OpenGLRendererAPI::DrawInstanced(const Ref<VertexArray>& vertexArray, uint32_t const instanceCount)
 {
 	glDrawElementsInstanced(GL_TRIANGLES, static_cast<int>(vertexArray->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr, static_cast<int>(instanceCount));
 }
@@ -39,11 +41,14 @@ uint32_t Imp::OpenGLRendererAPI::GetFrameId()
 	return m_FrameID;
 }
 
-void Imp::OpenGLRendererAPI::DrawLines(const Ref<VertexArray>& vertexArray, uint32_t vertexCount)
+void Imp::OpenGLRendererAPI::DrawLines(const Ref<VertexArray>& vertexArray, uint32_t const vertexCount)
 {
+	vertexArray->Bind();
+	glDrawArrays(GL_LINES, 0, static_cast<int>(vertexCount));
 }
 
 void Imp::OpenGLRendererAPI::SetLineWidth(float width)
 {
+	glLineWidth(width);
 }
 

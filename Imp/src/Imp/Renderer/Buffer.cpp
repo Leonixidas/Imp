@@ -51,10 +51,22 @@ T* Imp::ShaderProps::GetShaderProperty(uint32_t const index)
 	return static_cast<T*>(&m_Buffer[index]);
 }
 
+
+
 /////////////////////////////////////////////
 ///////////// Vertex Buffer  ////////////////
 /////////////////////////////////////////////
-///
+Imp::Ref<Imp::VertexBuffer> Imp::VertexBuffer::Create(uint32_t const size)
+{
+	switch (Renderer::GetApi())
+	{
+	case RendererApi::Api::OpenGl: return std::make_shared<OpenGLVertexBuffer>(size);
+	default:
+		IMP_CORE_ERROR("We do not support NONE as an API");
+		return nullptr;
+	}
+}
+
 Imp::Ref<Imp::VertexBuffer> Imp::VertexBuffer::Create(float* vertices, uint32_t const size)
 {
 	switch (Renderer::GetApi())

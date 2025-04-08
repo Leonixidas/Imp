@@ -26,9 +26,14 @@ public:
 		s_RendererAPI->Clear();
 	}
 
-	inline static void DrawIndexed(Ref<VertexArray> const& vertexArray)
+	inline static void DrawIndexed(Ref<VertexArray> const& vertexArray, uint32_t indexCount = 0)
 	{
-		s_RendererAPI->DrawIndexed(vertexArray);
+		s_RendererAPI->DrawIndexed(vertexArray, indexCount);
+	}
+
+	inline static void DrawLines(Ref<VertexArray> const& vertexArray, uint32_t vertexCount)
+	{
+		s_RendererAPI->DrawLines(vertexArray, vertexCount);
 	}
 
 	inline static void DrawInstanced(Ref<VertexArray> const& vertexArray, uint32_t const instanceCount)

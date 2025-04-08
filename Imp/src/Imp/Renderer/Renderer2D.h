@@ -19,7 +19,7 @@ namespace Imp
 
 		static void BeginScene(Camera const& camera, glm::mat4 const& transform);
 		static void BeginScene(PerspectiveCamera const& camera);
-		static void BeginScene(OrthographicCamera const& pCam);
+		static void BeginScene(OrthographicCamera const& camera);
 		static void EndScene();
 		static void Flush();
 
@@ -52,27 +52,27 @@ namespace Imp
 			float LineSpacing = 0.f;
 		};
 
-		//initial size of the quad is 1 unit this means that the size of the quad is equal to the scale of the object
-		//texture coordinates are defined by 4 floats left/right/bottom/top
-		static void DrawQuadTexture(const Ref<Texture2D>& pTexture, const glm::mat4& world, const glm::vec4& texCoords = { 0.f, 1.f, 0.f, 1.f });
-		static void DrawQuadFlatColor(const glm::vec4& color, const glm::mat4& world);
-		static void DrawQuadFlatColor(const glm::vec4& color);
+		static void DrawString(std::string const& string, Ref<FontTexture> font, glm::mat4 const& tranaform, TextParams const& textParams, int entityId = -1);
+		static void DrawString(std::string const& string, glm::mat4 const& transform, TextComponent const& component, int entityId = -1);
 
-		static void SubmitBufferData(const glm::vec4& uvs);
-		static void SubmitBufferData(const std::vector<glm::vec2>& vertices);
+		static float GetLineWidth();
+		static void SetLineWidth(float width);
 
-		//Note that the size of the characters will depend on the loaded file
-		static void DrawString(std::string const& fontName, std::string const& text, const glm::mat4& world, const glm::vec4& color = { 1, 1, 1, 1 });
+		struct Statistics
+		{
+			uint32_t DrawCalls = 0;
+			uint32_t QuadCount = 0;
 
-		static void LoadFont(std::string const& filepath);
+			uint32_t GetTotalVertexCount() const { return QuadCount * 4; }
+			uint32_t GetTotalIndexCount() const { return QuadCount * 6; }
+		};
 
-		static bool HasFont(std::string const& fontName);
-
-		inline static RendererApi::Api GetApi() { return RendererApi::GetApi(); }
+		static void ResetStats();
+		static Statistics GetStats();
 
 	private:
-		static void SetUVsAndDefaultPos(const glm::vec4& uv);
-		static void SetVertices(const std::vector<glm::vec2>& vertices);
+		static void StartBatch();
+		static void NextBatch();
 
 		struct SceneData2D
 		{

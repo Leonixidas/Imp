@@ -19,7 +19,7 @@ namespace Imp
 		virtual void SetClearColor(glm::vec4 const& color) = 0;
 		virtual void Clear() = 0;
 
-		virtual void DrawIndexed(Ref<VertexArray> const& vertexArray) = 0;
+		virtual void DrawIndexed(Ref<VertexArray> const& vertexArray, uint32_t indexCount = 0) = 0;
 
 		virtual void DrawInstanced(Ref<VertexArray> const& vertexArray, uint32_t instanceCount) = 0;
 

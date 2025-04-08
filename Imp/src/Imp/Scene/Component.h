@@ -33,4 +33,13 @@ namespace Imp
 	private:
 		uint8_t MeshId, MaterialId;
 	};
+
+	struct TextComponent
+	{
+		std::string TextString;
+		Ref<FontTexture> FontAsset = FontTexture::Create();
+		glm::vec4 Color{ 1.0f };
+		float Kerning = 0.0f;
+		float LineSpacing = 0.0f;
+	};
 }
