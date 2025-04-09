@@ -11,28 +11,30 @@
 
 namespace Imp
 {
-class Renderer
-{
-public:
-	static void Init();
-	static void BeginScene(const Ref<Camera>& pCam);
-	static void EndScene();
-
-	static void OnWindowResize(uint32_t width, uint32_t height);
-
-	static uint32_t GetFrame();
-
-	inline static RendererApi::Api GetApi() { return RendererApi::GetApi(); }
-
-
-private:
-	struct SceneData
+	class Renderer
 	{
-		Ref<Camera> Camera = nullptr;
-	};
+	public:
+		static void Init();
+		static void ShutDown();
 
-	static Scope<SceneData> m_SceneData;
-};
+		static void OnWindowResize(uint32_t width, uint32_t height);
+
+		static void BeginScene(OrthographicCamera const& camera);
+		static void EndScene();
+
+		static void Submit(Ref<Shader> const& shader, Ref<VertexArray> const& vertexArray, glm::mat4 const& transform = glm::mat4(1.f));
+
+		static uint32_t GetFrame();
+
+		inline static RendererApi::Api GetApi() { return RendererApi::GetApi(); }
+	private:
+		struct SceneData
+		{
+			glm::mat4 ViewProjectionMatrix;
+		};
+
+		static Scope<SceneData> s_SceneData;
+	};
 
 
 }

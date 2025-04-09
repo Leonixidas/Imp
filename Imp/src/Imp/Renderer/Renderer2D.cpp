@@ -97,7 +97,7 @@ namespace Imp
 		uint32_t TextureSlotIndex = 1;
 
 		Ref<Texture2D> FontAtlasTexture;
-		glm::vec4 QuadVertexPosition[4];
+		glm::vec4 QuadVertexPositions[4] = {};
 
 		Renderer2D::Statistics Stats;
 
@@ -105,7 +105,7 @@ namespace Imp
 		{
 			glm::mat4 ViewProjection;
 		};
-		CameraData CameraBuffer;
+		CameraData CameraBuffer{};
 		Ref<UniformBuffer> CameraUniformBuffer;
 	};
 
@@ -236,49 +236,144 @@ namespace Imp
 
 	void Renderer2D::DrawQuad(glm::vec2 const& position, glm::vec2 const& size, glm::vec4 const& color)
 	{
+		DrawQuad({ position.x, position.y, 0.f }, size, color);
 	}
 
 	void Renderer2D::DrawQuad(glm::vec3 const& position, glm::vec2 const& size, glm::vec4 const& color)
 	{
+		IMP_PROFILE_FUNCTION();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.f), position) * glm::scale(glm::mat4(1.f), { size.x, size.y,1.f });
+
+		DrawQuad(transform, color);
 	}
 
-	void Renderer2D::DrawQuad(glm::vec2 const& position, glm::vec2 const& size, Ref<Texture2D> const&,
+	void Renderer2D::DrawQuad(glm::vec2 const& position, glm::vec2 const& size, Ref<Texture2D> const& texture,
 		float tilingFactor, glm::vec4 const& tintColor)
 	{
+		DrawQuad({ position.x, position.y, 0.f }, size, texture, tilingFactor, tintColor);
 	}
 
-	void Renderer2D::DrawQuad(glm::vec3 const& position, glm::vec2 const& size, Ref<Texture2D> const&,
+	void Renderer2D::DrawQuad(glm::vec3 const& position, glm::vec2 const& size, Ref<Texture2D> const& texture,
 		float tilingFactor, glm::vec4 const& tintColor)
 	{
+		IMP_PROFILE_FUNCTION();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.f), position) * glm::scale(glm::mat4(1.f), { size.x, size.y, 1.f });
+
+		DrawQuad(transform, texture, tilingFactor, tintColor);
 	}
 
 	void Renderer2D::DrawQuad(glm::mat4 const& transform, glm::vec4 const& color, int entityId)
 	{
+		IMP_PROFILE_FUNCTION();
+		size_t constexpr quadVertexCount = 4;
+		glm::vec2 constexpr texCoords[] = { {0.f,0.f}, {1.f,0.f},{1.f,1.f},{0.f,1.f} };
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+			NextBatch();
+
+		for (size_t i = 0; i < quadVertexCount; ++i)
+		{
+			float constexpr tilingFactor = 1.f;
+			float constexpr textureIndex = 0.f;
+
+			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->TexCoord = texCoords[i];
+			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			s_Data.QuadVertexBufferPtr->EntityId = entityId;
+			++s_Data.QuadVertexBufferPtr;
+		}
+
+		s_Data.QuadIndexCount += 6;
+		++s_Data.Stats.QuadCount;
 	}
 
 	void Renderer2D::DrawQuad(glm::mat4 const& transform, Ref<Texture2D> const& texture, float tilingFactor,
 		glm::vec4 const& tintColor, int entityId)
 	{
+		IMP_PROFILE_FUNCTION();
+
+		size_t constexpr quadVertexCount = 4;
+		glm::vec2 constexpr texCoords[] = { {0.f,0.f}, {1.f,0.f}, {1.f,1.f}, {0.f,1.f} };
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+			NextBatch();
+
+		float textureIndex = 0.f;
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; ++i)
+		{
+			if (*s_Data.TextureSlots[i] == *texture)
+			{
+				textureIndex = static_cast<float>(i);
+				break;
+			}
+		}
+
+		if (textureIndex == 0.f)
+		{
+			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+				NextBatch();
+
+			textureIndex = static_cast<float>(s_Data.TextureSlotIndex);
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+			++s_Data.TextureSlotIndex;
+		}
+
+		 for (size_t i = 0; i < quadVertexCount; ++i)
+		 {
+			 s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			 s_Data.QuadVertexBufferPtr->Color = tintColor;
+			 s_Data.QuadVertexBufferPtr->TexCoord = texCoords[i];
+			 s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			 s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			 s_Data.QuadVertexBufferPtr->EntityId = entityId;
+			 ++s_Data.QuadVertexBufferPtr;
+		 }
+
+		 s_Data.QuadIndexCount += 6;
+
+		 ++s_Data.Stats.QuadCount;
 	}
 
 	void Renderer2D::DrawRotatedQuad(glm::vec2 const& position, glm::vec2 const& size, float rotation,
 		glm::vec4 const& color)
 	{
+		DrawRotatedQuad({ position.x, position.y, 0.f }, size, rotation, color);
 	}
 
 	void Renderer2D::DrawRotatedQuad(glm::vec3 const& position, glm::vec2 const& size, float rotation,
 		glm::vec4 const& color)
 	{
+		IMP_PROFILE_FUNCTION();
+
+		glm::mat4 transform = 
+			glm::translate(glm::mat4(1.f), position)
+			* glm::rotate(glm::mat4(1.f), glm::radians(rotation), glm::vec3(0.f, 0.f, 1.f))
+			* glm::scale(glm::mat4(1.f), { size.x, size.y, 1.f });
+
+		DrawQuad(transform, color);
 	}
 
 	void Renderer2D::DrawRotatedQuad(glm::vec2 const& position, glm::vec2 const& size, float rotation,
 		Ref<Texture2D> const& texture, float tilingFactor, glm::vec4 const& tintColor)
 	{
+		DrawRotatedQuad({ position.x,position.y,0.f }, size, rotation, texture, tilingFactor, tintColor);
 	}
 
 	void Renderer2D::DrawRotatedQuad(glm::vec3 const& position, glm::vec2 const& size, float rotation,
 		Ref<Texture2D> const& texture, float tilingFactor, glm::vec4 const& tintColor)
 	{
+		IMP_PROFILE_FUNCTION();
+
+		glm::mat4 transform =
+			glm::translate(glm::mat4(1.f), position)
+			* glm::rotate(glm::mat4(1.f), glm::radians(rotation), glm::vec3(0.f, 0.f, 1.f))
+			* glm::scale(glm::mat4(1.f), { size.x,size.y,1.f });
+
+		DrawQuad(transform, texture, tilingFactor, tintColor);
 	}
 
 	void Renderer2D::DrawCircle(glm::mat4 const& transform, glm::vec4 const& color, float radius, int entityId)
@@ -287,44 +382,83 @@ namespace Imp
 
 	void Renderer2D::DrawLine(glm::vec3 const& p0, glm::vec3 const& p1, glm::vec4 const& color, int entityId)
 	{
+		s_Data.LineVertexBufferPtr->Position = p0;
+		s_Data.LineVertexBufferPtr->Color = color;
+		s_Data.LineVertexBufferPtr->EntityId = entityId;
+		s_Data.LineVertexBufferPtr++;
+
+		s_Data.LineVertexBufferPtr->Position = p1;
+		s_Data.LineVertexBufferPtr->Color = color;
+		s_Data.LineVertexBufferPtr->EntityId = entityId;
+		s_Data.LineVertexBufferPtr++;
+
+		s_Data.LineVertexCount += 2;
 	}
 
 	void Renderer2D::DrawRect(glm::vec3 const& position, glm::vec2 const& size, glm::vec4 const& color, int entityId)
 	{
+		glm::vec3 p0 = glm::vec3(position.x - size.x * 0.5f, position.y - size.y * 0.5f, position.z);
+		glm::vec3 p1 = glm::vec3(position.x + size.x * 0.5f, position.y - size.y * 0.5f, position.z);
+		glm::vec3 p2 = glm::vec3(position.x + size.x * 0.5f, position.y + size.y * 0.5f, position.z);
+		glm::vec3 p3 = glm::vec3(position.x - size.x * 0.5f, position.y + size.y * 0.5f, position.z);
+
+		DrawLine(p0, p1, color, entityId);
+		DrawLine(p1, p2, color, entityId);
+		DrawLine(p2, p3, color, entityId);
+		DrawLine(p3, p0, color, entityId);
 	}
 
 	void Renderer2D::DrawRect(glm::mat4 const& transform, glm::vec4 const& color, int entityId)
 	{
+		glm::vec3 lineVertices[4];
+		for (size_t i = 0; i < 4; i++)
+			lineVertices[i] = transform * s_Data.QuadVertexPositions[i];
+
+		DrawLine(lineVertices[0], lineVertices[1], color, entityId);
+		DrawLine(lineVertices[1], lineVertices[2], color, entityId);
+		DrawLine(lineVertices[2], lineVertices[3], color, entityId);
+		DrawLine(lineVertices[3], lineVertices[0], color, entityId);
 	}
 
 	void Renderer2D::DrawSprite(glm::mat4 const& transform, SpriteRendererComponent& source, int entityId)
 	{
+		if (source.Texture)
+			DrawQuad(transform, source.Texture, source.TilingFactor, source.Color, entityId);
+		else
+			DrawQuad(transform, source.Color, entityId);
 	}
 
 	void Renderer2D::DrawString(std::string const& string, Ref<FontTexture> font, glm::mat4 const& tranaform,
 		TextParams const& textParams, int entityId)
 	{
+		//TODO: Implement
 	}
 
 	void Renderer2D::DrawString(std::string const& string, glm::mat4 const& transform, TextComponent const& component,
 		int entityId)
 	{
+		DrawString(string, component.FontAsset, transform, { component.Color, component.Kerning, component.LineSpacing }, entityId);
 	}
 
 	float Renderer2D::GetLineWidth()
 	{
+		return s_Data.LineWidth;
 	}
 
 	void Renderer2D::SetLineWidth(float width)
 	{
+		s_Data.LineWidth = width;
 	}
 
 	void Renderer2D::ResetStats()
 	{
+
+		memset(&s_Data.Stats, 0, sizeof(Statistics));
 	}
 
 	Renderer2D::Statistics Renderer2D::GetStats()
 	{
+		return s_Data.Stats;
 	}
 
 

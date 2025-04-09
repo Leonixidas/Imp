@@ -11,7 +11,7 @@ namespace Imp
 {
 	float Time::GetTime()
 	{
-		return glfwGetTime();
+		return static_cast<float>(glfwGetTime());
 	}
 
 
@@ -34,7 +34,7 @@ namespace Imp
 		if (GetOpenFileNameA(&ofn) == TRUE)
 			return ofn.lpstrFile;
 
-		return std::string();
+		return {};
 
 	}
 
@@ -60,7 +60,7 @@ namespace Imp
 		if (GetSaveFileNameA(&ofn) == TRUE)
 			return ofn.lpstrFile;
 
-		return std::string();
+		return {};
 	}
 
 }

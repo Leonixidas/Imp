@@ -1,4 +1,5 @@
 #pragma once
+#include "Glad/glad.h"
 #include "Imp/Renderer/Texture.h"
 
 namespace Imp
@@ -7,18 +8,36 @@ namespace Imp
 	{
 	public:
 		OpenGLTexture2D(std::string const& path);
+		OpenGLTexture2D(TextureSpecification const& specification);
 
 		virtual ~OpenGLTexture2D();
 
-		virtual uint32_t GetWidth() const { return m_Width; }
-		virtual uint32_t GetHeight() const { return m_Height; }
+		virtual uint32_t GetWidth() const override { return m_Width; }
+		virtual uint32_t GetHeight() const override { return m_Height; }
+		uint32_t GetRendererId() const override { return m_RendererId; }	
+		std::string const& GetPath() const override { return m_Path; }
 
-		virtual void Bind(uint32_t slot = 0);
+		virtual void Bind(uint32_t slot = 0) override;
+
+		TextureSpecification const& GetSpecification() const override { return m_Specification; }
+
+		void SetData(void* data, uint32_t size) override;
+
+		bool IsLoaded() const override { return m_IsLoaded; }
+
+		bool operator==(const Texture& other) const override
+		{
+			return m_RendererId == other.GetRendererId();
+		}
 
 	private:
-		std::string ath;
+		TextureSpecification m_Specification;
+
+		std::string m_Path;
 		uint32_t m_Width, m_Height;
-		uint32_t m_RendererID;
+		uint32_t m_RendererId;
+		bool m_IsLoaded = false;
+		GLenum m_InternalFormat, m_DataFormat;
 	};
 
 	class OpenGLFontTexture : public FontTexture

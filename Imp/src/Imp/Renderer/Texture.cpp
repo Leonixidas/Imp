@@ -5,24 +5,35 @@
 
 namespace Imp
 {
-Ref<Texture2D> Texture2D::Create(std::string const& path)
-{
-	switch (Renderer::GetApi())
+	Ref<Texture2D> Texture2D::Create(TextureSpecification const& specs)
 	{
-	case RendererApi::Api::OpenGl: return std::make_shared<OpenGLTexture2D>(path);
-	default:
-		IMP_CORE_ERROR("We do not support NONE as an API");
-		return nullptr;
+		switch (Renderer::GetApi())
+		{
+		case RendererApi::Api::OpenGl: return std::make_shared<OpenGLTexture2D>(specs);
+		default:
+			IMP_CORE_ERROR("We do not support NONE as an API");
+			return nullptr;
+		}
 	}
-}
-Ref<FontTexture> FontTexture::Create()
-{
-	switch (Renderer::GetApi())
+
+	Ref<Texture2D> Texture2D::Create(std::string const& path)
 	{
-	case RendererApi::Api::OpenGl: return CreateRef<OpenGLFontTexture>();
-	default:
-		IMP_CORE_ERROR("We do not support NONE as an API");
-		return nullptr;
+		switch (Renderer::GetApi())
+		{
+		case RendererApi::Api::OpenGl: return std::make_shared<OpenGLTexture2D>(path);
+		default:
+			IMP_CORE_ERROR("We do not support NONE as an API");
+			return nullptr;
+		}
 	}
-}
+	Ref<FontTexture> FontTexture::Create()
+	{
+		switch (Renderer::GetApi())
+		{
+		case RendererApi::Api::OpenGl: return CreateRef<OpenGLFontTexture>();
+		default:
+			IMP_CORE_ERROR("We do not support NONE as an API");
+			return nullptr;
+		}
+	}
 }

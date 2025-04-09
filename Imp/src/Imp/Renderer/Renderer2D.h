@@ -25,8 +25,8 @@ namespace Imp
 
 		static void DrawQuad(glm::vec2 const& position, glm::vec2 const& size, glm::vec4 const& color);
 		static void DrawQuad(glm::vec3 const& position, glm::vec2 const& size, glm::vec4 const& color);
-		static void DrawQuad(glm::vec2 const& position, glm::vec2 const& size, Ref<Texture2D> const&, float tilingFactor = 1.f, glm::vec4 const& tintColor = glm::vec4(1.f));
-		static void DrawQuad(glm::vec3 const& position, glm::vec2 const& size, Ref<Texture2D> const&, float tilingFactor = 1.f, glm::vec4 const& tintColor = glm::vec4(1.f));
+		static void DrawQuad(glm::vec2 const& position, glm::vec2 const& size, Ref<Texture2D> const& texture, float tilingFactor = 1.f, glm::vec4 const& tintColor = glm::vec4(1.f));
+		static void DrawQuad(glm::vec3 const& position, glm::vec2 const& size, Ref<Texture2D> const& texture, float tilingFactor = 1.f, glm::vec4 const& tintColor = glm::vec4(1.f));
 
 		static void DrawQuad(glm::mat4 const& transform, glm::vec4 const& color, int entityId = -1);
 		static void DrawQuad(glm::mat4 const& transform, Ref<Texture2D> const& texture, float tilingFactor = 1.f, glm::vec4 const& tintColor = glm::vec4(1.f), int entityId = -1);

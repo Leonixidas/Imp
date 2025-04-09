@@ -9,17 +9,37 @@
 
 namespace Imp
 {
-	Scope<Renderer::SceneData> Renderer::m_SceneData = std::make_unique<Renderer::SceneData>();
-	Scope<Renderer2D::SceneData2D> Renderer2D::m_Data2D = std::make_unique<Renderer2D::SceneData2D>();
+	Scope<Renderer::SceneData> Renderer::s_SceneData = std::make_unique<Renderer::SceneData>();
 
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		Renderer2D::Init();
 	}
 
-	void Renderer::BeginScene(Ref<Camera> const& pCam)
+	void Renderer::ShutDown()
 	{
-		m_SceneData->Camera = pCam;
+		Renderer2D::ShutDown();
+	}
+
+	void Renderer::OnWindowResize(uint32_t const width, uint32_t const height)
+	{
+		RenderCommand::SetViewport(0, 0, width, height);
+	}
+
+	void Renderer::BeginScene(OrthographicCamera const& camera)
+	{
+		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+	}
+
+	void Renderer::Submit(Ref<Shader> const& shader, Ref<VertexArray> const& vertexArray, glm::mat4 const& transform)
+	{
+		shader->Bind();
+		shader->LoadMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+		shader->LoadMat4("u_Transform", transform);
+
+		vertexArray->Bind();
+		RenderCommand::DrawIndexed(vertexArray);
 	}
 
 	void Renderer::EndScene()
@@ -32,9 +52,6 @@ namespace Imp
 		return RenderCommand::GetFrame();
 	}
 
-	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
-	{
-		RenderCommand::SetViewport(0, 0, width, height);
-	}
+	
 
 }
