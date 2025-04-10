@@ -18,8 +18,7 @@ void Imp::LayerManager::PushLayer(Ref<Layer> const& layer)
 
 	if (iter == m_Layers.end())
 	{
-		m_Layers.emplace(m_Layers.begin() + m_LayerInsert, layer);
-		layer->OnAttach();
+		m_Layers.emplace(m_Layers.begin() + m_LayerInsert, layer);;
 	}
 	else
 	{
@@ -51,7 +50,6 @@ void Imp::LayerManager::PushOverlay(Ref<Layer> const& overlay)
 	if (iter == m_Layers.end())
 	{
 		m_Layers.emplace_back(overlay);
-		overlay->OnAttach();
 	}
 	else
 	{

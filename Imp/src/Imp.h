@@ -21,6 +21,7 @@
 #include "Imp/Renderer/Buffer.h"
 #include "Imp/Renderer/Texture.h"
 #include "Imp/Renderer/Renderer.h"
+#include "Imp/Renderer/Renderer2D.h"
 #include "Imp/Renderer/RenderCommand.h"
 #include "Imp/Renderer/Camera.h"
 #include "Imp/Renderer/Shader.h"

@@ -4,22 +4,35 @@
 #include "Imp/Events/KeyEvent.h"
 #include "Imp/Events/MouseEvent.h"
 #include "Imp/Core/Log.h"
+#include "Imp/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Imp
 {
+	static uint8_t s_GLFWWindowCount = 0;
+
+	static void GLFWErrorCallback(int const error, char const* description)
+	{
+		IMP_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
+	}
+
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		IMP_PROFILE_FUNCTION();
+
 		WindowsWindow::Init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
+		IMP_PROFILE_FUNCTION();
 		WindowsWindow::ShutDown();
 	}
 
-	void WindowsWindow::Update()
+	void WindowsWindow::OnUpdate()
 	{
+		IMP_PROFILE_FUNCTION();
+
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
@@ -32,19 +45,26 @@ namespace Imp
 
 		IMP_TRACE("Creating window: Initializing GLFW");
 
-		if (!m_Initialized)
+		if (s_GLFWWindowCount == 0)
 		{
+			IMP_PROFILE_SCOPE("glfwInit");
 			bool succeed = glfwInit();
-			if (!succeed)
-			{
-				IMP_CORE_ERROR("GLFW could not be initialized");
-			}
-			m_Initialized = true;
+			IMP_CORE_ASSERT(succeed, "GLFW could not be initialized");
+			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 
-		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		m_Context = std::make_shared<OpenGLContext>(m_Window);
+		{
+			IMP_PROFILE_SCOPE("glfwCreateWindow");
+#if defined(IMP_DEBUG)
+			if (Renderer::GetApi() == RendererApi::Api::OpenGl)
+				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+#endif
 
+			m_Window = glfwCreateWindow(static_cast<int>(m_Data.Width), static_cast<int>(m_Data.Height), m_Data.Title.c_str(), nullptr, nullptr);
+			++s_GLFWWindowCount;
+		}
+
+		m_Context = GraphicsContext::Create(m_Window);
 		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -180,7 +200,12 @@ namespace Imp
 
 	void WindowsWindow::ShutDown()
 	{
+		IMP_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(m_Window);
-		glfwTerminate();
+		--s_GLFWWindowCount;
+
+		if (s_GLFWWindowCount == 0)
+			glfwTerminate();
 	}
 }

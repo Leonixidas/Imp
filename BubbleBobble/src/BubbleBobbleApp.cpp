@@ -16,9 +16,9 @@ public:
 
 		float vertices[3 * 7] =
 		{
-			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+			100.f, 100.f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+			400.f,  100.f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+			250.f,  300.f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 		Imp::Ref < Imp::VertexBuffer> vertexBuffer = Imp::VertexBuffer::Create(vertices, sizeof(vertices));
 		Imp::BufferLayout layout =
@@ -55,7 +55,7 @@ public:
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		std::string vertexSrc = R"(
-			#version 330 core
+			#version 460 core
 			
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
@@ -75,7 +75,7 @@ public:
 		)";
 
 		std::string fragmentSrc = R"(
-			#version 330 core
+			#version 460 core
 			
 			layout(location = 0) out vec4 color;
 
@@ -92,7 +92,7 @@ public:
 		m_Shader = Imp::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
 
 		std::string flatColorShaderVertexSrc = R"(
-			#version 330 core
+			#version 460 core
 			
 			layout(location = 0) in vec3 a_Position;
 
@@ -109,7 +109,7 @@ public:
 		)";
 
 		std::string flatColorShaderFragmentSrc = R"(
-			#version 330 core
+			#version 460 core
 			
 			layout(location = 0) out vec4 color;
 
@@ -124,9 +124,11 @@ public:
 		)";
 
 		m_FlatColorShader = Imp::Shader::Create("FlatColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
-	}
 
-	~ExampleLayer() override = default;
+		Imp::Window& window = Imp::Application::Get().GetWindow();
+		m_WindowBounds = { window.GetWidth(), window.GetHeight() };
+		m_Camera = Imp::OrthographicCamera(0.f, static_cast<float>(window.GetWidth()), 0.f, static_cast<float>(window.GetHeight()));
+	}
 
 	virtual void OnAttach() override
 	{
@@ -138,9 +140,19 @@ public:
 
 	}
 
-	virtual void Update( Imp::Timestep ts) override
+	virtual void Update(Imp::Timestep ts) override
 	{
+		Imp::RenderCommand::SetClearColor({ 0.f,0.f,0.f,1.f });
+		Imp::RenderCommand::Clear();
 
+		Imp::Renderer2D::BeginScene(m_Camera);
+		Imp::Renderer2D::DrawQuad({ m_WindowBounds.x / 2,m_WindowBounds.y / 2 , -1 }, { 200.f,200.f }, { 1.f,0.f,1.f,1.f });
+		Imp::Renderer2D::DrawQuad({ m_WindowBounds.x / 2,m_WindowBounds.y / 2 , 0 }, { 100.f,100.f }, { 1.f,1.f,1.f,1.f });
+		Imp::Renderer2D::EndScene();
+
+		Imp::Renderer::BeginScene(m_Camera);
+		Imp::Renderer::Submit(m_Shader, m_VertexArray);
+		Imp::Renderer::EndScene();
 	}
 
 	virtual void Render() override
@@ -151,7 +163,6 @@ public:
 	virtual void OnImGuiRender() override
 	{
 		ImGui::Begin("ExampleLayer");
-		ImGui::Text("Hello It's a me!");
 		ImVec2 size = ImGui::GetWindowSize();
 		auto const id = Imp::Renderer::GetFrame();
 		ImGui::GetWindowDrawList()->AddImage(id, ImVec2(0, 0), size);
@@ -161,15 +172,20 @@ public:
 	virtual void OnEvent(Imp::Event& e) override
 	{
 		Imp::EventDispatcher dispatcher{ e };
-		dispatcher.Dispatch<Imp::MouseMovedEvent>([this]<typename T0>(T0 && ph1)
-		{
-			return OnMouseMovedEvent(std::forward<T0>(ph1));
-		});
+		dispatcher.Dispatch<Imp::MouseMovedEvent>(IMP_BIND_EVENT_FN(OnMouseMovedEvent));
+		dispatcher.Dispatch<Imp::WindowResizeEvent>(IMP_BIND_EVENT_FN(OnWindowResizeEvent));
 	}
 
 	bool OnMouseMovedEvent(Imp::MouseMovedEvent& e)
 	{
-		return true;
+		return false;
+	}
+
+	bool OnWindowResizeEvent(Imp::WindowResizeEvent& e)
+	{
+		m_Camera.SetProjection(0.f, static_cast<float>(e.GetWidth()), 0.f, static_cast<float>(e.GetHeight()));
+		m_WindowBounds = { static_cast<float>(e.GetWidth()), static_cast<float>(e.GetHeight()) };
+		return false;
 	}
 
 private:
@@ -177,6 +193,8 @@ private:
 	Imp::Ref<Imp::VertexArray> m_SquareVA;
 	Imp::Ref<Imp::Shader> m_Shader;
 	Imp::Ref<Imp::Shader> m_FlatColorShader;
+	Imp::OrthographicCamera m_Camera;
+	glm::vec2 m_WindowBounds;
 };
 
 class BubbleBobbleApp : public Imp::Application
@@ -185,7 +203,7 @@ public:
 	explicit BubbleBobbleApp(const Imp::ApplicationSpecification& args)
 		: Application(args)
 	{
-		PushLayer(std::make_shared<ExampleLayer>(ExampleLayer()));
+		PushLayer(Imp::CreateScope<ExampleLayer>(ExampleLayer()));
 	}
 
 	~BubbleBobbleApp() override = default;

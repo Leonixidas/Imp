@@ -12,7 +12,7 @@
 
 namespace Imp
 {
-	Ref<Application> Application::s_Instance = nullptr;
+	Application* Application::s_Instance = nullptr;
 
 	Application::Application(ApplicationSpecification const& specification)
 		: m_Specification(specification)
@@ -21,33 +21,34 @@ namespace Imp
 
 		IMP_CORE_ASSERT(!s_Instance, "Application already exists!");
 
-		s_Instance.reset(this);
+		s_Instance = this;
 
 		if (!m_Specification.WorkingDirectory.empty())
 			std::filesystem::current_path(m_Specification.WorkingDirectory);
 
 		m_Window = Window::Create(WindowProps(specification.Name));
 		m_Window->SetEventCallBack(IMP_BIND_EVENT_FN(Application::OnEvent));
-		m_Window->SetVSync(false);
 
 		Renderer2D::Init();
 
-		m_ImGuiLayer = std::make_shared<ImGuiLayer>();
+		m_ImGuiLayer = CreateRef<ImGuiLayer>();
 		PushOverlay(m_ImGuiLayer);
 	}
 
 	Application::~Application()
 	{
-		Renderer2D::ShutDown();
+		Renderer::ShutDown();
 	}
 
 	void Application::PushLayer(const Ref<Layer>& layer)
 	{
+		IMP_PROFILE_FUNCTION();
 		m_LayerManager.PushLayer(layer);
 		layer->OnAttach();
 	}
 	void Application::PushOverlay(const Ref<Layer>& overlay)
 	{
+		IMP_PROFILE_FUNCTION();
 		m_LayerManager.PushOverlay(overlay);
 		overlay->OnAttach();
 	}
@@ -56,16 +57,14 @@ namespace Imp
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(IMP_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(IMP_BIND_EVENT_FN(Application::OnWindowResize));
 
 		for (auto const& layer : std::ranges::reverse_view(m_LayerManager))
 		{
+			if (e.IsHandled())
+				break;
 
 			layer->OnEvent(e);
-			if (e.IsHandled())
-			{
-				break;
-			}
-
 		}
 	}
 
@@ -101,32 +100,33 @@ namespace Imp
 		IMP_CORE_TRACE("Starting Application");
 		while (m_Running)
 		{
+			IMP_PROFILE_SCOPE("RunLoop");
 
 			float time = Time::GetTime();
 			Timestep ts = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
-			RenderCommand::Clear();
-
-			for (Ref<Layer> const& layer : m_LayerManager)
+			if (!m_Minimized)
 			{
-				layer->Update(ts);
+				for (Ref<Layer> const& layer : m_LayerManager)
+				{
+					layer->Update(ts);
+				}
+
+				for (Ref<Layer> const& layer : m_LayerManager)
+				{
+					layer->Render();
+				}
+
+				m_ImGuiLayer->Begin();
+				for (Ref<Layer> const& layer : m_LayerManager)
+				{
+					layer->OnImGuiRender();
+				}
+				m_ImGuiLayer->End();
 			}
 
-			for (Ref<Layer> const& layer : m_LayerManager)
-			{
-				layer->Render();
-			}
-
-#ifdef IMP_DEBUG
-			m_ImGuiLayer->Begin();
-			for (Ref<Layer> const& layer : m_LayerManager)
-			{
-				layer->OnImGuiRender();
-			}
-			m_ImGuiLayer->End();
-#endif
-			m_Window->Update();
+			m_Window->OnUpdate();
 		}
 
 		IMP_CORE_TRACE("Closing Application");

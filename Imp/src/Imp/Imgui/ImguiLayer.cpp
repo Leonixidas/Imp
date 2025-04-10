@@ -48,12 +48,16 @@ void Imp::ImGuiLayer::OnAttach()
 	GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init("#version 430");
+	ImGui_ImplOpenGL3_Init("#version 460");
 }
 
 void Imp::ImGuiLayer::OnDetach()
 {
+	IMP_PROFILE_FUNCTION();
 
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 }
 
 void Imp::ImGuiLayer::OnImGuiRender()

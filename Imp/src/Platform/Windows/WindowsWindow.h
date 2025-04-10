@@ -12,6 +12,8 @@ namespace Imp
 		WindowsWindow(const WindowProps& props);
 		~WindowsWindow() override;
 
+		virtual void OnUpdate() override;
+
 		virtual uint32_t GetWidth() const override;
 		virtual uint32_t GetHeight() const override;
 
@@ -19,7 +21,6 @@ namespace Imp
 		virtual bool IsVSync() const override;
 		virtual void SetVSync(bool vsync) override;
 
-		virtual void Update() override;
 
 		inline virtual void* GetNativeWindow() const override { return m_Window; }
 

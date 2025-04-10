@@ -68,7 +68,7 @@ namespace Imp
 		std::mutex m_MainThreadQueueMutex;
 
 	private:
-		static Ref<Application> s_Instance;
+		static Application* s_Instance;
 		friend int ::main(int argc, char** argv);
 	};
 

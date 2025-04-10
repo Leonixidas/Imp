@@ -80,16 +80,16 @@ namespace Imp
 		QuadVertex* QuadVertexBufferPtr = nullptr;
 
 		uint32_t CircleIndexCount = 0;
-		QuadVertex* CircleVertexBufferBase = nullptr;
-		QuadVertex* CircleVertexBufferPtr = nullptr;
+		CircleVertex* CircleVertexBufferBase = nullptr;
+		CircleVertex* CircleVertexBufferPtr = nullptr;
 
 		uint32_t LineVertexCount = 0;
-		QuadVertex* LineVertexBufferBase = nullptr;
-		QuadVertex* LineVertexBufferPtr = nullptr;
+		LineVertex* LineVertexBufferBase = nullptr;
+		LineVertex* LineVertexBufferPtr = nullptr;
 
 		uint32_t TextIndexCount = 0;
-		QuadVertex* TextVertexBufferBase = nullptr;
-		QuadVertex* TextVertexBufferPtr = nullptr;
+		TextVertex* TextVertexBufferBase = nullptr;
+		TextVertex* TextVertexBufferPtr = nullptr;
 
 		float LineWidth = 2.f;
 
@@ -114,13 +114,118 @@ namespace Imp
 
 	void Renderer2D::Init()
 	{
-		RenderCommand::Init();
+		IMP_PROFILE_FUNCTION();
+
+		s_Data.QuadVertexArray = VertexArray::Create();
+
+		s_Data.QuadVertexBuffer = VertexBuffer::Create(Renderer2DData::MaxVertices * sizeof(QuadVertex));
+		s_Data.QuadVertexBuffer->SetLayout({
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_Color" },
+			{ ShaderDataType::Float2, "a_TexCoord" },
+			{ ShaderDataType::Float, "a_TexIndex" },
+			{ ShaderDataType::Float, "a_TilingFactor" },
+			{ ShaderDataType::Int, "a_EntityId" }
+			});
+
+		s_Data.QuadVertexArray->AddVertexBuffer(s_Data.QuadVertexBuffer);
+
+		s_Data.QuadVertexBufferBase = new QuadVertex[Renderer2DData::MaxVertices];
+
+		uint32_t* quadIndices = new uint32_t[Renderer2DData::MaxIndices];
+
+		uint32_t offset = 0;
+		for (uint32_t i = 0; i < Renderer2DData::MaxIndices; i += 6)
+		{
+			quadIndices[i + 0] = offset + 0;
+			quadIndices[i + 1] = offset + 1;
+			quadIndices[i + 2] = offset + 2;
+
+			quadIndices[i + 3] = offset + 2;
+			quadIndices[i + 4] = offset + 3;
+			quadIndices[i + 5] = offset + 0;
+
+			offset += 4;
+		}
+
+		Ref<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, Renderer2DData::MaxIndices);
+		s_Data.QuadVertexArray->SetIndexBuffer(quadIB);
+		delete[] quadIndices;
+
+		//Circles
+		s_Data.CircleVertexArray = VertexArray::Create();
+		s_Data.CircleVertexBuffer = VertexBuffer::Create(Renderer2DData::MaxVertices * sizeof(CircleVertex));
+
+		s_Data.CircleVertexBuffer->SetLayout({
+			{ ShaderDataType::Float3, "a_WorldPosition" },
+			{ ShaderDataType::Float3, "a_LocalPosition" },
+			{ ShaderDataType::Float4, "a_Color" },
+			{ ShaderDataType::Float, "a_Thickness" },
+			{ ShaderDataType::Float, "a_Fade" },
+			{ ShaderDataType::Int, "a_EntityId" }
+			});
+
+		s_Data.CircleVertexArray->AddVertexBuffer(s_Data.CircleVertexBuffer);
+		s_Data.CircleVertexArray->SetIndexBuffer(quadIB);
+		s_Data.CircleVertexBufferBase = new CircleVertex[Renderer2DData::MaxVertices];
+
+		// Lines
+		s_Data.LineVertexArray = VertexArray::Create();
+
+		s_Data.LineVertexBuffer = VertexBuffer::Create(Renderer2DData::MaxVertices * sizeof(LineVertex));
+		s_Data.LineVertexBuffer->SetLayout({
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_Color"    },
+			{ ShaderDataType::Int,    "a_EntityID" }
+			});
+		s_Data.LineVertexArray->AddVertexBuffer(s_Data.LineVertexBuffer);
+		s_Data.LineVertexBufferBase = new LineVertex[Renderer2DData::MaxVertices];
+
+		// Text
+		s_Data.TextVertexArray = VertexArray::Create();
+
+		s_Data.TextVertexBuffer = VertexBuffer::Create(Renderer2DData::MaxVertices * sizeof(TextVertex));
+		s_Data.TextVertexBuffer->SetLayout({
+			{ ShaderDataType::Float3, "a_Position"     },
+			{ ShaderDataType::Float4, "a_Color"        },
+			{ ShaderDataType::Float2, "a_TexCoord"     },
+			{ ShaderDataType::Int,    "a_EntityID"     }
+			});
+		s_Data.TextVertexArray->AddVertexBuffer(s_Data.TextVertexBuffer);
+		s_Data.TextVertexArray->SetIndexBuffer(quadIB);
+		s_Data.TextVertexBufferBase = new TextVertex[Renderer2DData::MaxVertices];
+
+		s_Data.WhiteTexture = Texture2D::Create(TextureSpecification());
+		uint32_t whiteTextureData = 0xffffffff;
+		s_Data.WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
+
+		int32_t samplers[Renderer2DData::MaxTextureSlots];
+		for (uint32_t i = 0; i < Renderer2DData::MaxTextureSlots; ++i)
+			samplers[i] = static_cast<int32_t>(i);
+
+		s_Data.QuadShader = Shader::Create("assets/shaders/Quad.glsl");
+		s_Data.CircleShader = Shader::Create("assets/shaders/Circle.glsl");
+		s_Data.LineShader = Shader::Create("assets/shaders/Line.glsl");
+		s_Data.TextShader = Shader::Create("assets/shaders/Text.glsl");
+
+		// Set first texture slot to 0
+		s_Data.TextureSlots[0] = s_Data.WhiteTexture;
+
+		s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+		s_Data.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
+		s_Data.QuadVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
+		s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+
+		s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer2DData::CameraData), 0);
 	}
 
 	void Renderer2D::ShutDown()
 	{
 		IMP_PROFILE_FUNCTION();
 		delete[] s_Data.QuadVertexBufferBase;
+		delete[] s_Data.CircleVertexBufferBase;
+		delete[] s_Data.LineVertexBufferBase;
+		delete[] s_Data.TextVertexBufferBase;
 	}
 
 	void Renderer2D::BeginScene(Camera const& camera, glm::mat4 const& transform)

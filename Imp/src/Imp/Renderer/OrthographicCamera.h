@@ -6,6 +6,7 @@ namespace Imp
 	class OrthographicCamera
 	{
 	public:
+		OrthographicCamera() = default;
 		OrthographicCamera(float left, float right, float bottom, float top);
 		void SetProjection(float left, float right, float bottom, float top);
 
