@@ -24,7 +24,7 @@ namespace Imp
 
 		static void Submit(Ref<Shader> const& shader, Ref<VertexArray> const& vertexArray, glm::mat4 const& transform = glm::mat4(1.f));
 
-		static uint32_t GetFrame();
+		static uint64_t GetFrame();
 
 		inline static RendererApi::Api GetApi() { return RendererApi::GetApi(); }
 	private:

@@ -78,26 +78,3 @@ void Imp::OpenGLIndexBuffer::UnBind() const
 	IMP_PROFILE_FUNCTION();
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
-
-Imp::OpenGLFrameBuffer::OpenGLFrameBuffer(): m_TextureID(0)
-{
-	IMP_PROFILE_FUNCTION();
-	glGenFramebuffers(1, &m_BufferID);
-}
-
-void Imp::OpenGLFrameBuffer::Bind() const
-{
-	IMP_PROFILE_FUNCTION();
-
-}
-
-void Imp::OpenGLFrameBuffer::UnBind() const
-{
-	IMP_PROFILE_FUNCTION();
-
-}
-
-uint32_t Imp::OpenGLFrameBuffer::GetFrame() const
-{
-	return m_TextureID;
-}

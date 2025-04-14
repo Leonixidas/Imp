@@ -47,7 +47,7 @@ namespace Imp
 
 	}
 
-	uint32_t Renderer::GetFrame()
+	uint64_t Renderer::GetFrame()
 	{
 		return RenderCommand::GetFrame();
 	}

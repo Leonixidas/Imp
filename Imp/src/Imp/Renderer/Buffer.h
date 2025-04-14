@@ -130,6 +130,12 @@ namespace Imp
 		uint32_t m_Stride = 0;
 	};
 
+	struct Vertex
+	{
+		glm::vec3 pos;
+		glm::vec4 color;
+	};
+
 
 	class VertexBuffer
 	{
@@ -159,18 +165,5 @@ namespace Imp
 		virtual uint32_t GetCount() const = 0;
 
 		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t const count);
-	};
-
-	class FrameBuffer
-	{
-	public:
-		virtual ~FrameBuffer() = default;
-
-		virtual void Bind() const = 0;
-		virtual void UnBind() const = 0;
-
-		virtual uint32_t GetFrame() const = 0;
-
-		static Ref<FrameBuffer> Create();
 	};
 }

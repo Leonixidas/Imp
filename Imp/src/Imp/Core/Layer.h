@@ -13,7 +13,7 @@ namespace Imp
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void Update(Timestep ts) {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void Render() {}
 		virtual void OnImGuiRender() {} 
 		virtual void OnEvent(Event& e) {}

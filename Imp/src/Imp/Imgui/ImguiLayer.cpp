@@ -62,8 +62,6 @@ void Imp::ImGuiLayer::OnDetach()
 
 void Imp::ImGuiLayer::OnImGuiRender()
 {
-	static bool show = true;
-	ImGui::ShowDemoWindow(&show);
 }
 
 void Imp::ImGuiLayer::Begin()

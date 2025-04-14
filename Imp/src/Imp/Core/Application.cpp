@@ -29,7 +29,7 @@ namespace Imp
 		m_Window = Window::Create(WindowProps(specification.Name));
 		m_Window->SetEventCallBack(IMP_BIND_EVENT_FN(Application::OnEvent));
 
-		Renderer2D::Init();
+		Renderer::Init();
 
 		m_ImGuiLayer = CreateRef<ImGuiLayer>();
 		PushOverlay(m_ImGuiLayer);
@@ -110,7 +110,7 @@ namespace Imp
 			{
 				for (Ref<Layer> const& layer : m_LayerManager)
 				{
-					layer->Update(ts);
+					layer->OnUpdate(ts);
 				}
 
 				for (Ref<Layer> const& layer : m_LayerManager)

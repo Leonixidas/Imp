@@ -2,59 +2,62 @@
 #pragma warning(push)
 #pragma warning(disable:6011)
 #include "Imgui/imgui.h"
+#include "imgui/imgui_internal.h"
+#include "Imp/Renderer/FrameBuffer.h"
+#include "Imp/Renderer/OrthographicCameraController.h"
 #pragma warning(pop)
 
-class ExampleLayer : public Imp::Layer
+namespace Imp
 {
-public:
-	ExampleLayer()
-		: Layer("Example Layer")
+	class ExampleLayer : public Layer
 	{
-		m_VertexArray = Imp::VertexArray::Create();
-		Imp::RenderCommand::SetClearColor(glm::vec4(1, 1, 1, 1));
-		Imp::RenderCommand::Clear();
-
-		float vertices[3 * 7] =
+	public:
+		ExampleLayer()
+			: Layer("Example Layer")
+			, m_CameraController(1280.f/720.f)
 		{
-			100.f, 100.f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			400.f,  100.f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			250.f,  300.f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
-		};
-		Imp::Ref < Imp::VertexBuffer> vertexBuffer = Imp::VertexBuffer::Create(vertices, sizeof(vertices));
-		Imp::BufferLayout layout =
+
+		}
+
+		virtual void OnAttach() override
 		{
-			{Imp::ShaderDataType::Float3, "a_Position"},
-			{Imp::ShaderDataType::Float4, "a_Color" }
-		};
+			IMP_TRACE("ExampleLayer attached");
 
-		vertexBuffer->SetLayout(layout);
-		m_VertexArray->AddVertexBuffer(vertexBuffer);
+			Window& window = Application::Get().GetWindow();
+			m_WindowBounds = { window.GetWidth(), window.GetHeight() };
 
-		uint32_t indices[3] = { 0,1,2 };
-		Imp::Ref<Imp::IndexBuffer> indexBuffer = Imp::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
-		m_VertexArray->SetIndexBuffer(indexBuffer);
+			FrameBufferSpecification spec;
+			spec.Attachment = { FrameBufferTextureFormat::RGBA8, FrameBufferTextureFormat::RED_INTEGER, FrameBufferTextureFormat::Depth };
+			spec.Width = 1280;
+			spec.Height = 720;
+			m_FrameBuffer = FrameBuffer::Create(spec);
 
-		m_SquareVA = Imp::VertexArray::Create();
+			m_VertexArray = VertexArray::Create();
+			RenderCommand::SetClearColor(glm::vec4(1, 1, 1, 1));
+			RenderCommand::Clear();
 
-		float squareVertices[5 * 4] = {
-		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-		 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
-		};
+			Vertex vertices[3]
+			{
+				{.pos= {m_WindowBounds.x / 3.f, m_WindowBounds.y / 3.f, 0.0f}, .color= {0.8f, 0.2f, 0.8f, 1.0f}},
+				{.pos = {m_WindowBounds.x - m_WindowBounds.x / 3.f,  m_WindowBounds.y / 3.f, 0.0f}, .color = {0.2f, 0.3f, 0.8f, 1.0f}},
+				{.pos = {m_WindowBounds.x * 0.5f,  m_WindowBounds.y - m_WindowBounds.y / 3.f, 0.0f}, .color = {0.8f, 0.8f, 0.2f, 1.0f}}
+			};
 
-		Imp::Ref<Imp::VertexBuffer> squareVB = Imp::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
-		squareVB->SetLayout({
-			{ Imp::ShaderDataType::Float3, "a_Position" },
-			{ Imp::ShaderDataType::Float2, "a_TexCoord" }
-			});
-		m_SquareVA->AddVertexBuffer(squareVB);
+			Ref < VertexBuffer> const vertexBuffer = VertexBuffer::Create(reinterpret_cast<float*>(&vertices[0]), sizeof(vertices));
+			BufferLayout const layout =
+			{
+				{ShaderDataType::Float3, "a_Position"},
+				{ShaderDataType::Float4, "a_Color" }
+			};
 
-		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		Imp::Ref<Imp::IndexBuffer> squareIB = Imp::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
-		m_SquareVA->SetIndexBuffer(squareIB);
+			vertexBuffer->SetLayout(layout);
+			m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-		std::string vertexSrc = R"(
+			uint32_t indices[3] = { 0,1,2 };
+			Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
+			m_VertexArray->SetIndexBuffer(indexBuffer);
+
+			std::string vertexSrc = R"(
 			#version 460 core
 			
 			layout(location = 0) in vec3 a_Position;
@@ -74,7 +77,7 @@ public:
 			}
 		)";
 
-		std::string fragmentSrc = R"(
+			std::string fragmentSrc = R"(
 			#version 460 core
 			
 			layout(location = 0) out vec4 color;
@@ -89,131 +92,122 @@ public:
 			}
 		)";
 
-		m_Shader = Imp::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
+			m_Shader = Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
+		}
 
-		std::string flatColorShaderVertexSrc = R"(
-			#version 460 core
-			
-			layout(location = 0) in vec3 a_Position;
+		virtual void OnDetach() override
+		{
 
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
+		}
 
-			out vec3 v_Position;
+		virtual void OnUpdate(Timestep const ts) override
+		{
+			IMP_PROFILE_FUNCTION();
 
-			void main()
+			if (FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();
+				m_ViewportSize.x > 0.f && m_ViewportSize.y > 0.f && 
+				(spec.Width != static_cast<uint32_t>(m_ViewportSize.x) || spec.Height != static_cast<uint32_t>(m_ViewportSize.y)))
 			{
-				v_Position = a_Position;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
+				m_FrameBuffer->Resize(static_cast<uint32_t>(m_ViewportSize.x), static_cast<uint32_t>(m_ViewportSize.y));
+				m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
 			}
-		)";
 
-		std::string flatColorShaderFragmentSrc = R"(
-			#version 460 core
-			
-			layout(location = 0) out vec4 color;
+			Renderer2D::ResetStats();
+			m_FrameBuffer->Bind();
+			RenderCommand::SetClearColor({ 0.f,0.f,0.f,1.f });
+			RenderCommand::Clear();
 
-			in vec3 v_Position;
-			
-			uniform vec3 u_Color;
+			m_FrameBuffer->ClearAttachment(1, -1);
 
-			void main()
+			m_CameraController.OnUpdate(ts);
+
+			OnOverlayRender();
+
+			m_FrameBuffer->UnBind();
+		}
+
+		void OnOverlayRender()
+		{
+			Renderer2D::BeginScene(m_CameraController.GetCamera());
+			Renderer2D::DrawQuad({ m_WindowBounds.x / 2,m_WindowBounds.y / 2 , -1 }, { 200.f,200.f }, { 1.f,0.f,1.f,1.f });
+			Renderer2D::DrawQuad({ m_WindowBounds.x / 2,m_WindowBounds.y / 2 , 0 }, { 100.f,100.f }, { 1.f,1.f,1.f,1.f });
+			Renderer2D::EndScene();
+
+			Renderer::BeginScene(m_CameraController.GetCamera());
+			Renderer::Submit(m_Shader, m_VertexArray);
+			Renderer::EndScene();
+		}
+
+		virtual void Render() override
+		{
+		}
+
+		virtual void OnImGuiRender() override
+		{
+			auto dockSpaceId = ImGui::DockSpaceOverViewport();
+			auto nodeId = ImGui::DockBuilderAddNode();
+
+			if (ExampleOpen)
 			{
-				color = vec4(u_Color, 1.0);
+				ImGui::Begin("Viewport", &ExampleOpen);
+
+				auto size = ImGui::GetContentRegionAvail();
+				m_ViewportSize = { size.x, size.y };
+
+				auto const id = Renderer::GetFrame();
+
+				ImGui::Image(id, size, { 0.f, 1.f }, { 1.f,0.f });
+				ImGui::End();
 			}
-		)";
+		}
 
-		m_FlatColorShader = Imp::Shader::Create("FlatColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
+		virtual void OnEvent(Event& e) override
+		{
+			EventDispatcher dispatcher{ e };
+			dispatcher.Dispatch<MouseMovedEvent>(IMP_BIND_EVENT_FN(OnMouseMovedEvent));
+			dispatcher.Dispatch<WindowResizeEvent>(IMP_BIND_EVENT_FN(OnWindowResizeEvent));
+		}
 
-		Imp::Window& window = Imp::Application::Get().GetWindow();
-		m_WindowBounds = { window.GetWidth(), window.GetHeight() };
-		m_Camera = Imp::OrthographicCamera(0.f, static_cast<float>(window.GetWidth()), 0.f, static_cast<float>(window.GetHeight()));
-	}
+		bool OnMouseMovedEvent(MouseMovedEvent& e)
+		{
+			return false;
+		}
 
-	virtual void OnAttach() override
+		bool OnWindowResizeEvent(WindowResizeEvent& e)
+		{
+			m_WindowBounds = { static_cast<float>(e.GetWidth()), static_cast<float>(e.GetHeight()) };
+			return false;
+		}
+
+	private:
+		Ref<VertexArray> m_VertexArray;
+		Ref<Shader> m_Shader;
+		Ref<FrameBuffer> m_FrameBuffer;
+		OrthographicCameraController m_CameraController;
+		glm::vec2 m_WindowBounds;
+		glm::vec2 m_ViewportSize;
+
+		bool ExampleOpen = true;
+	};
+
+	class BubbleBobbleApp : public Application
 	{
-		IMP_TRACE("ExampleLayer attached");
-	}
+	public:
+		explicit BubbleBobbleApp(const ApplicationSpecification& args)
+			: Application(args)
+		{
+			PushLayer(CreateScope<ExampleLayer>(ExampleLayer()));
+		}
 
-	virtual void OnDetach() override
+		~BubbleBobbleApp() override = default;
+	};
+
+	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
-
+		ApplicationSpecification props{};
+		props.Name = "BubbleBobble";
+		props.WorkingDirectory = "../BubbleBobble";
+		props.CommandLineArgs = args;
+		return new BubbleBobbleApp(props);
 	}
-
-	virtual void Update(Imp::Timestep ts) override
-	{
-		Imp::RenderCommand::SetClearColor({ 0.f,0.f,0.f,1.f });
-		Imp::RenderCommand::Clear();
-
-		Imp::Renderer2D::BeginScene(m_Camera);
-		Imp::Renderer2D::DrawQuad({ m_WindowBounds.x / 2,m_WindowBounds.y / 2 , -1 }, { 200.f,200.f }, { 1.f,0.f,1.f,1.f });
-		Imp::Renderer2D::DrawQuad({ m_WindowBounds.x / 2,m_WindowBounds.y / 2 , 0 }, { 100.f,100.f }, { 1.f,1.f,1.f,1.f });
-		Imp::Renderer2D::EndScene();
-
-		Imp::Renderer::BeginScene(m_Camera);
-		Imp::Renderer::Submit(m_Shader, m_VertexArray);
-		Imp::Renderer::EndScene();
-	}
-
-	virtual void Render() override
-	{
-
-	}
-
-	virtual void OnImGuiRender() override
-	{
-		ImGui::Begin("ExampleLayer");
-		ImVec2 size = ImGui::GetWindowSize();
-		auto const id = Imp::Renderer::GetFrame();
-		ImGui::GetWindowDrawList()->AddImage(id, ImVec2(0, 0), size);
-		ImGui::End();
-	}
-
-	virtual void OnEvent(Imp::Event& e) override
-	{
-		Imp::EventDispatcher dispatcher{ e };
-		dispatcher.Dispatch<Imp::MouseMovedEvent>(IMP_BIND_EVENT_FN(OnMouseMovedEvent));
-		dispatcher.Dispatch<Imp::WindowResizeEvent>(IMP_BIND_EVENT_FN(OnWindowResizeEvent));
-	}
-
-	bool OnMouseMovedEvent(Imp::MouseMovedEvent& e)
-	{
-		return false;
-	}
-
-	bool OnWindowResizeEvent(Imp::WindowResizeEvent& e)
-	{
-		m_Camera.SetProjection(0.f, static_cast<float>(e.GetWidth()), 0.f, static_cast<float>(e.GetHeight()));
-		m_WindowBounds = { static_cast<float>(e.GetWidth()), static_cast<float>(e.GetHeight()) };
-		return false;
-	}
-
-private:
-	Imp::Ref<Imp::VertexArray> m_VertexArray;
-	Imp::Ref<Imp::VertexArray> m_SquareVA;
-	Imp::Ref<Imp::Shader> m_Shader;
-	Imp::Ref<Imp::Shader> m_FlatColorShader;
-	Imp::OrthographicCamera m_Camera;
-	glm::vec2 m_WindowBounds;
-};
-
-class BubbleBobbleApp : public Imp::Application
-{
-public:
-	explicit BubbleBobbleApp(const Imp::ApplicationSpecification& args)
-		: Application(args)
-	{
-		PushLayer(Imp::CreateScope<ExampleLayer>(ExampleLayer()));
-	}
-
-	~BubbleBobbleApp() override = default;
-};
-
-Imp::Application* Imp::CreateApplication(ApplicationCommandLineArgs args)
-{
-	ApplicationSpecification props{};
-	props.Name = "BubbleBobble";
-	props.WorkingDirectory = "../BubbleBobble";
-	props.CommandLineArgs = args;
-	return new BubbleBobbleApp(props);
 }
