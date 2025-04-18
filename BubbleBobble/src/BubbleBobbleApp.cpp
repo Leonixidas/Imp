@@ -14,7 +14,7 @@ namespace Imp
 	public:
 		ExampleLayer()
 			: Layer("Example Layer")
-			, m_CameraController(1280.f/720.f)
+			, m_CameraController(1280.f / 720.f)
 		{
 
 		}
@@ -38,12 +38,12 @@ namespace Imp
 
 			Vertex vertices[3]
 			{
-				{.pos= {m_WindowBounds.x / 3.f, m_WindowBounds.y / 3.f, 0.0f}, .color= {0.8f, 0.2f, 0.8f, 1.0f}},
+				{.pos = {m_WindowBounds.x / 3.f, m_WindowBounds.y / 3.f, 0.0f}, .color = {0.8f, 0.2f, 0.8f, 1.0f}},
 				{.pos = {m_WindowBounds.x - m_WindowBounds.x / 3.f,  m_WindowBounds.y / 3.f, 0.0f}, .color = {0.2f, 0.3f, 0.8f, 1.0f}},
 				{.pos = {m_WindowBounds.x * 0.5f,  m_WindowBounds.y - m_WindowBounds.y / 3.f, 0.0f}, .color = {0.8f, 0.8f, 0.2f, 1.0f}}
 			};
 
-			Ref < VertexBuffer> const vertexBuffer = VertexBuffer::Create(reinterpret_cast<float*>(&vertices[0]), sizeof(vertices));
+			Ref<VertexBuffer> const vertexBuffer = VertexBuffer::Create(reinterpret_cast<float*>(&vertices[0]), sizeof(vertices));
 			BufferLayout const layout =
 			{
 				{ShaderDataType::Float3, "a_Position"},
@@ -105,7 +105,7 @@ namespace Imp
 			IMP_PROFILE_FUNCTION();
 
 			if (FrameBufferSpecification spec = m_FrameBuffer->GetSpecification();
-				m_ViewportSize.x > 0.f && m_ViewportSize.y > 0.f && 
+				m_ViewportSize.x > 0.f && m_ViewportSize.y > 0.f &&
 				(spec.Width != static_cast<uint32_t>(m_ViewportSize.x) || spec.Height != static_cast<uint32_t>(m_ViewportSize.y)))
 			{
 				m_FrameBuffer->Resize(static_cast<uint32_t>(m_ViewportSize.x), static_cast<uint32_t>(m_ViewportSize.y));
@@ -128,9 +128,10 @@ namespace Imp
 
 		void OnOverlayRender()
 		{
+			auto aspect = m_ViewportSize.x / m_ViewportSize.y;
 			Renderer2D::BeginScene(m_CameraController.GetCamera());
-			Renderer2D::DrawQuad({ m_WindowBounds.x / 2,m_WindowBounds.y / 2 , -1 }, { 200.f,200.f }, { 1.f,0.f,1.f,1.f });
-			Renderer2D::DrawQuad({ m_WindowBounds.x / 2,m_WindowBounds.y / 2 , 0 }, { 100.f,100.f }, { 1.f,1.f,1.f,1.f });
+			Renderer2D::DrawQuad({ 0,0 , -1 }, { aspect / 4,aspect / 4 }, { 1.f,0.f,1.f,1.f });
+			Renderer2D::DrawQuad({ 0,0 , 0 }, { aspect / 5,aspect / 5}, { 1.f,1.f,1.f,1.f });
 			Renderer2D::EndScene();
 
 			Renderer::BeginScene(m_CameraController.GetCamera());
@@ -144,21 +145,43 @@ namespace Imp
 
 		virtual void OnImGuiRender() override
 		{
-			auto dockSpaceId = ImGui::DockSpaceOverViewport();
-			auto nodeId = ImGui::DockBuilderAddNode();
+			ImGuiViewport const* viewport = ImGui::GetMainViewport();
+			ImGuiID dockSpaceId = ImGui::GetID("DockSpace");
+			bool const init = ImGui::DockBuilderGetNode(dockSpaceId) == nullptr;
 
-			if (ExampleOpen)
+			if (init)
 			{
-				ImGui::Begin("Viewport", &ExampleOpen);
+				ImGui::DockBuilderAddNode(dockSpaceId, ImGuiDockNodeFlags_DockSpace);
+				ImGui::DockBuilderSetNodeSize(dockSpaceId, viewport->WorkSize);
 
-				auto size = ImGui::GetContentRegionAvail();
-				m_ViewportSize = { size.x, size.y };
+				ImGuiID dockLeftId = 0, dockRightId = 0, dockRightTop = 0, dockRightBottom = 0;
+				ImGui::DockBuilderSplitNode(dockSpaceId, ImGuiDir_Left, 0.25f, &dockLeftId, &dockRightId);
+				ImGui::DockBuilderDockWindow("Scene", dockLeftId);
 
-				auto const id = Renderer::GetFrame();
+				ImGui::DockBuilderSplitNode(dockRightId, ImGuiDir_Up, 0.75f, &dockRightTop, &dockRightBottom);
+				ImGui::DockBuilderDockWindow("Viewport", dockRightTop);
+				ImGui::DockBuilderDockWindow("Log", dockRightBottom);
 
-				ImGui::Image(id, size, { 0.f, 1.f }, { 1.f,0.f });
-				ImGui::End();
+				ImGui::DockBuilderFinish(dockSpaceId);
 			}
+
+			ImGui::DockSpaceOverViewport(dockSpaceId, viewport);
+
+			ImGui::Begin("Scene");
+			ImGui::End();
+			
+			ImGui::Begin("Viewport");
+
+			//auto size = ImGui::GetContentRegionAvail();
+			m_ViewportSize = {1280, 720 };
+
+			auto const id = m_FrameBuffer->GetColorAttachmentRendererId();
+
+			ImGui::Image(id, {m_ViewportSize.x, m_ViewportSize.y}, {0.f, 1.f}, {1.f,0.f});
+			ImGui::End();
+
+			ImGui::Begin("Log");
+			ImGui::End();
 		}
 
 		virtual void OnEvent(Event& e) override

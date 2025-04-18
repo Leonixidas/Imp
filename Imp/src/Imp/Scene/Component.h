@@ -19,6 +19,18 @@ namespace Imp
 		}
 	};
 
+	struct MeshComponent
+	{
+		Ref<Texture2D> Texture;
+		float TilingFactor = 1.f;
+
+		MeshComponent() = default;
+		MeshComponent(std::string const& meshPath)
+		{
+			
+		}
+	};
+
 	struct RenderComponent
 	{
 	public:
